@@ -33,17 +33,12 @@ function App({ children, routes }) {
 
   return (
     <div>
-      <h1>Single Page Apps for GitHub Pages</h1>
-      <a href={repoLink}>https://github.com/rafrex/spa-github-pages</a>
+      <h1>Lost Items</h1>
+      <h2>Never Lose Your Stuff Again</h2>
       <nav>
         {generateMapMenu()}
       </nav>
       {children}
-      <div style={{ color: '#A0A0A0', fontSize: '14px', marginTop: '50px' }}>
-        <a href="http://www.rafaelpedicini.com" className="extended-link">
-          Code and concept by <span className="link-style">Rafael Pedicini</span>
-        </a>
-      </div>
     </div>
   );
 }
