@@ -33,7 +33,7 @@ function App({ children, routes }) {
 
   return (
     <div>
-      <h1>Single Page Apps for GitHub Pages</h1>
+      <h1>Lost Item</h1>
       <a href={repoLink}>https://github.com/rafrex/spa-github-pages</a>
       <nav>
         {generateMapMenu()}
