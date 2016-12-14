@@ -42,16 +42,22 @@ class UserPage extends React.Component {
   }
 
   componentDidMount() {
+    // During dev, just use the path to decide if the user "exists"
+    const noSuchUser = location.pathname.includes("poop");
+
     const endpoint = `http://ip.jsontest.com/`;
+    // this is where we'll call the server to see
+    // if the user exists.
     axios.get(endpoint)
       .then(response => {
-        if (false) {
-          const ip = response.data.ip;
-          const user = {
-            'username': 'foobar',
-            'email': 'name@example.com',
-            'ip': ip
-          };
+        const ip = response.data.ip;
+        const user = {
+          'username': 'foobar',
+          'email': 'name@example.com',
+          'ip': ip
+        };
+        if (noSuchUser === true) {
+        } else {
           this.setState({'user': user});
         }
       });
