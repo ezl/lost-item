@@ -4,12 +4,15 @@ const propTypes = {
   location: PropTypes.object.isRequired,
 };
 
-function UserPage({ location }) {
-  return (
-    <p>
-      Page For User <strong>{location.pathname}</strong>
-    </p>
-  );
+/* Learn how to convert this to a class */
+class UserPage extends React.Component {
+  render() {
+    return (
+      <p>
+        Page For User <strong>{location.pathname}</strong>
+      </p>
+    );
+  }
 }
 
 UserPage.propTypes = propTypes;
