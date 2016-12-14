@@ -13,9 +13,10 @@ class UserInfo extends React.Component {
         <strong>some user info</strong>
         <p>
           Page For User <strong>{this.props.pathname}</strong>
-          <div><label>Username</label>: <span>{this.props.user.username}</span></div>
-          <div><label>email</label>: <span>{this.props.user.email}</span></div>
         </p>
+        <hr />
+        <div><label>Username</label>: <span>{this.props.user.username}</span></div>
+        <div><label>email</label>: <span>{this.props.user.email}</span></div>
       </div>
     )
   }
@@ -35,27 +36,32 @@ class UserNotFound extends React.Component {
 class UserPage extends React.Component {
   constructor(props) {
     super(props);
-    this.user = null;
-    /* try to hit an api to find out if the requested user exists */
+    this.state = {
+      user: null
+    };
+  }
 
+  componentDidMount() {
     const endpoint = `http://ip.jsontest.com/`;
     axios.get(endpoint)
       .then(response => {
-        console.log(response.data);
+        if (false) {
+          const ip = response.data.ip;
+          const user = {
+            'username': 'foobar',
+            'email': 'name@example.com',
+            'ip': ip
+          };
+          this.setState({'user': user});
+        }
       });
-    if (true) {
-      this.user = {
-        'username': 'foobar',
-        'email': 'name@example.com'
-      };
-    }
   }
 
   render() {
-    if (this.user !== null) {
-      return <UserInfo user={this.user} pathname={location.pathname} />;
-    } else {
+    if (this.state.user === null) {
       return <UserNotFound />;
+    } else {
+      return <UserInfo user={this.state.user} pathname={location.pathname} />;
     }
   }
 }
