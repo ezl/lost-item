@@ -6,17 +6,45 @@ const propTypes = {
 };
 
 
+class UserContactForm extends React.Component {
+  render() {
+    const buttonText = `Let ${this.props.name} know you found something!`;
+    return (
+      <form action="https://formspree.io/{this.props.email}" method="POST">
+        <div>
+          <label>What item did you find?</label>
+          <input type="text" name="what" />
+        </div>
+        <div>
+          <label>Where did you find it?</label>
+          <input type="text" name="where" />
+        </div>
+        <div>
+          <label>What&#39;s the best way for {this.props.name} to get this item back?</label>
+          <textarea name="how" placeholder=""/>
+          <p>For example, you can leave your contact email or phone here, or just say: I left it with the front desk at the ACME Hotel at Colombus and 4th Street..</p>
+        </div>
+        <div>
+          <input disabled type="submit" value={buttonText} />
+        </div>
+      </form>
+    )
+  }
+}
+
 class UserInfo extends React.Component {
   render() {
     return (
       <div>
-        <strong>some user info</strong>
         <p>
-          Page For User <strong>{this.props.pathname}</strong>
+          Page For User: <code>{this.props.pathname}</code>.
         </p>
         <hr />
-        <div><label>Username</label>: <span>{this.props.user.username}</span></div>
-        <div><label>email</label>: <span>{this.props.user.email}</span></div>
+        <strong>Yay! You found something that belongs to {this.props.user.name}!</strong>
+        <p>{this.props.user.name} will be very happy to hear that!</p>
+        <p>Will you help get this item returned to its owner?</p>
+
+        <UserContactForm name={this.props.user.name} email={this.props.user.email} />
       </div>
     )
   }
@@ -52,6 +80,7 @@ class UserPage extends React.Component {
       .then(response => {
         const ip = response.data.ip;
         const user = {
+          'name': 'James',
           'username': 'foobar',
           'email': 'name@example.com',
           'ip': ip

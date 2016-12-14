@@ -22,6 +22,7 @@ class Nav extends React.Component {
   render() {
     return (
       <nav>
+        <p>Here are some cool links:</p>
         <Links />
       </nav>
     )
