@@ -18,36 +18,15 @@ function App({ children, routes }) {
       )
     }
   }
+
   class Nav extends React.Component {
     render() {
       return (
         <nav>
-          {generateMapMenu()}
           <Links />
         </nav>
       )
     }
-  }
-  function generateMapMenu() {
-    let path = '';
-
-    function nextPath(route) {
-      path += (
-        (path.slice(-1) === '/' ? '' : '/') +
-        (route.path === '/' ? '' : route.path)
-      );
-      return path;
-    }
-
-    return (
-      routes.filter(route => route.mapMenuTitle)
-        .map((route, index, array) => (
-          <span key={index}>
-            <Link to={nextPath(route)}>{route.mapMenuTitle}</Link>
-            {(index + 1) < array.length && ' / '}
-          </span>
-        ))
-    );
   }
 
   return (
