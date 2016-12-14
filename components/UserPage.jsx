@@ -10,22 +10,20 @@ class UserContactForm extends React.Component {
     const buttonText = `Let ${this.props.name} know you found something!`;
     return (
       <form action="https://formspree.io/{this.props.email}" method="POST">
-        <div>
-          <label>What item did you find?</label>
-          <input type="text" name="what" />
+        <div className="form-group">
+          <label>What did you find?</label>
+          <input className="form-control" type="text" name="what" />
         </div>
-        <div>
+        <div className="form-group">
           <label>Where did you find it?</label>
-          <input type="text" name="where" />
+          <input className="form-control" type="text" name="where" />
         </div>
-        <div>
+        <div className="form-group">
           <label>What&#39;s the best way for {this.props.name} to get this item back?</label>
-          <textarea name="how" placeholder=""/>
-          <p>For example, you can leave your contact email or phone here, or just say: I left it with the front desk at the ACME Hotel at Colombus and 4th Street..</p>
+          <textarea className="form-control" type="text" name="where" />
+          <small className="form-text text-muted">For example, you can leave your contact email or phone here, or just say: I left it with the front desk at the ACME Hotel at Colombus and 4th Street..</small>
         </div>
-        <div>
-          <input disabled type="submit" value={buttonText} />
-        </div>
+        <button type="submit" className="btn btn-primary">{buttonText}</button>
       </form>
     )
   }
@@ -34,16 +32,17 @@ class UserContactForm extends React.Component {
 class UserInfo extends React.Component {
   render() {
     return (
-      <div>
-        <p>
-          Page For User: <code>{this.props.pathname}</code>.
-        </p>
-        <hr />
-        <strong>Yay! You found something that belongs to {this.props.user.name}!</strong>
-        <p>{this.props.user.name} will be very happy to hear that!</p>
-        <p>Will you help get this item returned?</p>
-
-        <UserContactForm name={this.props.user.name} email={this.props.user.email} />
+      <div className="row">
+        <div className="col-md-6">
+          <strong>Yay! You found something that belongs to {this.props.user.name}!</strong>
+          <p>{this.props.user.name} will be very happy to hear that!</p>
+          <p>Will you help get this item returned?</p>
+          <UserContactForm name={this.props.user.name} email={this.props.user.email} />
+          <hr />
+          <p>
+            Page For User: <code>{this.props.pathname}</code>.
+          </p>
+        </div>
       </div>
     )
   }
