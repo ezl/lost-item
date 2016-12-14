@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import axios from 'axios';
 
 const propTypes = {
   location: PropTypes.object.isRequired,
@@ -37,6 +38,11 @@ class UserPage extends React.Component {
     this.user = null;
     /* try to hit an api to find out if the requested user exists */
 
+    const endpoint = `http://ip.jsontest.com/`;
+    axios.get(endpoint)
+      .then(response => {
+        console.log(response.data);
+      });
     if (true) {
       this.user = {
         'username': 'foobar',
