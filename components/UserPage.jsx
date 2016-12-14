@@ -5,7 +5,6 @@ const propTypes = {
   location: PropTypes.object.isRequired,
 };
 
-
 class UserContactForm extends React.Component {
   render() {
     const buttonText = `Let ${this.props.name} know you found something!`;
@@ -42,7 +41,7 @@ class UserInfo extends React.Component {
         <hr />
         <strong>Yay! You found something that belongs to {this.props.user.name}!</strong>
         <p>{this.props.user.name} will be very happy to hear that!</p>
-        <p>Will you help get this item returned to its owner?</p>
+        <p>Will you help get this item returned?</p>
 
         <UserContactForm name={this.props.user.name} email={this.props.user.email} />
       </div>

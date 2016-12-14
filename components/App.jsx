@@ -11,8 +11,10 @@ class Links extends React.Component {
   render() {
     return(
       <ul>
-        <li><a href="https://wwww.google.com">Google</a></li>
-        <li><a href="https://wwww.yahoo.com">Yahoo</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/signup">Get Your Own Link (It&#39;s Free)</a></li>
+        <li><a href="/how-it-works">How Does It Work?</a></li>
+        <li><a href="/shop">Buy Labels</a></li>
       </ul>
     )
   }
@@ -22,7 +24,6 @@ class Nav extends React.Component {
   render() {
     return (
       <nav>
-        <p>Here are some cool links:</p>
         <Links />
       </nav>
     )
@@ -32,7 +33,7 @@ class Nav extends React.Component {
 function App({ children, routes }) {
   return (
     <div>
-      <h1>Lost Items</h1>
+      <h1>Lost-Item.Com</h1>
       <h2>Never Lose Your Stuff Again</h2>
       <Nav />
       {children}
