@@ -7,28 +7,28 @@ const propTypes = {
   routes: PropTypes.array.isRequired,
 };
 
+class Links extends React.Component {
+  render() {
+    return(
+      <ul>
+        <li><a href="https://wwww.google.com">Google</a></li>
+        <li><a href="https://wwww.yahoo.com">Yahoo</a></li>
+      </ul>
+    )
+  }
+}
+
+class Nav extends React.Component {
+  render() {
+    return (
+      <nav>
+        <Links />
+      </nav>
+    )
+  }
+}
+
 function App({ children, routes }) {
-  class Links extends React.Component {
-    render() {
-      return(
-        <ul>
-          <li><a href="https://wwww.google.com">Google</a></li>
-          <li><a href="https://wwww.yahoo.com">Yahoo</a></li>
-        </ul>
-      )
-    }
-  }
-
-  class Nav extends React.Component {
-    render() {
-      return (
-        <nav>
-          <Links />
-        </nav>
-      )
-    }
-  }
-
   return (
     <div>
       <h1>Lost Items</h1>
