@@ -10,11 +10,11 @@ const propTypes = {
 class Links extends React.Component {
   render() {
     return(
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/signup">Get Your Own Link (It&#39;s Free)</a></li>
-        <li><a href="/how-it-works">How Does It Work?</a></li>
-        <li><a href="/shop">Buy Labels</a></li>
+      <ul className="nav navbar-nav">
+        <li className="nav-item"><a className="nav-link" href="/">Home</a></li>
+        <li className="nav-item"><a className="nav-link" href="/signup">Get Your Own Link (It&#39;s Free)</a></li>
+        <li className="nav-item"><a className="nav-link" href="/how-it-works">How Does It Work?</a></li>
+        <li className="nav-item"><a className="nav-link" href="/shop">Buy Labels</a></li>
       </ul>
     )
   }
@@ -23,7 +23,8 @@ class Links extends React.Component {
 class Nav extends React.Component {
   render() {
     return (
-      <nav>
+      <nav className="navbar navbar-light">
+        <a className="navbar-brand" href="#">Lost-Item.Com</a>
         <Links />
       </nav>
     )
@@ -33,10 +34,10 @@ class Nav extends React.Component {
 function App({ children, routes }) {
   return (
     <div>
-      <h1>Lost-Item.Com</h1>
-      <h2>Never Lose Your Stuff Again</h2>
       <Nav />
-      {children}
+      <div className="container">
+        {children}
+      </div>
     </div>
   );
 }
