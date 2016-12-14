@@ -4,14 +4,41 @@ const propTypes = {
   location: PropTypes.object.isRequired,
 };
 
-/* Learn how to convert this to a class */
-class UserPage extends React.Component {
+
+class UserInfo extends React.Component {
   render() {
     return (
-      <p>
-        Page For User <strong>{location.pathname}</strong>
-      </p>
-    );
+      <div>
+        USER INFO CPMPONENT
+      </div>
+    )
+  }
+}
+
+class UserPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.user = null;
+    /* try to hit an api to find out if the requested user exists */
+
+    if (false) {
+      this.user = {
+        'username': 'foobar',
+        'email': 'name@example.com'
+      };
+    }
+  }
+  render() {
+    if (this.user !== null) {
+      return (
+        <p>
+          Page For User <strong>{location.pathname}</strong>
+          <UserInfo user={this.user} />
+        </p>
+      );
+    } else {
+      return <h4>user not found</h4>
+    }
   }
 }
 
