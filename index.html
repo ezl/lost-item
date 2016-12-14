@@ -74,6 +74,19 @@
 
     <div id="root"></div>
     <!-- single page app in bundle.js -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDwiKWP31SE4XnL0-_uSvNXORH9O-pp4u0",
+        authDomain: "lost-item-ba357.firebaseapp.com",
+        databaseURL: "https://lost-item-ba357.firebaseio.com",
+        storageBucket: "lost-item-ba357.appspot.com",
+        messagingSenderId: "205337206435"
+      };
+      firebase.initializeApp(config);
+    </script>
+
     <script src="/__build__/bundle.js"></script>
   </body>
 </html>

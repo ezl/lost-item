@@ -6,17 +6,52 @@ const propTypes = {
 };
 
 class SignUpForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      'name': '',
+      'email': '',
+    }
+
+    this.createUser = this.createUser.bind(this);
+  }
+
+  createUser(e) {
+    e.preventDefault();
+    console.log("createUser");
+    console.log("name", this.state.name);
+    console.log("email", this.state.email);
+
+    var email = this.state.email.trim();
+    var email = Math.random().toString(36).substring(7) + "@rentapplication.net";
+    var password = Math.random().toString(36).substring(7);
+    var name = this.state.name.trim();
+
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(error.code, error.message);
+     });
+  }
+
+  handleChange(name, e) {
+    var change = {};
+    change[name] = e.target.value;
+    this.setState(change);
+  }
+
   render() {
     return (
-      <form>
+      <form >
         <div className="form-group">
           <label>What is your name?</label>
-          <input className="form-control" type="text" name="name" />
+          <input value={this.state.name} className="form-control" type="text" name="name" onChange={this.handleChange.bind(this, 'name')} />
           <small className="form-text text-muted">If someone you know finds something that belongs to you, they can give it to you directly</small>
         </div>
         <div className="form-group">
           <label>What is your email address?</label>
-          <input className="form-control" type="email" name="email" />
+          <input value={this.state.email} className="form-control" type="email" name="email" onChange={this.handleChange.bind(this, 'email')} />
           <small className="form-text text-muted">So if someone you do not know finds something of yours, they'll let us know, and we can contact you to let you know.</small>
         </div>
 
@@ -34,7 +69,7 @@ class SignUpForm extends React.Component {
           </div>
         </fieldset>
 
-        <button type="submit" className="btn btn-primary">Get Your Own Lost Item Link!</button>
+        <button onClick={this.createUser} className="btn btn-primary">Get Your Own Lost Item Link!</button>
       </form>
     )
   }
