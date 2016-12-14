@@ -10,24 +10,28 @@ function Home() {
   return (
     <div>
       <p>
-        This is an example single page app built
-        with <a href={reactLink}>React</a> and {' '}
-        <a href={reactRouterLink}>React&nbsp;Router</a> using {' '}
-        <code>browserHistory</code>. Navigate with the links below and
-        refresh the page or copy/paste the url to test out the redirect
-        functionality deployed to overcome {' '}
-        <a href={ghPagesLink}>GitHub&nbsp;Pages</a> incompatibility
-        with single page apps (like this one).
+        <strong>What Is Lost-Item.Com?</strong> It's a site that gives you a permanent link,
+        which you attach to things you own. Then, if you ever lose something, whoever finds it
+        can know who to contact to return it.
       </p>
       <p>
-        Please see the <a href={repoReadmeLink}>repo readme</a> for
-        instructions on how to use this boilerplate
-        to deploy your own single page app using GitHub Pages.
+        <strong>Can I see an example?</strong> Sure! <a href="/eric">Click here</a>.
       </p>
-      <div><Link to="/example">Example page</Link></div>
-      <div><Link to="/example/two-deep?field1=foo&field2=bar#boom!">
-        Example two deep with query and hash
-      </Link></div>
+      <p>
+        <strong>Why wouldn't I just write my name on my stuff</strong> You could, but this is easier. 
+        Also, what if the person who finds it doesn't know you? Or if you don't want to put your personal
+        information on the item (For example, you might not want to attach a note to your keys that says "If found, please return
+        to &lt; <em>you address</em> &gt;.")
+      </p>
+      <p>
+        <strong>How much does it cost?</strong> Free. You get your own permanent link, for free. We make money by selling custom links (like vanity license plates), selling stickers, labels, and nametags with your link professionally printed on it, and through donations (like when people get their stuff returned to them).
+      </p>
+      <p>
+        <strong>OK I'm sold. How do I get one of these?</strong> Just <a href='/signup'>sign up here</a>.
+      </p>
+      <p>
+        <strong>Why did you make this?</strong> I lose stuff. All the time.
+      </p>
     </div>
   );
 }
