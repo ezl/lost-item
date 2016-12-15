@@ -6,7 +6,7 @@ class HeroUnit extends React.Component {
     return (
       <div className="jumbotron">
         <div className="container">
-          <h1 className="display-3">Never Lose Your Stuff Again</h1>
+          <h1>Never Lose Your Stuff Again</h1>
           <p>Or if you do, make it easy for someone to return it.</p>
         </div>
       </div>
