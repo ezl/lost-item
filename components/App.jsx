@@ -36,7 +36,7 @@ class AuthStatus extends React.Component {
   render() {
     if (this.props.user.loggedInUser === null) {
       return (
-        <div id="authStatus">
+        <div id="authStatus" className="navbar-nav">
           <a className='nav-link nav-item' href="/login">Log In</a>
         </div>
       )
