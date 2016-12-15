@@ -71,6 +71,10 @@
 	
 	var _SignUp2 = _interopRequireDefault(_SignUp);
 	
+	var _LogIn = __webpack_require__(/*! ./components/LogIn */ 288);
+	
+	var _LogIn2 = _interopRequireDefault(_LogIn);
+	
 	var _HowItWorks = __webpack_require__(/*! ./components/HowItWorks */ 259);
 	
 	var _HowItWorks2 = _interopRequireDefault(_HowItWorks);
@@ -94,6 +98,7 @@
 	  { path: '/', mapMenuTitle: 'Home', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'signup', mapMenuTitle: 'Claim Your Lost-Item.Com Link', component: _SignUp2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'login', mapMenuTitle: 'Log In', component: _LogIn2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'how-it-works', mapMenuTitle: 'How It Works', component: _HowItWorks2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'shop', mapMenuTitle: 'Buy Labels For Your Link', component: _Shop2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'settings', mapMenuTitle: 'Settings', component: _Settings2.default }),
@@ -29036,7 +29041,7 @@
 	      if (this.props.user.loggedInUser === null) {
 	        return _react2.default.createElement(
 	          'div',
-	          { id: 'authStatus' },
+	          { id: 'authStatus', className: 'navbar-nav' },
 	          _react2.default.createElement(
 	            'a',
 	            { className: 'nav-link nav-item', href: '/login' },
@@ -29725,9 +29730,10 @@
 	    key: 'render',
 	    value: function render() {
 	      var buttonText = 'Let ' + this.props.name + ' know you found something!';
+	      var action = "https://formspree.io/" + ('' + this.props.email);
 	      return _react2.default.createElement(
 	        'form',
-	        { action: 'https://formspree.io/{this.props.email}', method: 'POST' },
+	        { action: action, method: 'POST' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'form-group' },
@@ -29791,40 +29797,48 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'row' },
+	        null,
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'col-md-6' },
+	          { className: 'row' },
 	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            'Yay! You found something that belongs to ',
-	            this.props.user.name,
-	            '!'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            this.props.user.name,
-	            ' will be very happy to hear that!'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Will you help get this item returned?'
-	          ),
-	          _react2.default.createElement(UserContactForm, { name: this.props.user.name, email: this.props.user.email }),
-	          _react2.default.createElement('hr', null),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Page For User: ',
+	            'div',
+	            { className: 'col-md-12' },
 	            _react2.default.createElement(
-	              'code',
+	              'h2',
 	              null,
-	              this.props.pathname
+	              'Yay! You found something that belongs to ',
+	              this.props.user.name,
+	              '!'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-6' },
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              this.props.user.name,
+	              ' will be very happy to hear that! Please help get this item returned!'
 	            ),
-	            '.'
+	            _react2.default.createElement(UserContactForm, { name: this.props.user.name, email: this.props.user.email }),
+	            _react2.default.createElement('hr', null),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'Page For User: ',
+	              _react2.default.createElement(
+	                'code',
+	                null,
+	                this.props.pathname
+	              ),
+	              '.'
+	            )
 	          )
 	        )
 	      );
@@ -29886,7 +29900,7 @@
 	      var _this5 = this;
 	
 	      // During dev, just use the path to decide if the user "exists"
-	      var noSuchUser = location.pathname.includes("poop");
+	      var noSuchUser = !location.pathname.includes("eric");
 	
 	      var endpoint = 'http://ip.jsontest.com/';
 	      // this is where we'll call the server to see
@@ -29894,9 +29908,9 @@
 	      _axios2.default.get(endpoint).then(function (response) {
 	        var ip = response.data.ip;
 	        var user = {
-	          'name': 'James',
-	          'username': 'foobar',
-	          'email': 'name@example.com',
+	          'name': 'Eric',
+	          'username': 'eric',
+	          'email': 'ericzliu@gmail.com',
 	          'ip': ip
 	        };
 	        if (noSuchUser === true) {} else {
@@ -31622,6 +31636,112 @@
 	Settings.propTypes = propTypes;
 	
 	exports.default = Settings;
+
+/***/ },
+/* 288 */
+/*!******************************!*\
+  !*** ./components/LogIn.jsx ***!
+  \******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(/*! react-router */ 183);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var propTypes = {
+	  children: _react.PropTypes.element
+	};
+	
+	var LogInForm = function (_React$Component) {
+	  _inherits(LogInForm, _React$Component);
+	
+	  function LogInForm() {
+	    _classCallCheck(this, LogInForm);
+	
+	    return _possibleConstructorReturn(this, (LogInForm.__proto__ || Object.getPrototypeOf(LogInForm)).apply(this, arguments));
+	  }
+	
+	  _createClass(LogInForm, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'form',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Email'
+	          ),
+	          _react2.default.createElement('input', { className: 'form-control', type: 'text' })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Password'
+	          ),
+	          _react2.default.createElement('input', { className: 'form-control', type: 'password' })
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { disabled: true, className: 'btn btn-primary' },
+	          'Disabled Log In Button Here!'
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return LogInForm;
+	}(_react2.default.Component);
+	
+	function LogIn() {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-6' },
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Log In Not Yet Implemented'
+	        ),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(LogInForm, null)
+	      )
+	    )
+	  );
+	}
+	
+	LogIn.propTypes = propTypes;
+	
+	exports.default = LogIn;
 
 /***/ }
 /******/ ]);

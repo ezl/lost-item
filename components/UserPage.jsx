@@ -8,8 +8,9 @@ const propTypes = {
 class UserContactForm extends React.Component {
   render() {
     const buttonText = `Let ${this.props.name} know you found something!`;
+    const action = "https://formspree.io/" + `${this.props.email}`;
     return (
-      <form action="https://formspree.io/{this.props.email}" method="POST">
+      <form action={action} method="POST">
         <div className="form-group">
           <label>What did you find?</label>
           <input className="form-control" type="text" name="what" />
@@ -32,16 +33,22 @@ class UserContactForm extends React.Component {
 class UserInfo extends React.Component {
   render() {
     return (
-      <div className="row">
-        <div className="col-md-6">
-          <strong>Yay! You found something that belongs to {this.props.user.name}!</strong>
-          <p>{this.props.user.name} will be very happy to hear that!</p>
-          <p>Will you help get this item returned?</p>
-          <UserContactForm name={this.props.user.name} email={this.props.user.email} />
-          <hr />
-          <p>
-            Page For User: <code>{this.props.pathname}</code>.
-          </p>
+      <div>
+        <div className="row">
+          <div className="col-md-12">
+            <h2>Yay! You found something that belongs to {this.props.user.name}!</h2>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <br />
+            <p>{this.props.user.name} will be very happy to hear that! Please help get this item returned!</p>
+            <UserContactForm name={this.props.user.name} email={this.props.user.email} />
+            <hr />
+            <p>
+              Page For User: <code>{this.props.pathname}</code>.
+            </p>
+          </div>
         </div>
       </div>
     )
@@ -69,7 +76,7 @@ class UserPage extends React.Component {
 
   componentDidMount() {
     // During dev, just use the path to decide if the user "exists"
-    const noSuchUser = location.pathname.includes("poop");
+    const noSuchUser = !location.pathname.includes("eric");
 
     const endpoint = `http://ip.jsontest.com/`;
     // this is where we'll call the server to see
@@ -78,9 +85,9 @@ class UserPage extends React.Component {
       .then(response => {
         const ip = response.data.ip;
         const user = {
-          'name': 'James',
-          'username': 'foobar',
-          'email': 'name@example.com',
+          'name': 'Eric',
+          'username': 'eric',
+          'email': 'ericzliu@gmail.com',
           'ip': ip
         };
         if (noSuchUser === true) {
