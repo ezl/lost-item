@@ -11,7 +11,11 @@ class Links extends React.Component {
   render() {
     return(
       <ul className="nav navbar-nav">
-        <li className="nav-item"><a className="nav-link" href="/">Home</a></li>
+        <li className="nav-item hidden-xs-down">
+          <a className="title nav-link" href="/">
+            <img src="/images/morgia.png" /> Lost-Item
+          </a>
+        </li>
         <li className="nav-item"><a className="nav-link" href="/signup">Get Your Own Link (It&#39;s Free)</a></li>
         <li className="nav-item"><a className="nav-link" href="/how-it-works">How Does It Work?</a></li>
         <li className="nav-item"><a className="nav-link" href="/shop">Buy Labels</a></li>
@@ -33,15 +37,15 @@ class AuthStatus extends React.Component {
     if (this.props.user.loggedInUser === null) {
       return (
         <div id="authStatus">
-          <a href="/login">Log In</a>
+          <a className='nav-link nav-item' href="/login">Log In</a>
         </div>
       )
     } else {
       return (
-        <div id="authStatus">
-          <i className="fa fa-user-o"></i> <strong>{this.props.user.email}</strong>
-          <a href='/settings'>Settings</a>
-          <a onClick={this.handleLogOut} href="#">Log Out</a>
+        <div id="authStatus" className="navbar-nav">
+          <div id="username"><i className="fa fa-user-o"></i> <strong>{this.props.user.email}</strong></div>
+          <a className='nav-link nav-item' href='/settings'>Settings</a>
+          <a className='nav-link nav-item' onClick={this.handleLogOut} href="#">Log Out</a>
         </div>
       )
     }
@@ -71,9 +75,16 @@ class Nav extends React.Component {
     console.log("USER", this.state);
     return (
       <nav className="navbar navbar-light">
-        <a className="navbar-brand" href="#">Lost-Item.Com</a>
-        <Links />
-        <AuthStatus user={this.state.user} />
+        <div className="clearfix">
+          <button className="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation"></button>
+          <a className="navbar-brand hidden-sm-up" href="/">
+            <img src="/images/morgia.png" /> Lost-Item.Com
+          </a>
+        </div>
+        <div className="collapse navbar-toggleable-xs" id="bd-main-nav">
+          <Links />
+          <AuthStatus user={this.state.user} />
+        </div>
       </nav>
     )
   }
