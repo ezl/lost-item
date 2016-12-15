@@ -102,7 +102,8 @@ function SignUp() {
           <br />
           <br />
           <p><strong>Why?</strong> So if you lose your stuff, someone can get it back to you.</p>
-          <p><strong>How much?</strong> Free.</p>
+          <p><strong>How much does this cost?</strong> It's free.</p>
+          <p><strong>I don't want to do this.</strong> OK. I don't care.</p>
         </div>
         <div className="col-md-6">
           <SignUpForm />

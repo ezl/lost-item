@@ -29542,9 +29542,19 @@
 	          _react2.default.createElement(
 	            'strong',
 	            null,
-	            'How much?'
+	            'How much does this cost?'
 	          ),
-	          ' Free.'
+	          ' It\'s free.'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'I don\'t want to do this.'
+	          ),
+	          ' OK. I don\'t care.'
 	        )
 	      ),
 	      _react2.default.createElement(
