@@ -18,12 +18,8 @@ class SignUpForm extends React.Component {
 
   createUser(e) {
     e.preventDefault();
-    console.log("createUser");
-    console.log("name", this.state.name);
-    console.log("email", this.state.email);
 
     var email = this.state.email.trim();
-    var email = Math.random().toString(36).substring(7) + "@rentapplication.net";
     var password = Math.random().toString(36).substring(7);
     var name = this.state.name.trim();
 
