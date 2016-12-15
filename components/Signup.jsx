@@ -14,9 +14,11 @@ class SignUpForm extends React.Component {
     }
 
     this.createUser = this.createUser.bind(this);
+    this.updateProfile = this.updateProfile.bind(this);
   }
 
   createUser(e) {
+    console.log("create user...")
     e.preventDefault();
 
     var email = this.state.email.trim();
@@ -29,6 +31,26 @@ class SignUpForm extends React.Component {
       var errorMessage = error.message;
       console.log(error.code, error.message);
      });
+    console.log("user created!")
+    const user = {email: "fake@fake.com"};
+    const data = {name: "John Doe"};
+    this.updateProfile(user, data);
+
+  }
+
+  updateProfile(user, data) {
+    console.log("Updating profile:", user, data);
+    if (false) {
+      data = {
+        displayName: "Jane Q. User",
+        photoURL: "https://example.com/jane-q-user/profile.jpg"
+      }
+      user.updateProfile(data).then(function() {
+        // Update successful.
+      }, function(error) {
+        // An error happened.
+      });
+    }
   }
 
   handleChange(name, e) {
