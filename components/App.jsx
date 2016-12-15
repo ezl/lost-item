@@ -21,8 +21,16 @@ class Links extends React.Component {
 }
 
 class AuthStatus extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLogOut = this.handleLogOut.bind(this);
+  }
+
+  handleLogOut() {
+    alert("logout not implemented");
+  }
   render() {
-    if (this.props.user === null) {
+    if (this.props.user.loggedInUser === null) {
       return (
         <div id="authStatus">
           <a href="/login">Log In</a>
@@ -31,7 +39,7 @@ class AuthStatus extends React.Component {
     } else {
       return (
         <div id="authStatus">
-          <i className="fa fa-user-o"></i> <strong>{this.props.user.email}</strong> (<a href="#">Log Out</a>)
+          <i className="fa fa-user-o"></i> <strong>{this.props.user.email}</strong> (<a onClick={this.handleLogOut} href="#">Log Out</a>)
         </div>
       )
     }
@@ -42,14 +50,15 @@ class Nav extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {'loggedInUser': null};
+    const firebaseAnonymousUser = {loggedInUser: null};
+    this.state = {user: firebaseAnonymousUser};
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
         this.setState({'user': user});
         console.log(user);
       } else {
-        this.setState({'user': null});
+        this.setState({'user': firebaseAnonymousUser});
       }
     }.bind(this));
 
@@ -57,11 +66,12 @@ class Nav extends React.Component {
 
   render() {
     const user = {name:"Eric", email:"foo@ba.cm"};
+    console.log("USER", this.state);
     return (
       <nav className="navbar navbar-light">
         <a className="navbar-brand" href="#">Lost-Item.Com</a>
         <Links />
-        <AuthStatus user={user} />
+        <AuthStatus user={this.state.user} />
       </nav>
     )
   }
