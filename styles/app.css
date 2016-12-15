@@ -4,3 +4,10 @@
     margin-bottom: 2em;
 }
 a.nav-link { text-decoration: underline; }
+
+div#authStatus {
+    float: right;
+    display: block;
+    padding-top: .425rem;
+    padding-bottom: .425rem;
+}

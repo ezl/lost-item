@@ -20,12 +20,48 @@ class Links extends React.Component {
   }
 }
 
-class Nav extends React.Component {
+class AuthStatus extends React.Component {
   render() {
+    if (this.props.user === null) {
+      return (
+        <div id="authStatus">
+          <a href="/login">Log In</a>
+        </div>
+      )
+    } else {
+      return (
+        <div id="authStatus">
+          <i className="fa fa-user-o"></i> <strong>{this.props.user.email}</strong> (<a href="#">Log Out</a>)
+        </div>
+      )
+    }
+  }
+}
+
+class Nav extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {'loggedInUser': null};
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // User is signed in.
+        this.setState({'user': user});
+        console.log(user);
+      } else {
+        this.setState({'user': null});
+      }
+    }.bind(this));
+
+  }
+
+  render() {
+    const user = {name:"Eric", email:"foo@ba.cm"};
     return (
       <nav className="navbar navbar-light">
         <a className="navbar-brand" href="#">Lost-Item.Com</a>
         <Links />
+        <AuthStatus user={user} />
       </nav>
     )
   }
