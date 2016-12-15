@@ -11,3 +11,6 @@ div#authStatus {
     padding-top: .425rem;
     padding-bottom: .425rem;
 }
+div#authStatus a {
+    margin-left: 1rem;
+}

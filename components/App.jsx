@@ -39,7 +39,9 @@ class AuthStatus extends React.Component {
     } else {
       return (
         <div id="authStatus">
-          <i className="fa fa-user-o"></i> <strong>{this.props.user.email}</strong> (<a onClick={this.handleLogOut} href="#">Log Out</a>)
+          <i className="fa fa-user-o"></i> <strong>{this.props.user.email}</strong>
+          <a href='/settings'>Settings</a>
+          <a onClick={this.handleLogOut} href="#">Log Out</a>
         </div>
       )
     }
