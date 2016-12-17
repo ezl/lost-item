@@ -23,12 +23,14 @@ class SignUpForm extends React.Component {
     var email = this.state.email.trim();
     var password = Math.random().toString(36).substring(7);
     var name = this.state.name.trim();
+    var slug = Math.random().toString(36).substring(21);
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(function(user) {
         const data = {
           name: name,
-          email: email
+          email: email,
+          slug: slug
         };
         this.updateProfile(user, data);
       }.bind(this))
