@@ -90,15 +90,21 @@ class Nav extends React.Component {
   }
 }
 
-function App({ children, routes }) {
-  return (
-    <div>
-      <Nav />
-      <div className="container">
-        {children}
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <Nav />
+        <div className="container">
+          {this.props.children}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 App.propTypes = propTypes;
