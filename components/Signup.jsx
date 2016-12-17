@@ -79,20 +79,6 @@ class SignUpForm extends React.Component {
           <small className="form-text text-muted">So if someone you do not know finds something of yours, they'll let us know, and we can contact you to let you know.</small>
         </div>
 
-        <fieldset className="form-group">
-          <p>If someone finds something that belongs to you and goes to your link, do you want us to display the email address to them to contact you directly? Or hide it using a form to contact you through us?</p>
-          <div className="form-check">
-            <label className="form-check-label">
-              <input type="radio" className="form-check-input" name="contact" value="direct" /> Have them email me directly.
-            </label>
-          </div>
-          <div className="form-check">
-            <label className="form-check-label">
-              <input type="radio" className="form-check-input" name="contact" value="form" /> Hide my email and them contact me through Lost-Item.Com
-            </label>
-          </div>
-        </fieldset>
-
         <button onClick={this.createUser} className="btn btn-primary">Get Your Own Lost Item Link!</button>
       </form>
     )
