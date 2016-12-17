@@ -28,11 +28,7 @@ class SignUpForm extends React.Component {
       .then(function(user) {
         const data = {
           name: name,
-          favoriteColor: "blue",
-          displayName: "Farts"
-          // name and favorite color don't work (not part of default firebase object)
-          // displayName does work
-          // need to figure out how to push arbitrary attrs for user acct next
+          email: email
         };
         this.updateProfile(user, data);
       }.bind(this))
@@ -46,11 +42,8 @@ class SignUpForm extends React.Component {
   }
 
   updateProfile(user, data) {
-    user.updateProfile(data).then(function() {
-      // Update successful.
-    }, function(error) {
-      // An error happened.
-    });
+    var database = firebase.database();
+    database.ref('users/' + user.uid).set(data);
   }
 
   handleChange(name, e) {
