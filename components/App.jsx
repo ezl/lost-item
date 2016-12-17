@@ -27,10 +27,10 @@ class Links extends React.Component {
 class AuthStatus extends React.Component {
   constructor(props) {
     super(props);
-    this.handleLogOut = this.handleLogOut.bind(this);
   }
 
   handleLogOut() {
+    console.log("lot out", this.props);
     alert("logout not implemented");
   }
   render() {
@@ -53,26 +53,12 @@ class AuthStatus extends React.Component {
 }
 
 class Nav extends React.Component {
-
   constructor(props) {
     super(props);
-    const firebaseAnonymousUser = {loggedInUser: null};
-    this.state = {user: firebaseAnonymousUser};
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        this.setState({'user': user});
-        console.log(user);
-      } else {
-        this.setState({'user': firebaseAnonymousUser});
-      }
-    }.bind(this));
-
   }
 
   render() {
-    const user = {name:"Eric", email:"foo@ba.cm"};
-    console.log("USER", this.state);
+    console.log("user from nav", this.props.user.email);
     return (
       <nav className="navbar navbar-light">
         <div className="clearfix">
@@ -83,7 +69,7 @@ class Nav extends React.Component {
         </div>
         <div className="collapse navbar-toggleable-xs" id="bd-main-nav">
           <Links />
-          <AuthStatus user={this.state.user} />
+          <AuthStatus user={this.props.user} />
         </div>
       </nav>
     )
@@ -93,12 +79,26 @@ class Nav extends React.Component {
 class App extends React.Component {
   constructor(props) {
     super(props);
+    const firebaseAnonymousUser = {loggedInUser: null};
+    this.state = {user: firebaseAnonymousUser};
   }
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(function(user) {
+        this.setState({'user': user});
+      if (user) {
+        // User is signed in.
+        console.log('user logged in');
+      } else {
+        console.log('user not logged in');
+      }
+    }.bind(this));
+
+  }
   render() {
     return (
       <div>
-        <Nav />
+        <Nav user={this.state.user} />
         <div className="container">
           {this.props.children}
         </div>
