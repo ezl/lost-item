@@ -58,7 +58,7 @@ class SignUpForm extends React.Component {
 
   render() {
     return (
-      <form >
+      <form onSubmit={this.createUser}>
         <div className="form-group">
           <label>What is your name?</label>
           <input value={this.state.name} className="form-control" type="text" name="name" onChange={this.handleChange.bind(this, 'name')} required="required" />
@@ -75,7 +75,7 @@ class SignUpForm extends React.Component {
           {this.state.signupFormError} :(
         </div>
         )}
-        <button onClick={this.createUser} className="btn btn-primary">Get Your Own Lost Item Link!</button>
+        <button type="submit" className="btn btn-primary">Get Your Own Lost Item Link!</button>
       </form>
     )
   }
