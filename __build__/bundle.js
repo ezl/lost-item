@@ -71,23 +71,23 @@
 	
 	var _SignUp2 = _interopRequireDefault(_SignUp);
 	
-	var _LogIn = __webpack_require__(/*! ./components/LogIn */ 288);
+	var _LogIn = __webpack_require__(/*! ./components/LogIn */ 259);
 	
 	var _LogIn2 = _interopRequireDefault(_LogIn);
 	
-	var _HowItWorks = __webpack_require__(/*! ./components/HowItWorks */ 259);
+	var _HowItWorks = __webpack_require__(/*! ./components/HowItWorks */ 260);
 	
 	var _HowItWorks2 = _interopRequireDefault(_HowItWorks);
 	
-	var _Shop = __webpack_require__(/*! ./components/Shop */ 260);
+	var _Shop = __webpack_require__(/*! ./components/Shop */ 261);
 	
 	var _Shop2 = _interopRequireDefault(_Shop);
 	
-	var _Settings = __webpack_require__(/*! ./components/Settings */ 287);
+	var _Settings = __webpack_require__(/*! ./components/Settings */ 262);
 	
 	var _Settings2 = _interopRequireDefault(_Settings);
 	
-	var _UserPage = __webpack_require__(/*! ./components/UserPage */ 261);
+	var _UserPage = __webpack_require__(/*! ./components/UserPage */ 263);
 	
 	var _UserPage2 = _interopRequireDefault(_UserPage);
 	
@@ -29026,19 +29026,19 @@
 	
 	    var _this2 = _possibleConstructorReturn(this, (AuthStatus.__proto__ || Object.getPrototypeOf(AuthStatus)).call(this, props));
 	
-	    _this2.handleLogOut = _this2.handleLogOut.bind(_this2);
+	    _this2.handleLogout = _this2.handleLogout.bind(_this2);
 	    return _this2;
 	  }
 	
 	  _createClass(AuthStatus, [{
-	    key: 'handleLogOut',
-	    value: function handleLogOut() {
-	      alert("logout not implemented");
+	    key: 'handleLogout',
+	    value: function handleLogout() {
+	      var resp = firebase.auth().signOut();
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (this.props.user.loggedInUser === null) {
+	      if (this.props.user === null) {
 	        return _react2.default.createElement(
 	          'div',
 	          { id: 'authStatus', className: 'navbar-nav' },
@@ -29070,7 +29070,7 @@
 	          ),
 	          _react2.default.createElement(
 	            'a',
-	            { className: 'nav-link nav-item', onClick: this.handleLogOut, href: '#' },
+	            { className: 'nav-link nav-item', onClick: this.handleLogout, href: '#' },
 	            'Log Out'
 	          )
 	        );
@@ -29087,28 +29087,12 @@
 	  function Nav(props) {
 	    _classCallCheck(this, Nav);
 	
-	    var _this3 = _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
-	
-	    var firebaseAnonymousUser = { loggedInUser: null };
-	    _this3.state = { user: firebaseAnonymousUser };
-	    firebase.auth().onAuthStateChanged(function (user) {
-	      if (user) {
-	        // User is signed in.
-	        this.setState({ 'user': user });
-	        console.log(user);
-	      } else {
-	        this.setState({ 'user': firebaseAnonymousUser });
-	      }
-	    }.bind(_this3));
-	
-	    return _this3;
+	    return _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
 	  }
 	
 	  _createClass(Nav, [{
 	    key: 'render',
 	    value: function render() {
-	      var user = { name: "Eric", email: "foo@ba.cm" };
-	      console.log("USER", this.state);
 	      return _react2.default.createElement(
 	        'nav',
 	        { className: 'navbar navbar-light' },
@@ -29127,7 +29111,7 @@
 	          'div',
 	          { className: 'collapse navbar-toggleable-xs', id: 'bd-main-nav' },
 	          _react2.default.createElement(Links, null),
-	          _react2.default.createElement(AuthStatus, { user: this.state.user })
+	          _react2.default.createElement(AuthStatus, { user: this.props.user })
 	        )
 	      );
 	    }
@@ -29136,21 +29120,48 @@
 	  return Nav;
 	}(_react2.default.Component);
 	
-	function App(_ref) {
-	  var children = _ref.children,
-	      routes = _ref.routes;
+	var App = function (_React$Component4) {
+	  _inherits(App, _React$Component4);
 	
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(Nav, null),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'container' },
-	      children
-	    )
-	  );
-	}
+	  function App(props) {
+	    _classCallCheck(this, App);
+	
+	    var _this4 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	
+	    var user = firebase.auth().currentUser;
+	    _this4.state = { user: user };
+	    return _this4;
+	  }
+	
+	  _createClass(App, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      firebase.auth().onAuthStateChanged(function (user) {
+	        this.setState({ 'user': user });
+	        if (user) {
+	          // User is signed in.
+	        } else {}
+	      }.bind(this));
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var children = _react2.default.cloneElement(this.props.children, { user: this.state.user });
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(Nav, { user: this.state.user }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container' },
+	          children
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return App;
+	}(_react2.default.Component);
 	
 	App.propTypes = propTypes;
 	
@@ -29391,33 +29402,37 @@
 	  _createClass(SignUpForm, [{
 	    key: 'createUser',
 	    value: function createUser(e) {
-	      console.log("create user...");
 	      e.preventDefault();
 	
 	      var email = this.state.email.trim();
 	      var password = Math.random().toString(36).substring(7);
 	      var name = this.state.name.trim();
 	
-	      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+	      firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
+	        var data = {
+	          name: name,
+	          favoriteColor: "blue",
+	          displayName: "Farts"
+	          // name and favorite color don't work (not part of default firebase object)
+	          // displayName does work
+	          // need to figure out how to push arbitrary attrs for user acct next
+	        };
+	        this.updateProfile(user, data);
+	      }.bind(this)).catch(function (error) {
 	        // Handle Errors here.
 	        var errorCode = error.code;
 	        var errorMessage = error.message;
 	        console.log(error.code, error.message);
 	      });
-	      console.log("user created!");
-	      var user = { email: "fake@fake.com" };
-	      var data = { name: "John Doe" };
-	      this.updateProfile(user, data);
 	    }
 	  }, {
 	    key: 'updateProfile',
 	    value: function updateProfile(user, data) {
-	      console.log("Updating profile:", user, data);
-	      if (false) {
-	        data = {
-	          displayName: "Jane Q. User",
-	          photoURL: "https://example.com/jane-q-user/profile.jpg"
-	        };
+	      if (true) {
+	        //data = {
+	        //  displayName: "Jane Q. User",
+	        //  photoURL: "https://example.com/jane-q-user/profile.jpg"
+	        //}
 	        user.updateProfile(data).then(function () {
 	          // Update successful.
 	        }, function (error) {
@@ -29450,7 +29465,7 @@
 	          _react2.default.createElement(
 	            'small',
 	            { className: 'form-text text-muted' },
-	            'If someone you know finds something that belongs to you, they can give it to you directly'
+	            'So if someone you know finds something that belongs to you, they can give it to you directly.'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -29465,36 +29480,7 @@
 	          _react2.default.createElement(
 	            'small',
 	            { className: 'form-text text-muted' },
-	            'So if someone you do not know finds something of yours, they\'ll let us know, and we can contact you to let you know.'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'fieldset',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'If someone finds something that belongs to you and goes to your link, do you want us to display the email address to them to contact you directly? Or hide it using a form to contact you through us?'
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'form-check' },
-	            _react2.default.createElement(
-	              'label',
-	              { className: 'form-check-label' },
-	              _react2.default.createElement('input', { type: 'radio', className: 'form-check-input', name: 'contact', value: 'direct' }),
-	              ' Have them email me directly.'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'form-check' },
-	            _react2.default.createElement(
-	              'label',
-	              { className: 'form-check-label' },
-	              _react2.default.createElement('input', { type: 'radio', className: 'form-check-input', name: 'contact', value: 'form' }),
-	              ' Hide my email and them contact me through Lost-Item.Com'
-	            )
+	            'So we can email you if someone you don\'t know finds your stuff.'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -29572,6 +29558,112 @@
 
 /***/ },
 /* 259 */
+/*!******************************!*\
+  !*** ./components/LogIn.jsx ***!
+  \******************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(/*! react-router */ 183);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var propTypes = {
+	  children: _react.PropTypes.element
+	};
+	
+	var LogInForm = function (_React$Component) {
+	  _inherits(LogInForm, _React$Component);
+	
+	  function LogInForm() {
+	    _classCallCheck(this, LogInForm);
+	
+	    return _possibleConstructorReturn(this, (LogInForm.__proto__ || Object.getPrototypeOf(LogInForm)).apply(this, arguments));
+	  }
+	
+	  _createClass(LogInForm, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'form',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Email'
+	          ),
+	          _react2.default.createElement('input', { className: 'form-control', type: 'text' })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Password'
+	          ),
+	          _react2.default.createElement('input', { className: 'form-control', type: 'password' })
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { disabled: true, className: 'btn btn-primary' },
+	          'Disabled Log In Button Here!'
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return LogInForm;
+	}(_react2.default.Component);
+	
+	function LogIn() {
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-6' },
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Log In Not Yet Implemented'
+	        ),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(LogInForm, null)
+	      )
+	    )
+	  );
+	}
+	
+	LogIn.propTypes = propTypes;
+	
+	exports.default = LogIn;
+
+/***/ },
+/* 260 */
 /*!***********************************!*\
   !*** ./components/HowItWorks.jsx ***!
   \***********************************/
@@ -29607,7 +29699,7 @@
 	    _react2.default.createElement(
 	      'p',
 	      null,
-	      'If you lose stuff and it has your link on it, whoever finds it go to that link and use it to contact you.'
+	      'If you lose something and it has your link on it, whoever finds it can let you know.'
 	    ),
 	    _react2.default.createElement(
 	      'ol',
@@ -29621,7 +29713,7 @@
 	          { href: '/eric' },
 	          'www.lost-item.com/eric'
 	        ),
-	        ' on something you belong.'
+	        ' on something you own.'
 	      ),
 	      _react2.default.createElement(
 	        'li',
@@ -29631,12 +29723,12 @@
 	      _react2.default.createElement(
 	        'li',
 	        null,
-	        'When a kind and benevolent stranger finds that item, he/she goes to your link, the contacts you.'
+	        'Someone finds that item, then goes to your link.'
 	      ),
 	      _react2.default.createElement(
 	        'li',
 	        null,
-	        'Coordinate with stranger to recover your lost item.'
+	        'That person contacts you and helps you get your item back.'
 	      )
 	    )
 	  );
@@ -29647,7 +29739,7 @@
 	exports.default = HowItWorks;
 
 /***/ },
-/* 260 */
+/* 261 */
 /*!*****************************!*\
   !*** ./components/Shop.jsx ***!
   \*****************************/
@@ -29693,7 +29785,177 @@
 	exports.default = Shop;
 
 /***/ },
-/* 261 */
+/* 262 */
+/*!*********************************!*\
+  !*** ./components/Settings.jsx ***!
+  \*********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(/*! react-router */ 183);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var propTypes = {
+	  children: _react.PropTypes.element
+	};
+	
+	var SettingsForm = function (_React$Component) {
+	  _inherits(SettingsForm, _React$Component);
+	
+	  function SettingsForm(props) {
+	    _classCallCheck(this, SettingsForm);
+	
+	    return _possibleConstructorReturn(this, (SettingsForm.__proto__ || Object.getPrototypeOf(SettingsForm)).call(this, props));
+	  }
+	
+	  _createClass(SettingsForm, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'form',
+	        null,
+	        'This will be a form, possibly even the same form as the signup form.',
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Foo'
+	          ),
+	          _react2.default.createElement('input', { className: 'form-control', type: 'text' }),
+	          _react2.default.createElement(
+	            'small',
+	            { className: 'form-text text-muted' },
+	            'Help text blah blah'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Foo'
+	          ),
+	          _react2.default.createElement('input', { className: 'form-control', type: 'text' }),
+	          _react2.default.createElement(
+	            'small',
+	            { className: 'form-text text-muted' },
+	            'Help text blah blah'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'form-group' },
+	          _react2.default.createElement(
+	            'label',
+	            null,
+	            'Foo'
+	          ),
+	          _react2.default.createElement('input', { className: 'form-control', type: 'text' }),
+	          _react2.default.createElement(
+	            'small',
+	            { className: 'form-text text-muted' },
+	            'Help text blah blah'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { disabled: true, className: 'btn btn-primary' },
+	          'Update Settings'
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return SettingsForm;
+	}(_react2.default.Component);
+	
+	var Settings = function (_React$Component2) {
+	  _inherits(Settings, _React$Component2);
+	
+	  function Settings(props) {
+	    _classCallCheck(this, Settings);
+	
+	    return _possibleConstructorReturn(this, (Settings.__proto__ || Object.getPrototypeOf(Settings)).call(this, props));
+	  }
+	
+	  _createClass(Settings, [{
+	    key: 'render',
+	    value: function render() {
+	      if (this.props.user === null) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'h2',
+	            null,
+	            'You must be logged in to view this page'
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-md-6' },
+	              _react2.default.createElement(
+	                'h2',
+	                null,
+	                'Settings'
+	              ),
+	              _react2.default.createElement(
+	                'p',
+	                null,
+	                'For ',
+	                this.props.user.email
+	              ),
+	              _react2.default.createElement('br', null),
+	              _react2.default.createElement(
+	                'p',
+	                null,
+	                'Settings page here. User should be authenticated to get here.'
+	              ),
+	              _react2.default.createElement(SettingsForm, null)
+	            )
+	          )
+	        );
+	      }
+	    }
+	  }]);
+	
+	  return Settings;
+	}(_react2.default.Component);
+	
+	Settings.propTypes = propTypes;
+	
+	exports.default = Settings;
+
+/***/ },
+/* 263 */
 /*!*********************************!*\
   !*** ./components/UserPage.jsx ***!
   \*********************************/
@@ -29711,7 +29973,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(/*! axios */ 262);
+	var _axios = __webpack_require__(/*! axios */ 264);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
@@ -29947,16 +30209,16 @@
 	exports.default = UserPage;
 
 /***/ },
-/* 262 */
+/* 264 */
 /*!**************************!*\
   !*** ./~/axios/index.js ***!
   \**************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./lib/axios */ 263);
+	module.exports = __webpack_require__(/*! ./lib/axios */ 265);
 
 /***/ },
-/* 263 */
+/* 265 */
 /*!******************************!*\
   !*** ./~/axios/lib/axios.js ***!
   \******************************/
@@ -29964,10 +30226,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 264);
-	var bind = __webpack_require__(/*! ./helpers/bind */ 265);
-	var Axios = __webpack_require__(/*! ./core/Axios */ 266);
-	var defaults = __webpack_require__(/*! ./defaults */ 267);
+	var utils = __webpack_require__(/*! ./utils */ 266);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 267);
+	var Axios = __webpack_require__(/*! ./core/Axios */ 268);
+	var defaults = __webpack_require__(/*! ./defaults */ 269);
 	
 	/**
 	 * Create an instance of Axios
@@ -30000,15 +30262,15 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 284);
-	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 285);
-	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 281);
+	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 286);
+	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 287);
+	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 283);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(/*! ./helpers/spread */ 286);
+	axios.spread = __webpack_require__(/*! ./helpers/spread */ 288);
 	
 	module.exports = axios;
 	
@@ -30017,7 +30279,7 @@
 
 
 /***/ },
-/* 264 */
+/* 266 */
 /*!******************************!*\
   !*** ./~/axios/lib/utils.js ***!
   \******************************/
@@ -30025,7 +30287,7 @@
 
 	'use strict';
 	
-	var bind = __webpack_require__(/*! ./helpers/bind */ 265);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 267);
 	
 	/*global toString:true*/
 	
@@ -30325,7 +30587,7 @@
 
 
 /***/ },
-/* 265 */
+/* 267 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/bind.js ***!
   \*************************************/
@@ -30345,7 +30607,7 @@
 
 
 /***/ },
-/* 266 */
+/* 268 */
 /*!***********************************!*\
   !*** ./~/axios/lib/core/Axios.js ***!
   \***********************************/
@@ -30353,12 +30615,12 @@
 
 	'use strict';
 	
-	var defaults = __webpack_require__(/*! ./../defaults */ 267);
-	var utils = __webpack_require__(/*! ./../utils */ 264);
-	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 278);
-	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 279);
-	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 282);
-	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 283);
+	var defaults = __webpack_require__(/*! ./../defaults */ 269);
+	var utils = __webpack_require__(/*! ./../utils */ 266);
+	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 280);
+	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 281);
+	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 284);
+	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 285);
 	
 	/**
 	 * Create a new instance of Axios
@@ -30439,7 +30701,7 @@
 
 
 /***/ },
-/* 267 */
+/* 269 */
 /*!*********************************!*\
   !*** ./~/axios/lib/defaults.js ***!
   \*********************************/
@@ -30447,8 +30709,8 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 264);
-	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 268);
+	var utils = __webpack_require__(/*! ./utils */ 266);
+	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 270);
 	
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -30465,10 +30727,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(/*! ./adapters/xhr */ 269);
+	    adapter = __webpack_require__(/*! ./adapters/xhr */ 271);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(/*! ./adapters/http */ 269);
+	    adapter = __webpack_require__(/*! ./adapters/http */ 271);
 	  }
 	  return adapter;
 	}
@@ -30542,7 +30804,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../webpack/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 268 */
+/* 270 */
 /*!****************************************************!*\
   !*** ./~/axios/lib/helpers/normalizeHeaderName.js ***!
   \****************************************************/
@@ -30550,7 +30812,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ../utils */ 264);
+	var utils = __webpack_require__(/*! ../utils */ 266);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -30563,7 +30825,7 @@
 
 
 /***/ },
-/* 269 */
+/* 271 */
 /*!*************************************!*\
   !*** ./~/axios/lib/adapters/xhr.js ***!
   \*************************************/
@@ -30571,13 +30833,13 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 264);
-	var settle = __webpack_require__(/*! ./../core/settle */ 270);
-	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 273);
-	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 274);
-	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 275);
-	var createError = __webpack_require__(/*! ../core/createError */ 271);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ 276);
+	var utils = __webpack_require__(/*! ./../utils */ 266);
+	var settle = __webpack_require__(/*! ./../core/settle */ 272);
+	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 275);
+	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 276);
+	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 277);
+	var createError = __webpack_require__(/*! ../core/createError */ 273);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ 278);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -30673,7 +30935,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 277);
+	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 279);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -30750,7 +31012,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../webpack/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 270 */
+/* 272 */
 /*!************************************!*\
   !*** ./~/axios/lib/core/settle.js ***!
   \************************************/
@@ -30758,7 +31020,7 @@
 
 	'use strict';
 	
-	var createError = __webpack_require__(/*! ./createError */ 271);
+	var createError = __webpack_require__(/*! ./createError */ 273);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -30784,7 +31046,7 @@
 
 
 /***/ },
-/* 271 */
+/* 273 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/core/createError.js ***!
   \*****************************************/
@@ -30792,7 +31054,7 @@
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(/*! ./enhanceError */ 272);
+	var enhanceError = __webpack_require__(/*! ./enhanceError */ 274);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -30810,7 +31072,7 @@
 
 
 /***/ },
-/* 272 */
+/* 274 */
 /*!******************************************!*\
   !*** ./~/axios/lib/core/enhanceError.js ***!
   \******************************************/
@@ -30838,7 +31100,7 @@
 
 
 /***/ },
-/* 273 */
+/* 275 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/helpers/buildURL.js ***!
   \*****************************************/
@@ -30846,7 +31108,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 264);
+	var utils = __webpack_require__(/*! ./../utils */ 266);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -30915,7 +31177,7 @@
 
 
 /***/ },
-/* 274 */
+/* 276 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/helpers/parseHeaders.js ***!
   \*********************************************/
@@ -30923,7 +31185,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 264);
+	var utils = __webpack_require__(/*! ./../utils */ 266);
 	
 	/**
 	 * Parse headers into an object
@@ -30961,7 +31223,7 @@
 
 
 /***/ },
-/* 275 */
+/* 277 */
 /*!************************************************!*\
   !*** ./~/axios/lib/helpers/isURLSameOrigin.js ***!
   \************************************************/
@@ -30969,7 +31231,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 264);
+	var utils = __webpack_require__(/*! ./../utils */ 266);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -31038,7 +31300,7 @@
 
 
 /***/ },
-/* 276 */
+/* 278 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/btoa.js ***!
   \*************************************/
@@ -31083,7 +31345,7 @@
 
 
 /***/ },
-/* 277 */
+/* 279 */
 /*!****************************************!*\
   !*** ./~/axios/lib/helpers/cookies.js ***!
   \****************************************/
@@ -31091,7 +31353,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 264);
+	var utils = __webpack_require__(/*! ./../utils */ 266);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -31145,7 +31407,7 @@
 
 
 /***/ },
-/* 278 */
+/* 280 */
 /*!************************************************!*\
   !*** ./~/axios/lib/core/InterceptorManager.js ***!
   \************************************************/
@@ -31153,7 +31415,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 264);
+	var utils = __webpack_require__(/*! ./../utils */ 266);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -31206,7 +31468,7 @@
 
 
 /***/ },
-/* 279 */
+/* 281 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/core/dispatchRequest.js ***!
   \*********************************************/
@@ -31214,10 +31476,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 264);
-	var transformData = __webpack_require__(/*! ./transformData */ 280);
-	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 281);
-	var defaults = __webpack_require__(/*! ../defaults */ 267);
+	var utils = __webpack_require__(/*! ./../utils */ 266);
+	var transformData = __webpack_require__(/*! ./transformData */ 282);
+	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 283);
+	var defaults = __webpack_require__(/*! ../defaults */ 269);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -31294,7 +31556,7 @@
 
 
 /***/ },
-/* 280 */
+/* 282 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/core/transformData.js ***!
   \*******************************************/
@@ -31302,7 +31564,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 264);
+	var utils = __webpack_require__(/*! ./../utils */ 266);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -31323,7 +31585,7 @@
 
 
 /***/ },
-/* 281 */
+/* 283 */
 /*!****************************************!*\
   !*** ./~/axios/lib/cancel/isCancel.js ***!
   \****************************************/
@@ -31337,7 +31599,7 @@
 
 
 /***/ },
-/* 282 */
+/* 284 */
 /*!**********************************************!*\
   !*** ./~/axios/lib/helpers/isAbsoluteURL.js ***!
   \**********************************************/
@@ -31360,7 +31622,7 @@
 
 
 /***/ },
-/* 283 */
+/* 285 */
 /*!********************************************!*\
   !*** ./~/axios/lib/helpers/combineURLs.js ***!
   \********************************************/
@@ -31381,7 +31643,7 @@
 
 
 /***/ },
-/* 284 */
+/* 286 */
 /*!**************************************!*\
   !*** ./~/axios/lib/cancel/Cancel.js ***!
   \**************************************/
@@ -31409,7 +31671,7 @@
 
 
 /***/ },
-/* 285 */
+/* 287 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/cancel/CancelToken.js ***!
   \*******************************************/
@@ -31417,7 +31679,7 @@
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(/*! ./Cancel */ 284);
+	var Cancel = __webpack_require__(/*! ./Cancel */ 286);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -31475,7 +31737,7 @@
 
 
 /***/ },
-/* 286 */
+/* 288 */
 /*!***************************************!*\
   !*** ./~/axios/lib/helpers/spread.js ***!
   \***************************************/
@@ -31509,249 +31771,6 @@
 	  };
 	};
 
-
-/***/ },
-/* 287 */
-/*!*********************************!*\
-  !*** ./components/Settings.jsx ***!
-  \*********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(/*! react-router */ 183);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var propTypes = {
-	  children: _react.PropTypes.element
-	};
-	
-	var SettingsForm = function (_React$Component) {
-	  _inherits(SettingsForm, _React$Component);
-	
-	  function SettingsForm() {
-	    _classCallCheck(this, SettingsForm);
-	
-	    return _possibleConstructorReturn(this, (SettingsForm.__proto__ || Object.getPrototypeOf(SettingsForm)).apply(this, arguments));
-	  }
-	
-	  _createClass(SettingsForm, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'form',
-	        null,
-	        'This will be a form, posisbly even the same form as the signup form.',
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Foo'
-	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'text' }),
-	          _react2.default.createElement(
-	            'small',
-	            { className: 'form-text text-muted' },
-	            'Help text blah blah'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Foo'
-	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'text' }),
-	          _react2.default.createElement(
-	            'small',
-	            { className: 'form-text text-muted' },
-	            'Help text blah blah'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Foo'
-	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'text' }),
-	          _react2.default.createElement(
-	            'small',
-	            { className: 'form-text text-muted' },
-	            'Help text blah blah'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { disabled: true, className: 'btn btn-primary' },
-	          'Update Settings'
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return SettingsForm;
-	}(_react2.default.Component);
-	
-	function Settings() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-md-6' },
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Settings'
-	        ),
-	        _react2.default.createElement('br', null),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          'Settings page here. User should be authenticated to get here.'
-	        ),
-	        _react2.default.createElement(SettingsForm, null)
-	      )
-	    )
-	  );
-	}
-	
-	Settings.propTypes = propTypes;
-	
-	exports.default = Settings;
-
-/***/ },
-/* 288 */
-/*!******************************!*\
-  !*** ./components/LogIn.jsx ***!
-  \******************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(/*! react-router */ 183);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var propTypes = {
-	  children: _react.PropTypes.element
-	};
-	
-	var LogInForm = function (_React$Component) {
-	  _inherits(LogInForm, _React$Component);
-	
-	  function LogInForm() {
-	    _classCallCheck(this, LogInForm);
-	
-	    return _possibleConstructorReturn(this, (LogInForm.__proto__ || Object.getPrototypeOf(LogInForm)).apply(this, arguments));
-	  }
-	
-	  _createClass(LogInForm, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'form',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Email'
-	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'text' })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Password'
-	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'password' })
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { disabled: true, className: 'btn btn-primary' },
-	          'Disabled Log In Button Here!'
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return LogInForm;
-	}(_react2.default.Component);
-	
-	function LogIn() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'row' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-md-6' },
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Log In Not Yet Implemented'
-	        ),
-	        _react2.default.createElement('br', null),
-	        _react2.default.createElement(LogInForm, null)
-	      )
-	    )
-	  );
-	}
-	
-	LogIn.propTypes = propTypes;
-	
-	exports.default = LogIn;
 
 /***/ }
 /******/ ]);
