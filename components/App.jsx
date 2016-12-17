@@ -88,20 +88,18 @@ class App extends React.Component {
         this.setState({'user': user});
       if (user) {
         // User is signed in.
-        console.log('user logged in');
       } else {
-        console.log('user not logged in');
       }
     }.bind(this));
 
   }
   render() {
-    console.log(this.state);
+    var children = React.cloneElement(this.props.children, {user: this.state.user});
     return (
       <div>
         <Nav user={this.state.user} />
         <div className="container">
-          {this.props.children}
+          {children}
         </div>
       </div>
     );

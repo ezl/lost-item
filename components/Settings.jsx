@@ -6,10 +6,14 @@ const propTypes = {
 };
 
 class SettingsForm extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <form>
-        This will be a form, posisbly even the same form as the signup form.
+        This will be a form, possibly even the same form as the signup form.
         <div className="form-group">
           <label>Foo</label>
           <input className="form-control" type="text" />
@@ -31,19 +35,32 @@ class SettingsForm extends React.Component {
   }
 }
 
-function Settings() {
-  return (
-    <div>
-      <div className="row">
-        <div className="col-md-6">
-          <h2>Settings</h2>
-          <br />
-          <p>Settings page here. User should be authenticated to get here.</p>
-          <SettingsForm />
+class Settings extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    if (this.props.user === null) {
+      return (
+        <div><h2>You must be logged in to view this page</h2></div>
+      );
+    } else {
+      return (
+        <div>
+          <div className="row">
+            <div className="col-md-6">
+              <h2>Settings</h2>
+              <p>For {this.props.user.email}</p>
+              <br />
+              <p>Settings page here. User should be authenticated to get here.</p>
+              <SettingsForm />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  );
+      );
+    }
+  }
 }
 
 Settings.propTypes = propTypes;
