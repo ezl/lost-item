@@ -10,13 +10,13 @@ function HowItWorks() {
     <div>
       <h1>How It Works</h1>
       <p>
-        If you lose stuff and it has your link on it, whoever finds it go to that link and use it to contact you.
+        If you lose something and it has your link on it, whoever finds it can let you know.
       </p>
       <ol>
-        <li>Put your link, like <a href="/eric">www.lost-item.com/eric</a> on something you belong.</li>
+        <li>Put your link, like <a href="/eric">www.lost-item.com/eric</a> on something you own.</li>
         <li>Lose that item.</li>
-        <li>When a kind and benevolent stranger finds that item, he/she goes to your link, the contacts you.</li>
-        <li>Coordinate with stranger to recover your lost item.</li>
+        <li>Someone finds that item, then goes to your link.</li>
+        <li>That person contacts you and helps you get your item back.</li>
       </ol>
     </div>
   );
