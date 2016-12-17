@@ -35,12 +35,12 @@ class SignUpForm extends React.Component {
         };
         this.updateProfile(user, data);
       }.bind(this))
-      .catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(error.code, error.message);
-      this.setState({signupFormError: error.message});
+        .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(error.code, error.message);
+        this.setState({signupFormError: error.message});
      }.bind(this));
 
   }
