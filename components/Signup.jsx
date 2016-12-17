@@ -46,17 +46,11 @@ class SignUpForm extends React.Component {
   }
 
   updateProfile(user, data) {
-    if (true) {
-      //data = {
-      //  displayName: "Jane Q. User",
-      //  photoURL: "https://example.com/jane-q-user/profile.jpg"
-      //}
-      user.updateProfile(data).then(function() {
-        // Update successful.
-      }, function(error) {
-        // An error happened.
-      });
-    }
+    user.updateProfile(data).then(function() {
+      // Update successful.
+    }, function(error) {
+      // An error happened.
+    });
   }
 
   handleChange(name, e) {
