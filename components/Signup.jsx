@@ -11,7 +11,8 @@ class SignUpForm extends React.Component {
     this.state = {
       'name': '',
       'email': '',
-    }
+      'signupFormError': ''
+    };
 
     this.createUser = this.createUser.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
@@ -39,7 +40,8 @@ class SignUpForm extends React.Component {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(error.code, error.message);
-     });
+      this.setState({signupFormError: error.message});
+     }.bind(this));
 
   }
 
@@ -59,15 +61,20 @@ class SignUpForm extends React.Component {
       <form >
         <div className="form-group">
           <label>What is your name?</label>
-          <input value={this.state.name} className="form-control" type="text" name="name" onChange={this.handleChange.bind(this, 'name')} />
+          <input value={this.state.name} className="form-control" type="text" name="name" onChange={this.handleChange.bind(this, 'name')} required="required" />
           <small className="form-text text-muted">So if someone you know finds something that belongs to you, they can give it to you directly.</small>
         </div>
         <div className="form-group">
           <label>What is your email address?</label>
-          <input value={this.state.email} className="form-control" type="email" name="email" onChange={this.handleChange.bind(this, 'email')} />
+          <input value={this.state.email} className="form-control" type="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
           <small className="form-text text-muted">So we can email you if someone you don't know finds your stuff.</small>
         </div>
-
+        {this.state.signupFormError && (
+        <div className="alert alert-danger" role="alert">
+          <strong>You suck at signing up. </strong>
+          {this.state.signupFormError} :(
+        </div>
+        )}
         <button onClick={this.createUser} className="btn btn-primary">Get Your Own Lost Item Link!</button>
       </form>
     )
