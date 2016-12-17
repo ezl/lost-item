@@ -18,33 +18,39 @@ class SignUpForm extends React.Component {
   }
 
   createUser(e) {
-    console.log("create user...")
     e.preventDefault();
 
     var email = this.state.email.trim();
     var password = Math.random().toString(36).substring(7);
     var name = this.state.name.trim();
 
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(function(user) {
+        const data = {
+          name: name,
+          favoriteColor: "blue",
+          displayName: "Farts"
+          // name and favorite color don't work (not part of default firebase object)
+          // displayName does work
+          // need to figure out how to push arbitrary attrs for user acct next
+        };
+        this.updateProfile(user, data);
+      }.bind(this))
+      .catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log(error.code, error.message);
      });
-    console.log("user created!")
-    const user = {email: "fake@fake.com"};
-    const data = {name: "John Doe"};
-    this.updateProfile(user, data);
 
   }
 
   updateProfile(user, data) {
-    console.log("Updating profile:", user, data);
-    if (false) {
-      data = {
-        displayName: "Jane Q. User",
-        photoURL: "https://example.com/jane-q-user/profile.jpg"
-      }
+    if (true) {
+      //data = {
+      //  displayName: "Jane Q. User",
+      //  photoURL: "https://example.com/jane-q-user/profile.jpg"
+      //}
       user.updateProfile(data).then(function() {
         // Update successful.
       }, function(error) {
