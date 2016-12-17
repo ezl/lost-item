@@ -8,26 +8,47 @@ const propTypes = {
 class SettingsForm extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      email: "",
+      name: "",
+      slug: ""
+    };
+  }
+
+  componentDidMount() {
+    console.log("mount")
+
+    var database = firebase.database
+    firebase.database().ref('users/' + this.props.user.uid).once('value').then(function(snapshot) {
+      this.setState({
+        name: snapshot.val().name,
+        email: snapshot.val().email,
+        slug: snapshot.val().slug
+      });
+    }.bind(this));
   }
 
   render() {
     return (
       <form>
-        This will be a form, possibly even the same form as the signup form.
         <div className="form-group">
-          <label>Foo</label>
-          <input className="form-control" type="text" />
-          <small className="form-text text-muted">Help text blah blah</small>
+          <label>Name</label>
+          <input value={this.state.name} className="form-control" type="text" />
+          <small className="form-text text-muted">Como te llamas?</small>
         </div>
         <div className="form-group">
-          <label>Foo</label>
-          <input className="form-control" type="text" />
-          <small className="form-text text-muted">Help text blah blah</small>
+          <label>Email</label>
+          <input value={this.state.email} className="form-control" type="text" />
+          <small className="form-text text-muted">An email address so we can let you know if your lost items are found</small>
         </div>
         <div className="form-group">
-          <label>Foo</label>
-          <input className="form-control" type="text" />
-          <small className="form-text text-muted">Help text blah blah</small>
+          <label>Your Link</label>
+          <div className="input-group">
+            <span className="input-group-addon" >www.lost-item.com/</span>
+            <input value={this.state.slug} className="form-control" type="text" />
+          </div>
+          <small className="form-text text-muted">This is the link you'll label your stuff with</small>
         </div>
         <button disabled className="btn btn-primary">Update Settings</button>
       </form>
@@ -53,8 +74,7 @@ class Settings extends React.Component {
               <h2>Settings</h2>
               <p>For {this.props.user.email}</p>
               <br />
-              <p>Settings page here. User should be authenticated to get here.</p>
-              <SettingsForm />
+              <SettingsForm user={this.props.user} />
             </div>
           </div>
         </div>
