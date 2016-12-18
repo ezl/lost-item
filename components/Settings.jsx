@@ -21,8 +21,8 @@ class SettingsForm extends React.Component {
   }
 
   componentDidMount() {
-    var database = firebase.database
-    firebase.database().ref('users/' + this.props.user.uid).once('value').then(function(snapshot) {
+    var database = firebase.database()
+    database.ref('users/' + this.props.user.uid).once('value').then(function(snapshot) {
       this.setState({
         name: snapshot.val().name,
         email: snapshot.val().email,
