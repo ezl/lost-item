@@ -12,13 +12,15 @@ class SettingsForm extends React.Component {
     this.state = {
       email: "",
       name: "",
-      slug: ""
+      slug: "",
+      updatingSettings: false,
+      updateSettingsSuccessMessageVisible: false
     };
+
+    this.updateProfile = this.updateProfile.bind(this);
   }
 
   componentDidMount() {
-    console.log("mount")
-
     var database = firebase.database
     firebase.database().ref('users/' + this.props.user.uid).once('value').then(function(snapshot) {
       this.setState({
@@ -30,6 +32,39 @@ class SettingsForm extends React.Component {
   }
   specialtyLinkClickHandler() {
     alert("Feature not yet implemented.");
+  }
+
+  handleChange(name, e) {
+    var change = {};
+    change[name] = e.target.value;
+    this.setState(change);
+  }
+
+  flashProfileUpdateSuccessMessage() {
+    console.log("flash");
+    this.setState({updateSettingsSuccessMessageVisible: true});
+    setTimeout(
+      () => {
+        this.setState({updateSettingsSuccessMessageVisible: false});
+      }, 3000);
+  }
+
+  updateProfile(e) {
+    this.setState({updatingSettings: true});
+    e.preventDefault();
+    var data = {
+      name: this.state.name,
+      email: this.state.email,
+      slug: this.state.slug
+    };
+    var user = this.props.user;
+    var database = firebase.database();
+    database.ref('users/' + user.uid).set(data);
+    setTimeout(
+      () => {
+        this.setState({updatingSettings: false});
+        this.flashProfileUpdateSuccessMessage()
+      }, 1000);
   }
 
   render() {
@@ -45,18 +80,32 @@ class SettingsForm extends React.Component {
           </div>
         </div>
         <br />
-        <form>
+        <form onSubmit={this.updateProfile}>
           <div className="form-group">
             <label>Name</label>
-            <input value={this.state.name} className="form-control" type="text" />
+            <input value={this.state.name} name="name" onChange={this.handleChange.bind(this, 'name')} className="form-control" type="text" />
             <small className="form-text text-muted">Como te llamas?</small>
           </div>
           <div className="form-group">
             <label>Email</label>
-            <input value={this.state.email} className="form-control" type="text" />
+            <input value={this.state.email} name="email" onChange={this.handleChange.bind(this, 'email')} className="form-control" type="text" />
             <small className="form-text text-muted">An email address so we can let you know if your lost items are found</small>
           </div>
-          <button disabled className="btn btn-primary">Update Settings</button>
+
+          <div className="form-group">
+            <label>Slug</label>
+            <input value={this.state.slug} name="slug" onChange={this.handleChange.bind(this, 'slug')}  className="form-control" type="text" />
+          </div>
+
+          {this.state.updatingSettings ?
+          <button className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin"></i> Updating Settings...</button>
+          :
+          <button className="btn btn-primary">Update Settings</button>
+          }
+
+          {this.state.updateSettingsSuccessMessageVisible &&
+          <span id="settingsUpdateSuccessMessage">Success!</span>
+          }
         </form>
       </div>
     );
