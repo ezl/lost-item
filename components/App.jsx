@@ -16,9 +16,13 @@ class Links extends React.Component {
             <img src="/images/morgia.png" /> Lost-Item
           </a>
         </li>
+        {!this.props.user &&
         <li className="nav-item"><a className="nav-link" href="/signup">Get Your Own Link (It&#39;s Free)</a></li>
+        }
         <li className="nav-item"><a className="nav-link" href="/how-it-works">How Does It Work?</a></li>
+        {this.props.user &&
         <li className="nav-item"><a className="nav-link" href="/shop">Buy Labels</a></li>
+        }
       </ul>
     )
   }
@@ -68,7 +72,7 @@ class Nav extends React.Component {
           </a>
         </div>
         <div className="collapse navbar-toggleable-xs" id="bd-main-nav">
-          <Links />
+          <Links user={this.props.user} />
           <AuthStatus user={this.props.user} />
         </div>
       </nav>
