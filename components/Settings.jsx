@@ -28,30 +28,37 @@ class SettingsForm extends React.Component {
       });
     }.bind(this));
   }
+  specialtyLinkClickHandler() {
+    alert("Feature not yet implemented.");
+  }
 
   render() {
     return (
-      <form>
-        <div className="form-group">
-          <label>Name</label>
-          <input value={this.state.name} className="form-control" type="text" />
-          <small className="form-text text-muted">Como te llamas?</small>
-        </div>
-        <div className="form-group">
-          <label>Email</label>
-          <input value={this.state.email} className="form-control" type="text" />
-          <small className="form-text text-muted">An email address so we can let you know if your lost items are found</small>
-        </div>
-        <div className="form-group">
-          <label>Your Link</label>
-          <div className="input-group">
-            <span className="input-group-addon" >www.lost-item.com/</span>
-            <input value={this.state.slug} className="form-control" type="text" />
+      <div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="pull-left">
+              <label>Your Link</label>: <strong>www.lost-item.com/{this.state.slug}</strong>
+              <small className="form-text text-muted">This is the link you'll label your stuff with</small>
+            </div>
+            <div className="pull-right"><button onClick={this.specialtyLinkClickHandler} className="btn btn-success">Buy a specialty link</button></div>
           </div>
-          <small className="form-text text-muted">This is the link you'll label your stuff with</small>
         </div>
-        <button disabled className="btn btn-primary">Update Settings</button>
-      </form>
+        <br />
+        <form>
+          <div className="form-group">
+            <label>Name</label>
+            <input value={this.state.name} className="form-control" type="text" />
+            <small className="form-text text-muted">Como te llamas?</small>
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input value={this.state.email} className="form-control" type="text" />
+            <small className="form-text text-muted">An email address so we can let you know if your lost items are found</small>
+          </div>
+          <button disabled className="btn btn-primary">Update Settings</button>
+        </form>
+      </div>
     );
   }
 }
@@ -72,7 +79,6 @@ class Settings extends React.Component {
           <div className="row">
             <div className="col-md-6">
               <h2>Settings</h2>
-              <p>For {this.props.user.email}</p>
               <br />
               <SettingsForm user={this.props.user} />
             </div>
