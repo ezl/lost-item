@@ -29391,7 +29391,8 @@
 	
 	    _this.state = {
 	      'name': '',
-	      'email': ''
+	      'email': '',
+	      'signupFormError': ''
 	    };
 	
 	    _this.createUser = _this.createUser.bind(_this);
@@ -29407,15 +29408,13 @@
 	      var email = this.state.email.trim();
 	      var password = Math.random().toString(36).substring(7);
 	      var name = this.state.name.trim();
+	      var slug = Math.random().toString(36).substring(21);
 	
 	      firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
 	        var data = {
 	          name: name,
-	          favoriteColor: "blue",
-	          displayName: "Farts"
-	          // name and favorite color don't work (not part of default firebase object)
-	          // displayName does work
-	          // need to figure out how to push arbitrary attrs for user acct next
+	          email: email,
+	          slug: slug
 	        };
 	        this.updateProfile(user, data);
 	      }.bind(this)).catch(function (error) {
@@ -29423,22 +29422,14 @@
 	        var errorCode = error.code;
 	        var errorMessage = error.message;
 	        console.log(error.code, error.message);
-	      });
+	        this.setState({ signupFormError: error.message });
+	      }.bind(this));
 	    }
 	  }, {
 	    key: 'updateProfile',
 	    value: function updateProfile(user, data) {
-	      if (true) {
-	        //data = {
-	        //  displayName: "Jane Q. User",
-	        //  photoURL: "https://example.com/jane-q-user/profile.jpg"
-	        //}
-	        user.updateProfile(data).then(function () {
-	          // Update successful.
-	        }, function (error) {
-	          // An error happened.
-	        });
-	      }
+	      var database = firebase.database();
+	      database.ref('users/' + user.uid).set(data);
 	    }
 	  }, {
 	    key: 'handleChange',
@@ -29452,7 +29443,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'form',
-	        null,
+	        { onSubmit: this.createUser },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'form-group' },
@@ -29461,7 +29452,7 @@
 	            null,
 	            'What is your name?'
 	          ),
-	          _react2.default.createElement('input', { value: this.state.name, className: 'form-control', type: 'text', name: 'name', onChange: this.handleChange.bind(this, 'name') }),
+	          _react2.default.createElement('input', { value: this.state.name, className: 'form-control', type: 'text', name: 'name', onChange: this.handleChange.bind(this, 'name'), required: 'required' }),
 	          _react2.default.createElement(
 	            'small',
 	            { className: 'form-text text-muted' },
@@ -29476,16 +29467,27 @@
 	            null,
 	            'What is your email address?'
 	          ),
-	          _react2.default.createElement('input', { value: this.state.email, className: 'form-control', type: 'email', name: 'email', onChange: this.handleChange.bind(this, 'email') }),
+	          _react2.default.createElement('input', { value: this.state.email, className: 'form-control', type: 'email', name: 'email', onChange: this.handleChange.bind(this, 'email'), required: 'required' }),
 	          _react2.default.createElement(
 	            'small',
 	            { className: 'form-text text-muted' },
 	            'So we can email you if someone you don\'t know finds your stuff.'
 	          )
 	        ),
+	        this.state.signupFormError && _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-danger', role: 'alert' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'You suck at signing up. '
+	          ),
+	          this.state.signupFormError,
+	          ' :('
+	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { onClick: this.createUser, className: 'btn btn-primary' },
+	          { type: 'submit', className: 'btn btn-primary' },
 	          'Get Your Own Lost Item Link!'
 	        )
 	      );
@@ -29823,29 +29825,49 @@
 	  function SettingsForm(props) {
 	    _classCallCheck(this, SettingsForm);
 	
-	    return _possibleConstructorReturn(this, (SettingsForm.__proto__ || Object.getPrototypeOf(SettingsForm)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (SettingsForm.__proto__ || Object.getPrototypeOf(SettingsForm)).call(this, props));
+	
+	    _this.state = {
+	      email: "",
+	      name: "",
+	      slug: ""
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(SettingsForm, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      console.log("mount");
+	
+	      var database = firebase.database;
+	      firebase.database().ref('users/' + this.props.user.uid).once('value').then(function (snapshot) {
+	        this.setState({
+	          name: snapshot.val().name,
+	          email: snapshot.val().email,
+	          slug: snapshot.val().slug
+	        });
+	      }.bind(this));
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'form',
 	        null,
-	        'This will be a form, possibly even the same form as the signup form.',
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'form-group' },
 	          _react2.default.createElement(
 	            'label',
 	            null,
-	            'Foo'
+	            'Name'
 	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'text' }),
+	          _react2.default.createElement('input', { value: this.state.name, className: 'form-control', type: 'text' }),
 	          _react2.default.createElement(
 	            'small',
 	            { className: 'form-text text-muted' },
-	            'Help text blah blah'
+	            'Como te llamas?'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -29854,13 +29876,13 @@
 	          _react2.default.createElement(
 	            'label',
 	            null,
-	            'Foo'
+	            'Email'
 	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'text' }),
+	          _react2.default.createElement('input', { value: this.state.email, className: 'form-control', type: 'text' }),
 	          _react2.default.createElement(
 	            'small',
 	            { className: 'form-text text-muted' },
-	            'Help text blah blah'
+	            'An email address so we can let you know if your lost items are found'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -29869,13 +29891,22 @@
 	          _react2.default.createElement(
 	            'label',
 	            null,
-	            'Foo'
+	            'Your Link'
 	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'text' }),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'input-group' },
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'input-group-addon' },
+	              'www.lost-item.com/'
+	            ),
+	            _react2.default.createElement('input', { value: this.state.slug, className: 'form-control', type: 'text' })
+	          ),
 	          _react2.default.createElement(
 	            'small',
 	            { className: 'form-text text-muted' },
-	            'Help text blah blah'
+	            'This is the link you\'ll label your stuff with'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -29934,12 +29965,7 @@
 	                this.props.user.email
 	              ),
 	              _react2.default.createElement('br', null),
-	              _react2.default.createElement(
-	                'p',
-	                null,
-	                'Settings page here. User should be authenticated to get here.'
-	              ),
-	              _react2.default.createElement(SettingsForm, null)
+	              _react2.default.createElement(SettingsForm, { user: this.props.user })
 	            )
 	          )
 	        );
