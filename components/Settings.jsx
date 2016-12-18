@@ -120,7 +120,7 @@ class Settings extends React.Component {
   render() {
     if (this.props.user === null) {
       return (
-        <div><h2>You must be logged in to view this page</h2></div>
+        <div><h2>You must be logged in to view this page</h2><a href="/">Click here to back to the home page.</a></div>
       );
     } else {
       return (
