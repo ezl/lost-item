@@ -28984,7 +28984,7 @@
 	            ' Lost-Item'
 	          )
 	        ),
-	        _react2.default.createElement(
+	        !this.props.user && _react2.default.createElement(
 	          'li',
 	          { className: 'nav-item' },
 	          _react2.default.createElement(
@@ -29002,7 +29002,7 @@
 	            'How Does It Work?'
 	          )
 	        ),
-	        _react2.default.createElement(
+	        this.props.user && _react2.default.createElement(
 	          'li',
 	          { className: 'nav-item' },
 	          _react2.default.createElement(
@@ -29110,7 +29110,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'collapse navbar-toggleable-xs', id: 'bd-main-nav' },
-	          _react2.default.createElement(Links, null),
+	          _react2.default.createElement(Links, { user: this.props.user }),
 	          _react2.default.createElement(AuthStatus, { user: this.props.user })
 	        )
 	      );
@@ -29830,18 +29830,20 @@
 	    _this.state = {
 	      email: "",
 	      name: "",
-	      slug: ""
+	      slug: "",
+	      updatingSettings: false,
+	      updateSettingsSuccessMessageVisible: false
 	    };
+	
+	    _this.updateProfile = _this.updateProfile.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(SettingsForm, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      console.log("mount");
-	
-	      var database = firebase.database;
-	      firebase.database().ref('users/' + this.props.user.uid).once('value').then(function (snapshot) {
+	      var database = firebase.database();
+	      database.ref('users/' + this.props.user.uid).once('value').then(function (snapshot) {
 	        this.setState({
 	          name: snapshot.val().name,
 	          email: snapshot.val().email,
@@ -29850,69 +29852,151 @@
 	      }.bind(this));
 	    }
 	  }, {
+	    key: 'specialtyLinkClickHandler',
+	    value: function specialtyLinkClickHandler() {
+	      alert("Feature not yet implemented.");
+	    }
+	  }, {
+	    key: 'handleChange',
+	    value: function handleChange(name, e) {
+	      var change = {};
+	      change[name] = e.target.value;
+	      this.setState(change);
+	    }
+	  }, {
+	    key: 'flashProfileUpdateSuccessMessage',
+	    value: function flashProfileUpdateSuccessMessage() {
+	      var _this2 = this;
+	
+	      console.log("flash");
+	      this.setState({ updateSettingsSuccessMessageVisible: true });
+	      setTimeout(function () {
+	        _this2.setState({ updateSettingsSuccessMessageVisible: false });
+	      }, 3000);
+	    }
+	  }, {
+	    key: 'updateProfile',
+	    value: function updateProfile(e) {
+	      var _this3 = this;
+	
+	      this.setState({ updatingSettings: true });
+	      e.preventDefault();
+	      var data = {
+	        name: this.state.name,
+	        email: this.state.email,
+	        slug: this.state.slug
+	      };
+	      var user = this.props.user;
+	      var database = firebase.database();
+	      database.ref('users/' + user.uid).set(data);
+	      setTimeout(function () {
+	        _this3.setState({ updatingSettings: false });
+	        _this3.flashProfileUpdateSuccessMessage();
+	      }, 1000);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        'form',
+	        'div',
 	        null,
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'form-group' },
+	          { className: 'row' },
 	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Name'
-	          ),
-	          _react2.default.createElement('input', { value: this.state.name, className: 'form-control', type: 'text' }),
-	          _react2.default.createElement(
-	            'small',
-	            { className: 'form-text text-muted' },
-	            'Como te llamas?'
+	            'div',
+	            { className: 'col-md-12' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-left' },
+	              _react2.default.createElement(
+	                'label',
+	                null,
+	                'Your Link'
+	              ),
+	              ': ',
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'www.lost-item.com/',
+	                this.state.slug
+	              ),
+	              _react2.default.createElement(
+	                'small',
+	                { className: 'form-text text-muted' },
+	                'This is the link you\'ll label your stuff with'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-right' },
+	              _react2.default.createElement(
+	                'button',
+	                { onClick: this.specialtyLinkClickHandler, className: 'btn btn-success' },
+	                'Buy a specialty link'
+	              )
+	            )
 	          )
 	        ),
+	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
+	          'form',
+	          { onSubmit: this.updateProfile },
 	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Email'
-	          ),
-	          _react2.default.createElement('input', { value: this.state.email, className: 'form-control', type: 'text' }),
-	          _react2.default.createElement(
-	            'small',
-	            { className: 'form-text text-muted' },
-	            'An email address so we can let you know if your lost items are found'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'Your Link'
+	            'div',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Name'
+	            ),
+	            _react2.default.createElement('input', { value: this.state.name, name: 'name', onChange: this.handleChange.bind(this, 'name'), className: 'form-control', type: 'text' }),
+	            _react2.default.createElement(
+	              'small',
+	              { className: 'form-text text-muted' },
+	              'Como te llamas?'
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'input-group' },
+	            { className: 'form-group' },
 	            _react2.default.createElement(
-	              'span',
-	              { className: 'input-group-addon' },
-	              'www.lost-item.com/'
+	              'label',
+	              null,
+	              'Email'
 	            ),
-	            _react2.default.createElement('input', { value: this.state.slug, className: 'form-control', type: 'text' })
+	            _react2.default.createElement('input', { value: this.state.email, name: 'email', onChange: this.handleChange.bind(this, 'email'), className: 'form-control', type: 'text' }),
+	            _react2.default.createElement(
+	              'small',
+	              { className: 'form-text text-muted' },
+	              'An email address so we can let you know if your lost items are found'
+	            )
 	          ),
 	          _react2.default.createElement(
-	            'small',
-	            { className: 'form-text text-muted' },
-	            'This is the link you\'ll label your stuff with'
+	            'div',
+	            { className: 'form-group' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Slug'
+	            ),
+	            _react2.default.createElement('input', { value: this.state.slug, name: 'slug', onChange: this.handleChange.bind(this, 'slug'), className: 'form-control', type: 'text' })
+	          ),
+	          this.state.updatingSettings ? _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-primary', disabled: true },
+	            _react2.default.createElement('i', { className: 'fa fa-spinner fa-spin' }),
+	            ' Updating Settings...'
+	          ) : _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-primary' },
+	            'Update Settings'
+	          ),
+	          this.state.updateSettingsSuccessMessageVisible && _react2.default.createElement(
+	            'span',
+	            { id: 'settingsUpdateSuccessMessage' },
+	            'Success!'
 	          )
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { disabled: true, className: 'btn btn-primary' },
-	          'Update Settings'
 	        )
 	      );
 	    }
@@ -29941,6 +30025,11 @@
 	            'h2',
 	            null,
 	            'You must be logged in to view this page'
+	          ),
+	          _react2.default.createElement(
+	            'a',
+	            { href: '/' },
+	            'Click here to back to the home page.'
 	          )
 	        );
 	      } else {
@@ -29957,12 +30046,6 @@
 	                'h2',
 	                null,
 	                'Settings'
-	              ),
-	              _react2.default.createElement(
-	                'p',
-	                null,
-	                'For ',
-	                this.props.user.email
 	              ),
 	              _react2.default.createElement('br', null),
 	              _react2.default.createElement(SettingsForm, { user: this.props.user })
