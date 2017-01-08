@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 const propTypes = {
   children: PropTypes.element,
@@ -46,7 +46,9 @@ class SignUpForm extends React.Component {
 
   updateProfile(user, data) {
     var database = firebase.database();
-    database.ref('users/' + user.uid).set(data);
+    database.ref('users/' + user.uid).set(data).then(function() {
+      browserHistory.push('settings/');
+    }); 
   }
 
   handleChange(name, e) {
