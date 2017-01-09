@@ -5,6 +5,11 @@ const propTypes = {
   location: PropTypes.object.isRequired,
 };
 
+var getSlug = function() {
+  // Just cut off the preceding '/'
+  return location.pathname.slice(1);
+};
+
 class UserContactForm extends React.Component {
   render() {
     const buttonText = `Let ${this.props.name} know you found something!`;
@@ -45,9 +50,6 @@ class UserInfo extends React.Component {
             <p>{this.props.user.name} will be very happy to hear that! Please help get this item returned!</p>
             <UserContactForm name={this.props.user.name} email={this.props.user.email} />
             <hr />
-            <p>
-              Page For User: <code>{this.props.pathname}</code>.
-            </p>
           </div>
         </div>
       </div>
@@ -75,33 +77,29 @@ class UserPage extends React.Component {
   }
 
   componentDidMount() {
-    // During dev, just use the path to decide if the user "exists"
-    const noSuchUser = !location.pathname.includes("eric");
+    var slug = getSlug();
 
-    const endpoint = `http://ip.jsontest.com/`;
-    // this is where we'll call the server to see
-    // if the user exists.
-    axios.get(endpoint)
-      .then(response => {
-        const ip = response.data.ip;
-        const user = {
-          'name': 'Eric',
-          'username': 'eric',
-          'email': 'ericzliu@gmail.com',
-          'ip': ip
-        };
-        if (noSuchUser === true) {
+    firebase.database()
+      .ref('/users')
+      .orderByChild('slug')
+      .equalTo(slug)
+      .once('value')
+      .then(function(snapshot) {
+        if (snapshot.val() === null) {
+          // not exists;
         } else {
+          // do something else;
+          var user = Object.values(snapshot.val())[0];
           this.setState({'user': user});
-        }
-      });
+        };
+       }.bind(this));
   }
 
   render() {
     if (this.state.user === null) {
       return <UserNotFound />;
     } else {
-      return <UserInfo user={this.state.user} pathname={location.pathname} />;
+      return <UserInfo user={this.state.user} />;
     }
   }
 }
