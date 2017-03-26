@@ -57,30 +57,6 @@ class SignUpForm extends React.Component {
     this.setState(change);
   }
 
-  renderOld() {
-    return (
-      <form onSubmit={this.createUser}>
-        <div className="form-group">
-          <label>What is your name?</label>
-          <input value={this.state.name} className="form-control" type="text" name="name" onChange={this.handleChange.bind(this, 'name')} required="required" />
-          <small className="form-text text-muted">So if someone you know finds something that belongs to you, they can give it to you directly.</small>
-        </div>
-        <div className="form-group">
-          <label>What is your email address?</label>
-          <input value={this.state.email} className="form-control" type="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
-          <small className="form-text text-muted">So we can email you if someone you don't know finds your stuff.</small>
-        </div>
-        {this.state.signupFormError && (
-        <div className="alert alert-danger" role="alert">
-          <strong>You suck at signing up. </strong>
-          {this.state.signupFormError} :(
-        </div>
-        )}
-        <button type="submit" className="btn btn-primary">Get Your Own Lost Item Link!</button>
-      </form>
-    )
-  }
-
   render() {
     return (
       <form className='signupForm' onSubmit={this.createUser}>
@@ -98,6 +74,12 @@ class SignUpForm extends React.Component {
         <p>
             Give me a personal www.lost-item.com link, please!
         </p>
+        {this.state.signupFormError && (
+        <div className="alert alert-danger" role="alert">
+          <strong>You suck at signing up. </strong>
+          {this.state.signupFormError} :(
+        </div>
+        )}
         <button type="submit" className="btn btn-primary">Love, {this.state.name ? this.state.name : 'me'}</button>
       </form>
     )
