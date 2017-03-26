@@ -1,9 +1,35 @@
-.navbar {
-    border-bottom: 1px solid #333;
-    background-color: white;
-    margin-bottom: 2em;
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    color: #3B1204;
+    color: #5C2614;
+    color: #40190D;
 }
-a.nav-link { text-decoration: underline; }
+
+.container {
+    width: 960px;
+}
+.navbar {
+    background-color: #3ec19d;
+    margin-bottom: 2em;
+    color:white;
+    border-radius: 0;
+}
+.navbar a,
+.navbar-dark .navbar-nav a.nav-link {
+    text-decoration: none;
+}
+
+.navbar-dark .navbar-nav a.nav-link:hover {
+    color: white;
+}
+a {
+    color: #999;
+    text-decoration: underline;
+}
+a:hover {
+    color: #3ec19d;
+}
 
 div#authStatus {
     float: left;
@@ -21,20 +47,61 @@ div #authStatus div#username {
     padding-bottom: .425rem;
     margin-right: 1rem;
 }
-nav img {
-    border-radius: 50%;
-    height:30px;
-    padding-right: 10px;
-}
 .title.nav-link {
-    text-decoration: none;
     font-weight: bold;
-    color: black !important;
+    color: white !important;
 }
 
-.jumbotron { text-align: center;}
+.jumbotron {
+    text-align: center;
+    background-color: white;
+}
 
 #settingsUpdateSuccessMessage {
-  color: #5cb85c;
-  padding-left: 20px;
+    color: #5cb85c;
+    padding-left: 20px;
+}
+
+h2 {
+    color: #3ec19d;
+    margin-bottom: 1rem;
+}
+h3 {
+    font-size: 1.5rem;
+    color: #3ec19d;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+p.cta {
+    text-align: center;
+    margin: 2em auto;
+}
+
+.btn-primary {
+    border: 2px solid #3ec19d;
+    background: #3ec19d;
+    border-radius: 2px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: white;
+    color: #3ec19d;
+    border: 2px solid #3ec19d;
+}
+
+
+.form-control {
+    border: 2px solid #cfcfd2;
+    border-radius: 2px;
+    padding: 7px 8px;
+    background: #fff;
+    margin-top: 7px;
+    margin-bottom: 5px;
+    color: #545454;
+}
+.form-control:focus {
+    border-color: #3ec19d;
 }

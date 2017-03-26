@@ -13,7 +13,7 @@ class Links extends React.Component {
       <ul className="nav navbar-nav">
         <li className="nav-item hidden-xs-down">
           <a className="title nav-link" href="/">
-            <img src="/images/morgia.png" /> Lost-Item
+            lost-item
           </a>
         </li>
         {!this.props.user &&
@@ -64,11 +64,11 @@ class Nav extends React.Component {
 
   render() {
     return (
-      <nav className="navbar navbar-light">
+      <nav className="navbar navbar-dark">
         <div className="clearfix">
           <button className="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation"></button>
           <a className="navbar-brand hidden-sm-up" href="/">
-            <img src="/images/morgia.png" /> Lost-Item.Com
+            lost item
           </a>
         </div>
         <div className="collapse navbar-toggleable-xs" id="bd-main-nav">

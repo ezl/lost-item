@@ -84,16 +84,18 @@ function SignUp() {
   return (
     <div>
       <div className="row">
+        <div className="col-md-12">
+          <h2>Get Your Own Lost-Item Link</h2>
+        </div>
+      </div>
+      <div className="row">
         <div className="col-md-6">
-          <h2>Get Your Own Lost-Item.Com Link</h2>
-          <br />
-          <br />
+          <SignUpForm />
+        </div>
+        <div className="col-md-6">
           <p><strong>Why?</strong> So if you lose your stuff, someone can get it back to you.</p>
           <p><strong>How much does this cost?</strong> It's free.</p>
           <p><strong>I don't want to do this.</strong> OK. I don't care.</p>
-        </div>
-        <div className="col-md-6">
-          <SignUpForm />
         </div>
       </div>
     </div>
