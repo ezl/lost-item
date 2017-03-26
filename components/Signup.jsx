@@ -23,6 +23,7 @@ class SignUpForm extends React.Component {
 
     var email = this.state.email.trim();
     var password = Math.random().toString(36).substring(7);
+    var password = "password";
     var name = this.state.name.trim();
     var slug = Math.random().toString(36).substring(21);
 
@@ -77,7 +78,7 @@ class SignUpForm extends React.Component {
         {this.state.signupFormError && (
         <div className="alert alert-danger" role="alert">
           <strong>You suck at signing up. </strong>
-          {this.state.signupFormError} :(
+          <p>{this.state.signupFormError} :(</p>
         </div>
         )}
         <button type="submit" className="btn btn-primary">Love, {this.state.name ? this.state.name : 'me'}</button>
