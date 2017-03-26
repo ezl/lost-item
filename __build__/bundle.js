@@ -29506,7 +29506,9 @@
 	    key: 'updateProfile',
 	    value: function updateProfile(user, data) {
 	      var database = firebase.database();
-	      database.ref('users/' + user.uid).set(data);
+	      database.ref('users/' + user.uid).set(data).then(function () {
+	        _reactRouter.browserHistory.push('settings/');
+	      });
 	    }
 	  }, {
 	    key: 'handleChange',
