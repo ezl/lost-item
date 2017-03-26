@@ -72,11 +72,13 @@ class SettingsForm extends React.Component {
       <div>
         <div className="row">
           <div className="col-md-12">
-            <div className="pull-left">
+            <div>
               <label>Your Link</label>: <strong>www.lost-item.com/{this.state.slug}</strong>
-              <small className="form-text text-muted">This is the link you'll label your stuff with</small>
+              <small className="form-text text-muted">This is the link you'll label your stuff with. You can write it or print it on things you own like credit cards or cell phones, print labels and sew it to clothes.
+              </small>
             </div>
-            <div className="pull-right"><button onClick={this.specialtyLinkClickHandler} className="btn btn-success">Buy a specialty link</button></div>
+            <br />
+            <div><button onClick={this.specialtyLinkClickHandler} className="btn btn-primary">Buy a custom link</button></div>
           </div>
         </div>
         <br />

@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-    width: 960px;
+    max-width: 960px;
 }
 .navbar {
     background-color: #3ec19d;
@@ -86,7 +86,11 @@ p.cta {
     color: #fff;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:active:hover,
+.btn-primary:disabled,
+.btn-primary:disabled:hover {
     background-color: white;
     color: #3ec19d;
     border: 2px solid #3ec19d;
@@ -104,4 +108,20 @@ p.cta {
 }
 .form-control:focus {
     border-color: #3ec19d;
+}
+.teal {
+    color: #3ec19d;
+}
+
+input.dotted, input.dotted:focus {
+   /* Thanks, https://www.chefsteps.com/activities/equilibrium-brining! */
+    border-width: 0px;
+    border-bottom: 1px;
+    border-style: dashed;
+    border-color: #b8b6b4;
+    outline: none;
+    text-align: center;
+}
+
+form.signupForm p {
 }

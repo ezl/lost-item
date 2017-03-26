@@ -68,7 +68,7 @@ class Nav extends React.Component {
         <div className="clearfix">
           <button className="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation"></button>
           <a className="navbar-brand hidden-sm-up" href="/">
-            lost item
+            lost-item
           </a>
         </div>
         <div className="collapse navbar-toggleable-xs" id="bd-main-nav">

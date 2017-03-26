@@ -55,7 +55,7 @@ class SignUpForm extends React.Component {
     this.setState(change);
   }
 
-  render() {
+  renderOld() {
     return (
       <form onSubmit={this.createUser}>
         <div className="form-group">
@@ -78,6 +78,32 @@ class SignUpForm extends React.Component {
       </form>
     )
   }
+
+  render() {
+    return (
+      <form className='signupForm' onSubmit={this.createUser}>
+        <p>Dear Eric,</p>
+        <p>
+            My name is
+            <input className="dotted" value={this.state.name} type="text" placeholder="name" name="name" onChange={this.handleChange.bind(this, 'name')} required="required" />
+            and my email is
+            <input className="dotted"  value={this.state.email} type="email" placeholder="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
+            .
+        </p>
+        <p>
+            If I lose my stuff, I want the person who finds it to easily know how to get it back to me.
+        </p>
+        <p>
+            Give me a personal www.lost-item.com link, please!
+        </p>
+        <button type="submit" className="btn btn-primary">Love, {this.state.name ? this.state.name : 'me'}</button>
+      </form>
+    )
+  }
+
+
+
+
 }
 
 function SignUp() {
@@ -90,12 +116,15 @@ function SignUp() {
       </div>
       <div className="row">
         <div className="col-md-6">
+          <br />
           <SignUpForm />
+          <br />
         </div>
-        <div className="col-md-6">
-          <p><strong>Why?</strong> So if you lose your stuff, someone can get it back to you.</p>
-          <p><strong>How much does this cost?</strong> It's free.</p>
-          <p><strong>I don't want to do this.</strong> OK. I don't care.</p>
+        <div className="col-md-6 hidden">
+          <br />
+          <p><strong className="teal">Why?</strong> So if you lose your stuff, someone can get it back to you.</p>
+          <p><strong className="teal">How much does this cost?</strong> It's free.</p>
+          <p><strong className="teal">I don't want to do this.</strong> OK. Cool.</p>
         </div>
       </div>
     </div>

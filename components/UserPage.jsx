@@ -19,15 +19,17 @@ class UserContactForm extends React.Component {
         <div className="form-group">
           <label>What did you find?</label>
           <input className="form-control" type="text" name="what" />
+          <small className="form-text text-muted">e.g. an android phone, a credit card, a large sack of potatoes</small>
         </div>
         <div className="form-group">
           <label>Where did you find it?</label>
           <input className="form-control" type="text" name="where" />
+          <small className="form-text text-muted">e.g. at Burger King on Clark Street, at Jenny's house, on Richard Branson's jet</small>
         </div>
         <div className="form-group">
           <label>What&#39;s the best way for {this.props.name} to get this item back?</label>
           <textarea className="form-control" type="text" name="where" />
-          <small className="form-text text-muted">For example, you can leave your contact email or phone here, or just say: I left it with the front desk at the ACME Hotel at Colombus and 4th Street..</small>
+          <small className="form-text text-muted">Leave your contact email or phone here, or a message for how {this.props.name} can retrieve it, like "I left it with the front desk at the ACME Hotel at Colombus and 4th Street."</small>
         </div>
         <button type="submit" className="btn btn-primary">{buttonText}</button>
       </form>

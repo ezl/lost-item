@@ -29,6 +29,7 @@ function LogIn() {
       <div className="row">
         <div className="col-md-6">
           <h2>Log In Not Yet Implemented</h2>
+          <p>Sorry, right now this site only works for Eric. One day soon, I'll make it work for other people too.</p>
           <br />
           <LogInForm />
         </div>
