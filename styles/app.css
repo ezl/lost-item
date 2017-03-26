@@ -56,7 +56,7 @@ div #authStatus div#username {
 }
 
 #settingsUpdateSuccessMessage {
-    color: #5cb85c;
+    color: #3ec19d;
     padding-left: 20px;
 }
 
@@ -82,6 +82,8 @@ p.cta {
     border-radius: 2px;
     text-decoration: none;
     color: #fff;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .btn-primary:hover,
