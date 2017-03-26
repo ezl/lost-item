@@ -1,8 +1,6 @@
 body {
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
-    color: #3B1204;
-    color: #5C2614;
     color: #40190D;
 }
 
@@ -88,6 +86,7 @@ p.cta {
 
 .btn-primary:hover,
 .btn-primary:active,
+.btn-primary:focus,
 .btn-primary:active:hover,
 .btn-primary:disabled,
 .btn-primary:disabled:hover {
@@ -121,6 +120,7 @@ input.dotted, input.dotted:focus {
     border-color: #b8b6b4;
     outline: none;
     text-align: center;
+    color: #3ec19d;
 }
 
 form.signupForm p {
