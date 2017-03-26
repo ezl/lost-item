@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 
 const propTypes = {
@@ -36,6 +36,7 @@ class AuthStatus extends React.Component {
 
   handleLogout() {
     var resp = firebase.auth().signOut();
+    browserHistory.push('/');
   }
 
   render() {
