@@ -28980,8 +28980,7 @@
 	          _react2.default.createElement(
 	            'a',
 	            { className: 'title nav-link', href: '/' },
-	            _react2.default.createElement('img', { src: '/images/morgia.png' }),
-	            ' Lost-Item'
+	            'lost-item'
 	          )
 	        ),
 	        !this.props.user && _react2.default.createElement(
@@ -29095,7 +29094,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'nav',
-	        { className: 'navbar navbar-light' },
+	        { className: 'navbar navbar-dark' },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'clearfix' },
@@ -29103,8 +29102,7 @@
 	          _react2.default.createElement(
 	            'a',
 	            { className: 'navbar-brand hidden-sm-up', href: '/' },
-	            _react2.default.createElement('img', { src: '/images/morgia.png' }),
-	            ' Lost-Item.Com'
+	            'lost-item'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -29248,82 +29246,161 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'p',
+	          'section',
 	          null,
 	          _react2.default.createElement(
-	            'strong',
+	            'h3',
 	            null,
-	            'What Is Lost-Item.Com?'
+	            'What is Lost Item?'
 	          ),
-	          ' It\'s a site that gives you a permanent link, which you attach to things you own. Then, if you ever lose something, whoever finds it can know who to contact to return it.'
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Lost Item is a site that gives you a permanent link, which you can stick on things that you own.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'For example, I have a sticker that says ',
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'https://www.lost-item.com/eric' },
+	              'www.lost-item.com/eric'
+	            ),
+	            ' on it. So if anyone finds my phone, it will be easy for them to figure out who it belongs to.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'With your own www.lost-item.com link, if you ever lose something, whoever finds it will easily be able to get it back to you.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { href: '/eric' },
+	              'Click here'
+	            ),
+	            ' to see an example.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'cta' },
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'btn btn-primary', href: '/signup' },
+	              'Oh, cool. Sign me up.'
+	            )
+	          )
 	        ),
 	        _react2.default.createElement(
-	          'p',
+	          'section',
 	          null,
 	          _react2.default.createElement(
-	            'strong',
+	            'h3',
 	            null,
-	            'Can I see an example?'
+	            'Why wouldn\'t I just write my name on my stuff?'
 	          ),
-	          ' Sure! ',
 	          _react2.default.createElement(
-	            'a',
-	            { href: '/eric' },
-	            'Click here'
+	            'p',
+	            null,
+	            'You could, but this is easier.'
 	          ),
-	          '.'
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Also, what if the person who finds it doesn\'t know you? Or if you don\'t want to put your personal information on the item? For example, you might not want to attach a tag to your keys that says "If found, please return to 123 My House Lane."'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'So basically, Lost Item makes it easy for someone to contact you if they find your stuff.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'cta' },
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'btn btn-primary', href: '/signup' },
+	              'Oh, cool. Sign me up.'
+	            )
+	          )
 	        ),
 	        _react2.default.createElement(
-	          'p',
+	          'section',
 	          null,
 	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            'Why wouldn\'t I just write my name on my stuff'
-	          ),
-	          ' You could, but this is easier. Also, what if the person who finds it doesn\'t know you? Or if you don\'t want to put your personal information on the item (For example, you might not want to attach a note to your keys that says "If found, please return to < ',
-	          _react2.default.createElement(
-	            'em',
-	            null,
-	            'you address'
-	          ),
-	          ' >.")'
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          _react2.default.createElement(
-	            'strong',
+	            'h3',
 	            null,
 	            'How much does it cost?'
 	          ),
-	          ' Free. You get your own permanent link, for free. We make money by selling custom links (like vanity license plates), selling stickers, labels, and nametags with your link professionally printed on it, and through donations (like when people get their stuff returned to them).'
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
 	          _react2.default.createElement(
-	            'strong',
+	            'p',
 	            null,
-	            'OK I\'m sold. How do I get one of these?'
+	            'Free. You get your own permanent link, for free.'
 	          ),
-	          ' Just ',
 	          _react2.default.createElement(
-	            'a',
-	            { href: '/signup' },
-	            'sign up here'
+	            'p',
+	            null,
+	            'In theory, we would make money by:'
 	          ),
-	          '.'
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              'by selling custom links (like vanity license plates)'
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              'selling stickers, labels, and nametags with your link professionally printed on it'
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              'through donations (for example, when a grateful person has his/her lost belongings returned due to someone reporting an item lost through this site)'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'For now though, I just built this for myself so I would be able to recover items I lose.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'cta' },
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'btn btn-primary', href: '/signup' },
+	              'Oh, cool. Sign me up.'
+	            )
+	          )
 	        ),
 	        _react2.default.createElement(
-	          'p',
+	          'section',
 	          null,
 	          _react2.default.createElement(
-	            'strong',
+	            'h3',
 	            null,
 	            'Why did you make this?'
 	          ),
-	          ' I lose stuff. All the time.'
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'I lose stuff. Often. Obviously, it\'s kind of a problem.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            { className: 'cta' },
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'btn btn-primary', href: '/signup' },
+	              'Oh, cool. Sign me up.'
+	            )
+	          )
 	        )
 	      );
 	    }
@@ -29439,8 +29516,8 @@
 	      this.setState(change);
 	    }
 	  }, {
-	    key: 'render',
-	    value: function render() {
+	    key: 'renderOld',
+	    value: function renderOld() {
 	      return _react2.default.createElement(
 	        'form',
 	        { onSubmit: this.createUser },
@@ -29492,6 +29569,44 @@
 	        )
 	      );
 	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'form',
+	        { className: 'signupForm', onSubmit: this.createUser },
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Dear Eric,'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'My name is',
+	          _react2.default.createElement('input', { className: 'dotted', value: this.state.name, type: 'text', placeholder: 'name', name: 'name', onChange: this.handleChange.bind(this, 'name'), required: 'required' }),
+	          'and my email is',
+	          _react2.default.createElement('input', { className: 'dotted', value: this.state.email, type: 'email', placeholder: 'email', name: 'email', onChange: this.handleChange.bind(this, 'email'), required: 'required' }),
+	          '.'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'If I lose my stuff, I want the person who finds it to easily know how to get it back to me.'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Give me a personal www.lost-item.com link, please!'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'submit', className: 'btn btn-primary' },
+	          'Love, ',
+	          this.state.name ? this.state.name : 'me'
+	        )
+	      );
+	    }
 	  }]);
 	
 	  return SignUpForm;
@@ -29506,20 +29621,34 @@
 	      { className: 'row' },
 	      _react2.default.createElement(
 	        'div',
-	        { className: 'col-md-6' },
+	        { className: 'col-md-12' },
 	        _react2.default.createElement(
 	          'h2',
 	          null,
-	          'Get Your Own Lost-Item.Com Link'
-	        ),
+	          'Get Your Own Lost-Item Link'
+	        )
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'div',
+	      { className: 'row' },
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-6' },
 	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(SignUpForm, null),
+	        _react2.default.createElement('br', null)
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-6 hidden' },
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
 	          'p',
 	          null,
 	          _react2.default.createElement(
 	            'strong',
-	            null,
+	            { className: 'teal' },
 	            'Why?'
 	          ),
 	          ' So if you lose your stuff, someone can get it back to you.'
@@ -29529,7 +29658,7 @@
 	          null,
 	          _react2.default.createElement(
 	            'strong',
-	            null,
+	            { className: 'teal' },
 	            'How much does this cost?'
 	          ),
 	          ' It\'s free.'
@@ -29539,16 +29668,11 @@
 	          null,
 	          _react2.default.createElement(
 	            'strong',
-	            null,
+	            { className: 'teal' },
 	            'I don\'t want to do this.'
 	          ),
-	          ' OK. I don\'t care.'
+	          ' OK. Cool.'
 	        )
-	      ),
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'col-md-6' },
-	        _react2.default.createElement(SignUpForm, null)
 	      )
 	    )
 	  );
@@ -29652,6 +29776,11 @@
 	          'h2',
 	          null,
 	          'Log In Not Yet Implemented'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Sorry, right now this site only works for Eric. One day soon, I\'ll make it work for other people too.'
 	        ),
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(LogInForm, null)
@@ -29908,7 +30037,7 @@
 	            { className: 'col-md-12' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'pull-left' },
+	              null,
 	              _react2.default.createElement(
 	                'label',
 	                null,
@@ -29924,16 +30053,17 @@
 	              _react2.default.createElement(
 	                'small',
 	                { className: 'form-text text-muted' },
-	                'This is the link you\'ll label your stuff with'
+	                'This is the link you\'ll label your stuff with. You can write it or print it on things you own like credit cards or cell phones, print labels and sew it to clothes.'
 	              )
 	            ),
+	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'pull-right' },
+	              null,
 	              _react2.default.createElement(
 	                'button',
-	                { onClick: this.specialtyLinkClickHandler, className: 'btn btn-success' },
-	                'Buy a specialty link'
+	                { onClick: this.specialtyLinkClickHandler, className: 'btn btn-primary' },
+	                'Buy a custom link'
 	              )
 	            )
 	          )
@@ -30098,6 +30228,11 @@
 	  location: _react.PropTypes.object.isRequired
 	};
 	
+	var getSlug = function getSlug() {
+	  // Just cut off the preceding '/'
+	  return location.pathname.slice(1);
+	};
+	
 	var UserContactForm = function (_React$Component) {
 	  _inherits(UserContactForm, _React$Component);
 	
@@ -30123,7 +30258,12 @@
 	            null,
 	            'What did you find?'
 	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'text', name: 'what' })
+	          _react2.default.createElement('input', { className: 'form-control', type: 'text', name: 'what' }),
+	          _react2.default.createElement(
+	            'small',
+	            { className: 'form-text text-muted' },
+	            'e.g. an android phone, a credit card, a large sack of potatoes'
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -30133,7 +30273,12 @@
 	            null,
 	            'Where did you find it?'
 	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'text', name: 'where' })
+	          _react2.default.createElement('input', { className: 'form-control', type: 'text', name: 'where' }),
+	          _react2.default.createElement(
+	            'small',
+	            { className: 'form-text text-muted' },
+	            'e.g. at Burger King on Clark Street, at Jenny\'s house, on Richard Branson\'s jet'
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -30149,7 +30294,9 @@
 	          _react2.default.createElement(
 	            'small',
 	            { className: 'form-text text-muted' },
-	            'For example, you can leave your contact email or phone here, or just say: I left it with the front desk at the ACME Hotel at Colombus and 4th Street..'
+	            'Leave your contact email or phone here, or a message for how ',
+	            this.props.name,
+	            ' can retrieve it, like "I left it with the front desk at the ACME Hotel at Colombus and 4th Street."'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -30208,18 +30355,7 @@
 	              ' will be very happy to hear that! Please help get this item returned!'
 	            ),
 	            _react2.default.createElement(UserContactForm, { name: this.props.user.name, email: this.props.user.email }),
-	            _react2.default.createElement('hr', null),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              'Page For User: ',
-	              _react2.default.createElement(
-	                'code',
-	                null,
-	                this.props.pathname
-	              ),
-	              '.'
-	            )
+	            _react2.default.createElement('hr', null)
 	          )
 	        )
 	      );
@@ -30278,26 +30414,17 @@
 	  _createClass(UserPage, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var _this5 = this;
+	      var slug = getSlug();
 	
-	      // During dev, just use the path to decide if the user "exists"
-	      var noSuchUser = !location.pathname.includes("eric");
-	
-	      var endpoint = 'http://ip.jsontest.com/';
-	      // this is where we'll call the server to see
-	      // if the user exists.
-	      _axios2.default.get(endpoint).then(function (response) {
-	        var ip = response.data.ip;
-	        var user = {
-	          'name': 'Eric',
-	          'username': 'eric',
-	          'email': 'ericzliu@gmail.com',
-	          'ip': ip
+	      firebase.database().ref('/users').orderByChild('slug').equalTo(slug).once('value').then(function (snapshot) {
+	        if (snapshot.val() === null) {
+	          // not exists;
+	        } else {
+	          // do something else;
+	          var user = Object.values(snapshot.val())[0];
+	          this.setState({ 'user': user });
 	        };
-	        if (noSuchUser === true) {} else {
-	          _this5.setState({ 'user': user });
-	        }
-	      });
+	      }.bind(this));
 	    }
 	  }, {
 	    key: 'render',
@@ -30305,7 +30432,7 @@
 	      if (this.state.user === null) {
 	        return _react2.default.createElement(UserNotFound, null);
 	      } else {
-	        return _react2.default.createElement(UserInfo, { user: this.state.user, pathname: location.pathname });
+	        return _react2.default.createElement(UserInfo, { user: this.state.user });
 	      }
 	    }
 	  }]);
