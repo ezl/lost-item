@@ -29033,6 +29033,7 @@
 	    key: 'handleLogout',
 	    value: function handleLogout() {
 	      var resp = firebase.auth().signOut();
+	      _reactRouter.browserHistory.push('/');
 	    }
 	  }, {
 	    key: 'render',
@@ -29484,6 +29485,7 @@
 	
 	      var email = this.state.email.trim();
 	      var password = Math.random().toString(36).substring(7);
+	      var password = "password";
 	      var name = this.state.name.trim();
 	      var slug = Math.random().toString(36).substring(21);
 	
@@ -29518,60 +29520,6 @@
 	      this.setState(change);
 	    }
 	  }, {
-	    key: 'renderOld',
-	    value: function renderOld() {
-	      return _react2.default.createElement(
-	        'form',
-	        { onSubmit: this.createUser },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'What is your name?'
-	          ),
-	          _react2.default.createElement('input', { value: this.state.name, className: 'form-control', type: 'text', name: 'name', onChange: this.handleChange.bind(this, 'name'), required: 'required' }),
-	          _react2.default.createElement(
-	            'small',
-	            { className: 'form-text text-muted' },
-	            'So if someone you know finds something that belongs to you, they can give it to you directly.'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'form-group' },
-	          _react2.default.createElement(
-	            'label',
-	            null,
-	            'What is your email address?'
-	          ),
-	          _react2.default.createElement('input', { value: this.state.email, className: 'form-control', type: 'email', name: 'email', onChange: this.handleChange.bind(this, 'email'), required: 'required' }),
-	          _react2.default.createElement(
-	            'small',
-	            { className: 'form-text text-muted' },
-	            'So we can email you if someone you don\'t know finds your stuff.'
-	          )
-	        ),
-	        this.state.signupFormError && _react2.default.createElement(
-	          'div',
-	          { className: 'alert alert-danger', role: 'alert' },
-	          _react2.default.createElement(
-	            'strong',
-	            null,
-	            'You suck at signing up. '
-	          ),
-	          this.state.signupFormError,
-	          ' :('
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'submit', className: 'btn btn-primary' },
-	          'Get Your Own Lost Item Link!'
-	        )
-	      );
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -29600,6 +29548,21 @@
 	          'p',
 	          null,
 	          'Give me a personal www.lost-item.com link, please!'
+	        ),
+	        this.state.signupFormError && _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-danger', role: 'alert' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'You suck at signing up. '
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.state.signupFormError,
+	            ' :('
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'button',
@@ -29720,18 +29683,51 @@
 	var LogInForm = function (_React$Component) {
 	  _inherits(LogInForm, _React$Component);
 	
-	  function LogInForm() {
+	  function LogInForm(props) {
 	    _classCallCheck(this, LogInForm);
 	
-	    return _possibleConstructorReturn(this, (LogInForm.__proto__ || Object.getPrototypeOf(LogInForm)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (LogInForm.__proto__ || Object.getPrototypeOf(LogInForm)).call(this, props));
+	
+	    _this.state = {
+	      'email': '',
+	      'password': '',
+	      'loginFormError': ''
+	    };
+	
+	    _this.logInUser = _this.logInUser.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(LogInForm, [{
+	    key: 'logInUser',
+	    value: function logInUser(e) {
+	      e.preventDefault();
+	
+	      var email = this.state.email.trim();
+	      var password = "password";
+	      console.log("trying to log in!", email, password);
+	
+	      firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+	        // Handle Errors here.
+	        var errorCode = error.code;
+	        var errorMessage = error.message;
+	        console.log(errorCode, errorMessage);
+	        this.setState({ logInFormError: error.message });
+	      }.bind(this));
+	    }
+	  }, {
+	    key: 'handleChange',
+	    value: function handleChange(name, e) {
+	      var change = {};
+	      change[name] = e.target.value;
+	      this.setState(change);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'form',
-	        null,
+	        { onSubmit: this.logInUser },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'form-group' },
@@ -29740,7 +29736,7 @@
 	            null,
 	            'Email'
 	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'text' })
+	          _react2.default.createElement('input', { className: 'form-control', value: this.state.name, type: 'email', name: 'email', onChange: this.handleChange.bind(this, 'email'), required: 'required' })
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -29750,12 +29746,27 @@
 	            null,
 	            'Password'
 	          ),
-	          _react2.default.createElement('input', { className: 'form-control', type: 'password' })
+	          _react2.default.createElement('input', { className: 'form-control', value: this.state.password, type: 'password', name: 'password', onChange: this.handleChange.bind(this, 'password'), required: 'required' })
+	        ),
+	        this.state.logInFormError && _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-danger', role: 'alert' },
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            'Hmmm, I can\'t log you in. '
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            this.state.logInFormError,
+	            ' :('
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'button',
-	          { disabled: true, className: 'btn btn-primary' },
-	          'Disabled Log In Button Here!'
+	          { className: 'btn btn-primary' },
+	          'Log In'
 	        )
 	      );
 	    }
@@ -29777,12 +29788,7 @@
 	        _react2.default.createElement(
 	          'h2',
 	          null,
-	          'Log In Not Yet Implemented'
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          'Sorry, right now this site only works for Eric. One day soon, I\'ll make it work for other people too.'
+	          'Log In'
 	        ),
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(LogInForm, null)
