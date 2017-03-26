@@ -84,10 +84,6 @@ class SignUpForm extends React.Component {
       </form>
     )
   }
-
-
-
-
 }
 
 function SignUp() {
