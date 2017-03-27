@@ -86,16 +86,16 @@ class SettingsForm extends React.Component {
           <div className="form-group">
             <label>Name</label>
             <input value={this.state.name} name="name" onChange={this.handleChange.bind(this, 'name')} className="form-control" type="text" />
-            <small className="form-text text-muted">Como te llamas?</small>
+            <small className="form-text text-muted">What name do you want displayed on your Lost Item page?</small>
           </div>
           <div className="form-group">
             <label>Email</label>
             <input value={this.state.email} name="email" onChange={this.handleChange.bind(this, 'email')} className="form-control" type="text" />
-            <small className="form-text text-muted">An email address so we can let you know if your lost items are found</small>
+            <small className="form-text text-muted">This is the email address we will use to contac you if your lost items are found</small>
           </div>
 
           <div className="form-group">
-            <label>Slug</label>
+            <label>Your Link</label>
             <div className="input-group">
               <span className="input-group-addon">http://lost-item.com/</span>
               <input value={this.state.slug} name="slug" onChange={this.handleChange.bind(this, 'slug')}  className="form-control" type="text" />
