@@ -79,10 +79,6 @@
 	
 	var _HowItWorks2 = _interopRequireDefault(_HowItWorks);
 	
-	var _Shop = __webpack_require__(/*! ./components/Shop */ 261);
-	
-	var _Shop2 = _interopRequireDefault(_Shop);
-	
 	var _Settings = __webpack_require__(/*! ./components/Settings */ 262);
 	
 	var _Settings2 = _interopRequireDefault(_Settings);
@@ -100,7 +96,6 @@
 	  _react2.default.createElement(_reactRouter.Route, { path: 'signup', mapMenuTitle: 'Claim Your Lost-Item.Com Link', component: _SignUp2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'login', mapMenuTitle: 'Log In', component: _LogIn2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'how-it-works', mapMenuTitle: 'How It Works', component: _HowItWorks2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: 'shop', mapMenuTitle: 'Buy Labels For Your Link', component: _Shop2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: 'settings', mapMenuTitle: 'Settings', component: _Settings2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '*', mapMenuTitle: 'User Page', component: _UserPage2.default })
 	);
@@ -28983,15 +28978,6 @@
 	            'lost-item'
 	          )
 	        ),
-	        !this.props.user && _react2.default.createElement(
-	          'li',
-	          { className: 'nav-item' },
-	          _react2.default.createElement(
-	            'a',
-	            { className: 'nav-link', href: '/signup' },
-	            'Get Your Own Link (It\'s Free)'
-	          )
-	        ),
 	        _react2.default.createElement(
 	          'li',
 	          { className: 'nav-item' },
@@ -28999,15 +28985,6 @@
 	            'a',
 	            { className: 'nav-link', href: '/how-it-works' },
 	            'How Does It Work?'
-	          )
-	        ),
-	        this.props.user && _react2.default.createElement(
-	          'li',
-	          { className: 'nav-item' },
-	          _react2.default.createElement(
-	            'a',
-	            { className: 'nav-link', href: '/shop' },
-	            'Buy Labels'
 	          )
 	        )
 	      );
@@ -29044,6 +29021,11 @@
 	          { id: 'authStatus', className: 'navbar-nav' },
 	          _react2.default.createElement(
 	            'a',
+	            { className: 'nav-link nav-item', href: '/signup' },
+	            'Sign Up'
+	          ),
+	          _react2.default.createElement(
+	            'a',
 	            { className: 'nav-link nav-item', href: '/login' },
 	            'Log In'
 	          )
@@ -29052,17 +29034,6 @@
 	        return _react2.default.createElement(
 	          'div',
 	          { id: 'authStatus', className: 'navbar-nav' },
-	          _react2.default.createElement(
-	            'div',
-	            { id: 'username' },
-	            _react2.default.createElement('i', { className: 'fa fa-user-o' }),
-	            ' ',
-	            _react2.default.createElement(
-	              'strong',
-	              null,
-	              this.props.user.email
-	            )
-	          ),
 	          _react2.default.createElement(
 	            'a',
 	            { className: 'nav-link nav-item', href: '/settings' },
@@ -29211,18 +29182,14 @@
 	        'div',
 	        { className: 'jumbotron' },
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'container' },
-	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            'Never Lose Your Stuff Again'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Or if you do, make it easy for someone to return it.'
-	          )
+	          'h1',
+	          null,
+	          'Never Lose Your Stuff Again'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Or if you do, make it easy for someone to return it.'
 	        )
 	      );
 	    }
@@ -29459,6 +29426,12 @@
 	  children: _react.PropTypes.element
 	};
 	
+	function toTitleCase(str) {
+	  return str.replace(/\w\S*/g, function (txt) {
+	    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+	  });
+	}
+	
 	var SignUpForm = function (_React$Component) {
 	  _inherits(SignUpForm, _React$Component);
 	
@@ -29470,7 +29443,8 @@
 	    _this.state = {
 	      'name': '',
 	      'email': '',
-	      'signupFormError': ''
+	      'signupFormError': '',
+	      'signupButtonPending': false
 	    };
 	
 	    _this.createUser = _this.createUser.bind(_this);
@@ -29481,13 +29455,16 @@
 	  _createClass(SignUpForm, [{
 	    key: 'createUser',
 	    value: function createUser(e) {
+	      console.log("createUser");
+	      this.setState({ signupButtonPending: true });
 	      e.preventDefault();
 	
 	      var email = this.state.email.trim();
 	      var password = Math.random().toString(36).substring(7);
 	      var password = "password";
 	      var name = this.state.name.trim();
-	      var slug = Math.random().toString(36).substring(21);
+	      var slug = Math.random().toString(36).substring(6);
+	      console.log("slug", slug);
 	
 	      firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
 	        var data = {
@@ -29503,10 +29480,13 @@
 	        console.log(error.code, error.message);
 	        this.setState({ signupFormError: error.message });
 	      }.bind(this));
+	
+	      // this.setState({signupButtonPending: false});
 	    }
 	  }, {
 	    key: 'updateProfile',
 	    value: function updateProfile(user, data) {
+	      console.log("updateProfile");
 	      var database = firebase.database();
 	      database.ref('users/' + user.uid).set(data).then(function () {
 	        _reactRouter.browserHistory.push('settings/');
@@ -29564,11 +29544,16 @@
 	            ' :('
 	          )
 	        ),
-	        _react2.default.createElement(
+	        this.state.signupButtonPending ? _react2.default.createElement(
+	          'button',
+	          { className: 'btn btn-primary', disabled: true },
+	          _react2.default.createElement('i', { className: 'fa fa-spinner fa-spin' }),
+	          ' Signing Up...'
+	        ) : _react2.default.createElement(
 	          'button',
 	          { type: 'submit', className: 'btn btn-primary' },
 	          'Love, ',
-	          this.state.name ? this.state.name : 'me'
+	          this.state.name ? toTitleCase(this.state.name) : 'Me'
 	        )
 	      );
 	    }
@@ -29736,7 +29721,16 @@
 	            null,
 	            'Email'
 	          ),
-	          _react2.default.createElement('input', { className: 'form-control', value: this.state.name, type: 'email', name: 'email', onChange: this.handleChange.bind(this, 'email'), required: 'required' })
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'input-group' },
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'input-group-addon' },
+	              _react2.default.createElement('i', { className: 'fa fa-envelope-o' })
+	            ),
+	            _react2.default.createElement('input', { className: 'form-control', value: this.state.name, type: 'email', name: 'email', onChange: this.handleChange.bind(this, 'email'), required: 'required' })
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -29746,7 +29740,16 @@
 	            null,
 	            'Password'
 	          ),
-	          _react2.default.createElement('input', { className: 'form-control', value: this.state.password, type: 'password', name: 'password', onChange: this.handleChange.bind(this, 'password'), required: 'required' })
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'input-group' },
+	            _react2.default.createElement(
+	              'span',
+	              { className: 'input-group-addon' },
+	              _react2.default.createElement('i', { className: 'fa fa-lock' })
+	            ),
+	            _react2.default.createElement('input', { className: 'form-control', value: this.state.password, type: 'password', name: 'password', onChange: this.handleChange.bind(this, 'password'), required: 'required' })
+	          )
 	        ),
 	        this.state.logInFormError && _react2.default.createElement(
 	          'div',
@@ -29878,52 +29881,7 @@
 	exports.default = HowItWorks;
 
 /***/ },
-/* 261 */
-/*!*****************************!*\
-  !*** ./components/Shop.jsx ***!
-  \*****************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(/*! react-router */ 183);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var propTypes = {
-	  children: _react.PropTypes.element
-	};
-	
-	function Shop() {
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'h1',
-	      null,
-	      'Buy Stuff'
-	    ),
-	    _react2.default.createElement(
-	      'p',
-	      null,
-	      'Placeholder for a shop to sell labels/name tags with your lost-item.com link professionally printed on it.'
-	    )
-	  );
-	}
-	
-	Shop.propTypes = propTypes;
-	
-	exports.default = Shop;
-
-/***/ },
+/* 261 */,
 /* 262 */
 /*!*********************************!*\
   !*** ./components/Settings.jsx ***!
@@ -29969,7 +29927,9 @@
 	      name: "",
 	      slug: "",
 	      updatingSettings: false,
-	      updateSettingsSuccessMessageVisible: false
+	      updateSettingsSuccessMessageVisible: false,
+	      updateSettingsErrorMessageVisible: false,
+	      updateSettingsErrorMessageText: ''
 	    };
 	
 	    _this.updateProfile = _this.updateProfile.bind(_this);
@@ -29989,11 +29949,6 @@
 	      }.bind(this));
 	    }
 	  }, {
-	    key: 'specialtyLinkClickHandler',
-	    value: function specialtyLinkClickHandler() {
-	      alert("Feature not yet implemented.");
-	    }
-	  }, {
 	    key: 'handleChange',
 	    value: function handleChange(name, e) {
 	      var change = {};
@@ -30005,16 +29960,28 @@
 	    value: function flashProfileUpdateSuccessMessage() {
 	      var _this2 = this;
 	
-	      console.log("flash");
+	      console.log("flash success");
 	      this.setState({ updateSettingsSuccessMessageVisible: true });
 	      setTimeout(function () {
 	        _this2.setState({ updateSettingsSuccessMessageVisible: false });
-	      }, 3000);
+	      }, 5000);
+	    }
+	  }, {
+	    key: 'flashProfileUpdateErrorMessage',
+	    value: function flashProfileUpdateErrorMessage(message) {
+	      var _this3 = this;
+	
+	      console.log("flash error");
+	      this.setState({ updateSettingsErrorMessageText: message });
+	      this.setState({ updateSettingsErrorMessageVisible: true });
+	      setTimeout(function () {
+	        _this3.setState({ updateSettingsErrorMessageVisible: false });
+	      }, 5000);
 	    }
 	  }, {
 	    key: 'updateProfile',
 	    value: function updateProfile(e) {
-	      var _this3 = this;
+	      var _this4 = this;
 	
 	      this.setState({ updatingSettings: true });
 	      e.preventDefault();
@@ -30024,16 +29991,34 @@
 	        slug: this.state.slug
 	      };
 	      var user = this.props.user;
+	      console.log("emails are", user.email, this.state.email);
+	      if (user.email !== this.state.email) {
+	        console.log("emails DO NOT match. try update.");
+	        user.updateEmail(this.state.email).then(function () {
+	          console.log("update success!");
+	          // Update successful.
+	        }, function (error) {
+	          // An error happened.
+	          console.log("update failure :(", error.message);
+	        });
+	      } else {
+	        console.log("emails match, no need to update user.email");
+	      }
+	
+	      // this.flashProfileUpdateErrorMessage("error message");
+	
 	      var database = firebase.database();
 	      database.ref('users/' + user.uid).set(data);
+	      // oh this is janky. just waiting a second and assuming success.
 	      setTimeout(function () {
-	        _this3.setState({ updatingSettings: false });
-	        _this3.flashProfileUpdateSuccessMessage();
+	        _this4.setState({ updatingSettings: false });
+	        _this4.flashProfileUpdateSuccessMessage();
 	      }, 1000);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var url = "http://www.lost-item.com/" + this.state.slug;
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -30055,8 +30040,12 @@
 	              _react2.default.createElement(
 	                'strong',
 	                null,
-	                'www.lost-item.com/',
-	                this.state.slug
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: url },
+	                  'www.lost-item.com/',
+	                  this.state.slug
+	                )
 	              ),
 	              _react2.default.createElement(
 	                'small',
@@ -30064,14 +30053,20 @@
 	                'This is the link you\'ll label your stuff with. You can write it or print it on things you own like credit cards or cell phones, print labels and sew it to clothes.'
 	              )
 	            ),
-	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(
 	              'div',
-	              null,
+	              { className: 'hidden-xs-up' },
 	              _react2.default.createElement(
-	                'button',
-	                { onClick: this.specialtyLinkClickHandler, className: 'btn btn-primary' },
-	                'Buy a custom link'
+	                'label',
+	                null,
+	                'Your Log In Email Address'
+	              ),
+	              ': ',
+	              this.props.user.email,
+	              _react2.default.createElement(
+	                'small',
+	                { className: 'form-text text-muted' },
+	                'Use this email address to log in. It doesn\'t necessarily have to be the same as the contact email below.'
 	              )
 	            )
 	          )
@@ -30092,7 +30087,7 @@
 	            _react2.default.createElement(
 	              'small',
 	              { className: 'form-text text-muted' },
-	              'Como te llamas?'
+	              'What name do you want displayed on your Lost Item page?'
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -30107,7 +30102,7 @@
 	            _react2.default.createElement(
 	              'small',
 	              { className: 'form-text text-muted' },
-	              'An email address so we can let you know if your lost items are found'
+	              'This is the email address we will use to contact you if your lost items are found'
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -30116,9 +30111,18 @@
 	            _react2.default.createElement(
 	              'label',
 	              null,
-	              'Slug'
+	              'Your Link'
 	            ),
-	            _react2.default.createElement('input', { value: this.state.slug, name: 'slug', onChange: this.handleChange.bind(this, 'slug'), className: 'form-control', type: 'text' })
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'input-group' },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'input-group-addon' },
+	                'http://lost-item.com/'
+	              ),
+	              _react2.default.createElement('input', { value: this.state.slug, name: 'slug', onChange: this.handleChange.bind(this, 'slug'), className: 'form-control', type: 'text' })
+	            )
 	          ),
 	          this.state.updatingSettings ? _react2.default.createElement(
 	            'button',
@@ -30130,9 +30134,14 @@
 	            { className: 'btn btn-primary' },
 	            'Update Settings'
 	          ),
+	          this.state.updateSettingsErrorMessageVisible && _react2.default.createElement(
+	            'span',
+	            { className: 'settingsFlashMessage settingsError' },
+	            this.state.updateSettingsErrorMessageText
+	          ),
 	          this.state.updateSettingsSuccessMessageVisible && _react2.default.createElement(
 	            'span',
-	            { id: 'settingsUpdateSuccessMessage' },
+	            { className: 'settingsFlashMessage settingsSuccess' },
 	            'Success!'
 	          )
 	        )
@@ -30253,7 +30262,7 @@
 	  _createClass(UserContactForm, [{
 	    key: 'render',
 	    value: function render() {
-	      var buttonText = 'Let ' + this.props.name + ' know you found something!';
+	      var buttonText = 'Send';
 	      var action = "https://formspree.io/" + ('' + this.props.email);
 	      return _react2.default.createElement(
 	        'form',
@@ -30310,6 +30319,8 @@
 	        _react2.default.createElement(
 	          'button',
 	          { type: 'submit', className: 'btn btn-primary' },
+	          _react2.default.createElement('i', { className: 'fa fa-send' }),
+	          ' ',
 	          buttonText
 	        )
 	      );
