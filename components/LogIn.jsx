@@ -45,11 +45,17 @@ class LogInForm extends React.Component {
       <form onSubmit={this.logInUser}>
         <div className="form-group">
           <label>Email</label>
-          <input className="form-control" value={this.state.name} type="email"  name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
+          <div className="input-group">
+            <span className="input-group-addon"><i className='fa fa-envelope-o'></i></span>
+            <input className="form-control" value={this.state.name} type="email"  name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
+          </div>
         </div>
         <div className="form-group">
           <label>Password</label>
-          <input className="form-control" value={this.state.password} type="password"  name="password" onChange={this.handleChange.bind(this, 'password')} required="required" />
+          <div className="input-group">
+            <span className="input-group-addon"><i className='fa fa-lock'></i></span>
+            <input className="form-control" value={this.state.password} type="password"  name="password" onChange={this.handleChange.bind(this, 'password')} required="required" />
+          </div>
         </div>
         {this.state.logInFormError && (
         <div className="alert alert-danger" role="alert">
