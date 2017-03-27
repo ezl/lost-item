@@ -20,9 +20,6 @@ class Links extends React.Component {
         <li className="nav-item"><a className="nav-link" href="/signup">Get Your Own Link (It&#39;s Free)</a></li>
         }
         <li className="nav-item"><a className="nav-link" href="/how-it-works">How Does It Work?</a></li>
-        {this.props.user &&
-        <li className="nav-item"><a className="nav-link" href="/shop">Buy Labels</a></li>
-        }
       </ul>
     )
   }
@@ -49,7 +46,6 @@ class AuthStatus extends React.Component {
     } else {
       return (
         <div id="authStatus" className="navbar-nav">
-          <div id="username"><i className="fa fa-user-o"></i> <strong>{this.props.user.email}</strong></div>
           <a className='nav-link nav-item' href='/settings'>Settings</a>
           <a className='nav-link nav-item' onClick={this.handleLogout} href="#">Log Out</a>
         </div>
