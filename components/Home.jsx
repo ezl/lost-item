@@ -23,7 +23,7 @@ class About extends React.Component {
             things that you own.
           </p>
           <p>
-            For example, I have a sticker that says <a href="https://www.lost-item.com/eric">www.lost-item.com/eric</a> on it. So if anyone finds my phone, it will be easy for them to figure out who it belongs to.
+            For example, I have a sticker that says <a href="http://www.lost-item.com/eric">www.lost-item.com/eric</a> on it. So if anyone finds my phone, it will be easy for them to figure out who it belongs to.
           </p>
           <p>
             With your own www.lost-item.com link, if you ever lose something, whoever finds it
