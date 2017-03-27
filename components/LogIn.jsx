@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 
 const propTypes = {
   children: PropTypes.element,
@@ -11,7 +11,8 @@ class LogInForm extends React.Component {
     this.state = {
       'email': '',
       'password': '',
-      'loginFormError': ''
+      'loginFormError': '',
+      'loginButtonPending': false
     };
 
     this.logInUser = this.logInUser.bind(this);
@@ -19,19 +20,27 @@ class LogInForm extends React.Component {
 
   logInUser(e) {
     e.preventDefault();
+    this.setState({loginButtonPending: true});
 
     var email = this.state.email.trim();
     var password = "password";
     console.log("trying to log in!", email, password);
 
     firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(function() {
+        console.log("successfully logged in");
+        browserHistory.push('/settings/');
+        this.setState({loginButtonPending: false});
+      })
       .catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
         console.log(errorCode, errorMessage);
         this.setState({logInFormError: error.message});
+        this.setState({loginButtonPending: false});
       }.bind(this));
+
   }
 
   handleChange(name, e) {
@@ -63,7 +72,11 @@ class LogInForm extends React.Component {
           <p>{this.state.logInFormError} :(</p>
         </div>
         )}
+        {this.state.loginButtonPending ?
+        <button className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin"></i> Logging In...</button>
+        :
         <button className="btn btn-primary">Log In</button>
+        }
       </form>
     );
   }

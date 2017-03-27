@@ -43,6 +43,7 @@ class SignUpForm extends React.Component {
           slug: slug
         };
         this.updateProfile(user, data);
+        this.setState({signupButtonPending: false});
       }.bind(this))
       .catch(function(error) {
         // Handle Errors here.
@@ -50,16 +51,16 @@ class SignUpForm extends React.Component {
         var errorMessage = error.message;
         console.log(error.code, error.message);
         this.setState({signupFormError: error.message});
+        this.setState({signupButtonPending: false});
       }.bind(this));
 
-    // this.setState({signupButtonPending: false});
   }
 
   updateProfile(user, data) {
     console.log("updateProfile");
     var database = firebase.database();
     database.ref('users/' + user.uid).set(data).then(function() {
-      browserHistory.push('settings/');
+      browserHistory.push('/settings/');
     });
   }
 
