@@ -29232,7 +29232,7 @@
 	            'For example, I have a sticker that says ',
 	            _react2.default.createElement(
 	              'a',
-	              { href: 'https://www.lost-item.com/eric' },
+	              { href: 'http://www.lost-item.com/eric' },
 	              'www.lost-item.com/eric'
 	            ),
 	            ' on it. So if anyone finds my phone, it will be easy for them to figure out who it belongs to.'
