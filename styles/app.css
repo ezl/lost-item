@@ -107,6 +107,25 @@ p.cta {
     margin-bottom: 5px;
     color: #545454;
 }
+.input-group .form-control {
+    margin-top: 0px;
+    -webkit-border-top-left-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-bottomleft: 0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.input-group .input-group-addon {
+    border-width: 2px;
+    padding: 0px 10px;
+    -webkit-border-top-left-radius: 2px;
+    -webkit-border-bottom-left-radius: 2px;
+    -moz-border-radius-topleft: 2px;
+    -moz-border-radius-bottomleft: 2px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
 .form-control:focus {
     border-color: #3ec19d;
 }

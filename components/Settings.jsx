@@ -96,7 +96,10 @@ class SettingsForm extends React.Component {
 
           <div className="form-group">
             <label>Slug</label>
-            <input value={this.state.slug} name="slug" onChange={this.handleChange.bind(this, 'slug')}  className="form-control" type="text" />
+            <div className="input-group">
+              <span className="input-group-addon">http://lost-item.com/</span>
+              <input value={this.state.slug} name="slug" onChange={this.handleChange.bind(this, 'slug')}  className="form-control" type="text" />
+            </div>
           </div>
 
           {this.state.updatingSettings ?
