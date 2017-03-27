@@ -55,9 +55,14 @@ div #authStatus div#username {
     background-color: white;
 }
 
-#settingsUpdateSuccessMessage {
-    color: #3ec19d;
+.settingsFlashMessage {
     padding-left: 20px;
+}
+.settingsSuccess {
+    color: #3ec19d;
+}
+.settingsError {
+    color: #E8686B;
 }
 
 h2 {

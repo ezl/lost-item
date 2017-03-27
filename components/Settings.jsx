@@ -14,7 +14,9 @@ class SettingsForm extends React.Component {
       name: "",
       slug: "",
       updatingSettings: false,
-      updateSettingsSuccessMessageVisible: false
+      updateSettingsSuccessMessageVisible: false,
+      updateSettingsErrorMessageVisible: false,
+      updateSettingsErrorMessageText: ''
     };
 
     this.updateProfile = this.updateProfile.bind(this);
@@ -41,12 +43,22 @@ class SettingsForm extends React.Component {
   }
 
   flashProfileUpdateSuccessMessage() {
-    console.log("flash");
+    console.log("flash success");
     this.setState({updateSettingsSuccessMessageVisible: true});
     setTimeout(
       () => {
         this.setState({updateSettingsSuccessMessageVisible: false});
-      }, 3000);
+      }, 5000);
+  }
+
+  flashProfileUpdateErrorMessage(message) {
+    console.log("flash error");
+    this.setState({updateSettingsErrorMessageText: message});
+    this.setState({updateSettingsErrorMessageVisible: true});
+    setTimeout(
+      () => {
+        this.setState({updateSettingsErrorMessageVisible: false});
+      }, 5000);
   }
 
   updateProfile(e) {
@@ -58,8 +70,25 @@ class SettingsForm extends React.Component {
       slug: this.state.slug
     };
     var user = this.props.user;
+    console.log("emails are", user.email, this.state.email);
+    if (user.email !== this.state.email) {
+      console.log("emails DO NOT match. try update.");
+      user.updateEmail(this.state.email).then(function() {
+        console.log("update success!");
+        // Update successful.
+      }, function(error) {
+        // An error happened.
+        console.log("update failure :(", error.message);
+      });
+    } else {
+      console.log("emails match, no need to update user.email");
+    }
+
+    // this.flashProfileUpdateErrorMessage("error message");
+
     var database = firebase.database();
     database.ref('users/' + user.uid).set(data);
+    // oh this is janky. just waiting a second and assuming success.
     setTimeout(
       () => {
         this.setState({updatingSettings: false});
@@ -91,7 +120,7 @@ class SettingsForm extends React.Component {
           <div className="form-group">
             <label>Email</label>
             <input value={this.state.email} name="email" onChange={this.handleChange.bind(this, 'email')} className="form-control" type="text" />
-            <small className="form-text text-muted">This is the email address we will use to contac you if your lost items are found</small>
+            <small className="form-text text-muted">This is the email address we will use to contact you if your lost items are found</small>
           </div>
 
           <div className="form-group">
@@ -108,8 +137,11 @@ class SettingsForm extends React.Component {
           <button className="btn btn-primary">Update Settings</button>
           }
 
+          {this.state.updateSettingsErrorMessageVisible &&
+          <span className='settingsFlashMessage settingsError'>{this.state.updateSettingsErrorMessageText}</span>
+          }
           {this.state.updateSettingsSuccessMessageVisible &&
-          <span id="settingsUpdateSuccessMessage">Success!</span>
+          <span className='settingsFlashMessage settingsSuccess'>Success!</span>
           }
         </form>
       </div>
@@ -132,6 +164,7 @@ class Settings extends React.Component {
         <div>
           <div className="row">
             <div className="col-md-6">
+              <small className='text-muted'>{this.props.user.email}</small>
               <h2>Settings</h2>
               <br />
               <SettingsForm user={this.props.user} />
