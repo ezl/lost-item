@@ -5,13 +5,18 @@ const propTypes = {
   children: PropTypes.element,
 };
 
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
 class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       'name': '',
       'email': '',
-      'signupFormError': ''
+      'signupFormError': '',
+      'signupButtonPending': false
     };
 
     this.createUser = this.createUser.bind(this);
@@ -19,13 +24,16 @@ class SignUpForm extends React.Component {
   }
 
   createUser(e) {
+    console.log("createUser");
+    this.setState({signupButtonPending: true});
     e.preventDefault();
 
     var email = this.state.email.trim();
     var password = Math.random().toString(36).substring(7);
     var password = "password";
     var name = this.state.name.trim();
-    var slug = Math.random().toString(36).substring(21);
+    var slug = Math.random().toString(36).substring(6);
+    console.log("slug", slug);
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(function(user) {
@@ -43,13 +51,16 @@ class SignUpForm extends React.Component {
         console.log(error.code, error.message);
         this.setState({signupFormError: error.message});
       }.bind(this));
+
+    // this.setState({signupButtonPending: false});
   }
 
   updateProfile(user, data) {
+    console.log("updateProfile");
     var database = firebase.database();
     database.ref('users/' + user.uid).set(data).then(function() {
       browserHistory.push('settings/');
-    }); 
+    });
   }
 
   handleChange(name, e) {
@@ -75,13 +86,19 @@ class SignUpForm extends React.Component {
         <p>
             Give me a personal www.lost-item.com link, please!
         </p>
+
         {this.state.signupFormError && (
         <div className="alert alert-danger" role="alert">
           <strong>You suck at signing up. </strong>
           <p>{this.state.signupFormError} :(</p>
         </div>
         )}
-        <button type="submit" className="btn btn-primary">Love, {this.state.name ? this.state.name : 'me'}</button>
+
+        {this.state.signupButtonPending ?
+        <button className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin"></i> Signing Up...</button>
+        :
+        <button type="submit" className="btn btn-primary">Love, {this.state.name ? toTitleCase(this.state.name) : 'Me'}</button>
+        }
       </form>
     )
   }

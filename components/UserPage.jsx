@@ -12,7 +12,7 @@ var getSlug = function() {
 
 class UserContactForm extends React.Component {
   render() {
-    const buttonText = `Let ${this.props.name} know you found something!`;
+    const buttonText = `Send`;
     const action = "https://formspree.io/" + `${this.props.email}`;
     return (
       <form action={action} method="POST">
@@ -31,7 +31,7 @@ class UserContactForm extends React.Component {
           <textarea className="form-control" type="text" name="where" />
           <small className="form-text text-muted">Leave your contact email or phone here, or a message for how {this.props.name} can retrieve it, like "I left it with the front desk at the ACME Hotel at Colombus and 4th Street."</small>
         </div>
-        <button type="submit" className="btn btn-primary">{buttonText}</button>
+        <button type="submit" className="btn btn-primary"><i className='fa fa-send'></i> {buttonText}</button>
       </form>
     )
   }

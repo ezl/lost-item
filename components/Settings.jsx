@@ -14,7 +14,9 @@ class SettingsForm extends React.Component {
       name: "",
       slug: "",
       updatingSettings: false,
-      updateSettingsSuccessMessageVisible: false
+      updateSettingsSuccessMessageVisible: false,
+      updateSettingsErrorMessageVisible: false,
+      updateSettingsErrorMessageText: ''
     };
 
     this.updateProfile = this.updateProfile.bind(this);
@@ -30,9 +32,6 @@ class SettingsForm extends React.Component {
       });
     }.bind(this));
   }
-  specialtyLinkClickHandler() {
-    alert("Feature not yet implemented.");
-  }
 
   handleChange(name, e) {
     var change = {};
@@ -41,12 +40,22 @@ class SettingsForm extends React.Component {
   }
 
   flashProfileUpdateSuccessMessage() {
-    console.log("flash");
+    console.log("flash success");
     this.setState({updateSettingsSuccessMessageVisible: true});
     setTimeout(
       () => {
         this.setState({updateSettingsSuccessMessageVisible: false});
-      }, 3000);
+      }, 5000);
+  }
+
+  flashProfileUpdateErrorMessage(message) {
+    console.log("flash error");
+    this.setState({updateSettingsErrorMessageText: message});
+    this.setState({updateSettingsErrorMessageVisible: true});
+    setTimeout(
+      () => {
+        this.setState({updateSettingsErrorMessageVisible: false});
+      }, 5000);
   }
 
   updateProfile(e) {
@@ -58,8 +67,25 @@ class SettingsForm extends React.Component {
       slug: this.state.slug
     };
     var user = this.props.user;
+    console.log("emails are", user.email, this.state.email);
+    if (user.email !== this.state.email) {
+      console.log("emails DO NOT match. try update.");
+      user.updateEmail(this.state.email).then(function() {
+        console.log("update success!");
+        // Update successful.
+      }, function(error) {
+        // An error happened.
+        console.log("update failure :(", error.message);
+      });
+    } else {
+      console.log("emails match, no need to update user.email");
+    }
+
+    // this.flashProfileUpdateErrorMessage("error message");
+
     var database = firebase.database();
     database.ref('users/' + user.uid).set(data);
+    // oh this is janky. just waiting a second and assuming success.
     setTimeout(
       () => {
         this.setState({updatingSettings: false});
@@ -68,17 +94,19 @@ class SettingsForm extends React.Component {
   }
 
   render() {
+    var url = "http://www.lost-item.com/" + this.state.slug;
     return (
       <div>
         <div className="row">
           <div className="col-md-12">
             <div>
-              <label>Your Link</label>: <strong>www.lost-item.com/{this.state.slug}</strong>
-              <small className="form-text text-muted">This is the link you'll label your stuff with. You can write it or print it on things you own like credit cards or cell phones, print labels and sew it to clothes.
-              </small>
+              <label>Your Link</label>: <strong><a href={url}>www.lost-item.com/{this.state.slug}</a></strong>
+              <small className="form-text text-muted">This is the link you'll label your stuff with. You can write it or print it on things you own like credit cards or cell phones, print labels and sew it to clothes.</small>
             </div>
-            <br />
-            <div><button onClick={this.specialtyLinkClickHandler} className="btn btn-primary">Buy a custom link</button></div>
+            <div className='hidden-xs-up'>
+              <label>Your Log In Email Address</label>: {this.props.user.email}
+              <small className="form-text text-muted">Use this email address to log in. It doesn't necessarily have to be the same as the contact email below.</small>
+            </div>
           </div>
         </div>
         <br />
@@ -86,17 +114,20 @@ class SettingsForm extends React.Component {
           <div className="form-group">
             <label>Name</label>
             <input value={this.state.name} name="name" onChange={this.handleChange.bind(this, 'name')} className="form-control" type="text" />
-            <small className="form-text text-muted">Como te llamas?</small>
+            <small className="form-text text-muted">What name do you want displayed on your Lost Item page?</small>
           </div>
           <div className="form-group">
             <label>Email</label>
             <input value={this.state.email} name="email" onChange={this.handleChange.bind(this, 'email')} className="form-control" type="text" />
-            <small className="form-text text-muted">An email address so we can let you know if your lost items are found</small>
+            <small className="form-text text-muted">This is the email address we will use to contact you if your lost items are found</small>
           </div>
 
           <div className="form-group">
-            <label>Slug</label>
-            <input value={this.state.slug} name="slug" onChange={this.handleChange.bind(this, 'slug')}  className="form-control" type="text" />
+            <label>Your Link</label>
+            <div className="input-group">
+              <span className="input-group-addon">http://lost-item.com/</span>
+              <input value={this.state.slug} name="slug" onChange={this.handleChange.bind(this, 'slug')}  className="form-control" type="text" />
+            </div>
           </div>
 
           {this.state.updatingSettings ?
@@ -105,8 +136,11 @@ class SettingsForm extends React.Component {
           <button className="btn btn-primary">Update Settings</button>
           }
 
+          {this.state.updateSettingsErrorMessageVisible &&
+          <span className='settingsFlashMessage settingsError'>{this.state.updateSettingsErrorMessageText}</span>
+          }
           {this.state.updateSettingsSuccessMessageVisible &&
-          <span id="settingsUpdateSuccessMessage">Success!</span>
+          <span className='settingsFlashMessage settingsSuccess'>Success!</span>
           }
         </form>
       </div>
