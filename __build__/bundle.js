@@ -79,11 +79,11 @@
 	
 	var _HowItWorks2 = _interopRequireDefault(_HowItWorks);
 	
-	var _Settings = __webpack_require__(/*! ./components/Settings */ 262);
+	var _Settings = __webpack_require__(/*! ./components/Settings */ 261);
 	
 	var _Settings2 = _interopRequireDefault(_Settings);
 	
-	var _UserPage = __webpack_require__(/*! ./components/UserPage */ 263);
+	var _UserPage = __webpack_require__(/*! ./components/UserPage */ 262);
 	
 	var _UserPage2 = _interopRequireDefault(_UserPage);
 	
@@ -29473,15 +29473,15 @@
 	          slug: slug
 	        };
 	        this.updateProfile(user, data);
+	        this.setState({ signupButtonPending: false });
 	      }.bind(this)).catch(function (error) {
 	        // Handle Errors here.
 	        var errorCode = error.code;
 	        var errorMessage = error.message;
 	        console.log(error.code, error.message);
 	        this.setState({ signupFormError: error.message });
+	        this.setState({ signupButtonPending: false });
 	      }.bind(this));
-	
-	      // this.setState({signupButtonPending: false});
 	    }
 	  }, {
 	    key: 'updateProfile',
@@ -29489,7 +29489,7 @@
 	      console.log("updateProfile");
 	      var database = firebase.database();
 	      database.ref('users/' + user.uid).set(data).then(function () {
-	        _reactRouter.browserHistory.push('settings/');
+	        _reactRouter.browserHistory.push('/settings/');
 	      });
 	    }
 	  }, {
@@ -29676,7 +29676,8 @@
 	    _this.state = {
 	      'email': '',
 	      'password': '',
-	      'loginFormError': ''
+	      'loginFormError': '',
+	      'loginButtonPending': false
 	    };
 	
 	    _this.logInUser = _this.logInUser.bind(_this);
@@ -29687,17 +29688,23 @@
 	    key: 'logInUser',
 	    value: function logInUser(e) {
 	      e.preventDefault();
+	      this.setState({ loginButtonPending: true });
 	
 	      var email = this.state.email.trim();
 	      var password = "password";
 	      console.log("trying to log in!", email, password);
 	
-	      firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+	      firebase.auth().signInWithEmailAndPassword(email, password).then(function () {
+	        console.log("successfully logged in");
+	        _reactRouter.browserHistory.push('/settings/');
+	        this.setState({ loginButtonPending: false });
+	      }).catch(function (error) {
 	        // Handle Errors here.
 	        var errorCode = error.code;
 	        var errorMessage = error.message;
 	        console.log(errorCode, errorMessage);
 	        this.setState({ logInFormError: error.message });
+	        this.setState({ loginButtonPending: false });
 	      }.bind(this));
 	    }
 	  }, {
@@ -29766,7 +29773,12 @@
 	            ' :('
 	          )
 	        ),
-	        _react2.default.createElement(
+	        this.state.loginButtonPending ? _react2.default.createElement(
+	          'button',
+	          { className: 'btn btn-primary', disabled: true },
+	          _react2.default.createElement('i', { className: 'fa fa-spinner fa-spin' }),
+	          ' Logging In...'
+	        ) : _react2.default.createElement(
 	          'button',
 	          { className: 'btn btn-primary' },
 	          'Log In'
@@ -29881,8 +29893,7 @@
 	exports.default = HowItWorks;
 
 /***/ },
-/* 261 */,
-/* 262 */
+/* 261 */
 /*!*********************************!*\
   !*** ./components/Settings.jsx ***!
   \*********************************/
@@ -30211,7 +30222,7 @@
 	exports.default = Settings;
 
 /***/ },
-/* 263 */
+/* 262 */
 /*!*********************************!*\
   !*** ./components/UserPage.jsx ***!
   \*********************************/
@@ -30229,7 +30240,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _axios = __webpack_require__(/*! axios */ 264);
+	var _axios = __webpack_require__(/*! axios */ 263);
 	
 	var _axios2 = _interopRequireDefault(_axios);
 	
@@ -30464,16 +30475,16 @@
 	exports.default = UserPage;
 
 /***/ },
-/* 264 */
+/* 263 */
 /*!**************************!*\
   !*** ./~/axios/index.js ***!
   \**************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! ./lib/axios */ 265);
+	module.exports = __webpack_require__(/*! ./lib/axios */ 264);
 
 /***/ },
-/* 265 */
+/* 264 */
 /*!******************************!*\
   !*** ./~/axios/lib/axios.js ***!
   \******************************/
@@ -30481,10 +30492,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 266);
-	var bind = __webpack_require__(/*! ./helpers/bind */ 267);
-	var Axios = __webpack_require__(/*! ./core/Axios */ 268);
-	var defaults = __webpack_require__(/*! ./defaults */ 269);
+	var utils = __webpack_require__(/*! ./utils */ 265);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 266);
+	var Axios = __webpack_require__(/*! ./core/Axios */ 267);
+	var defaults = __webpack_require__(/*! ./defaults */ 268);
 	
 	/**
 	 * Create an instance of Axios
@@ -30517,15 +30528,15 @@
 	};
 	
 	// Expose Cancel & CancelToken
-	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 286);
-	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 287);
-	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 283);
+	axios.Cancel = __webpack_require__(/*! ./cancel/Cancel */ 285);
+	axios.CancelToken = __webpack_require__(/*! ./cancel/CancelToken */ 286);
+	axios.isCancel = __webpack_require__(/*! ./cancel/isCancel */ 282);
 	
 	// Expose all/spread
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(/*! ./helpers/spread */ 288);
+	axios.spread = __webpack_require__(/*! ./helpers/spread */ 287);
 	
 	module.exports = axios;
 	
@@ -30534,7 +30545,7 @@
 
 
 /***/ },
-/* 266 */
+/* 265 */
 /*!******************************!*\
   !*** ./~/axios/lib/utils.js ***!
   \******************************/
@@ -30542,7 +30553,7 @@
 
 	'use strict';
 	
-	var bind = __webpack_require__(/*! ./helpers/bind */ 267);
+	var bind = __webpack_require__(/*! ./helpers/bind */ 266);
 	
 	/*global toString:true*/
 	
@@ -30842,7 +30853,7 @@
 
 
 /***/ },
-/* 267 */
+/* 266 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/bind.js ***!
   \*************************************/
@@ -30862,7 +30873,7 @@
 
 
 /***/ },
-/* 268 */
+/* 267 */
 /*!***********************************!*\
   !*** ./~/axios/lib/core/Axios.js ***!
   \***********************************/
@@ -30870,12 +30881,12 @@
 
 	'use strict';
 	
-	var defaults = __webpack_require__(/*! ./../defaults */ 269);
-	var utils = __webpack_require__(/*! ./../utils */ 266);
-	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 280);
-	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 281);
-	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 284);
-	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 285);
+	var defaults = __webpack_require__(/*! ./../defaults */ 268);
+	var utils = __webpack_require__(/*! ./../utils */ 265);
+	var InterceptorManager = __webpack_require__(/*! ./InterceptorManager */ 279);
+	var dispatchRequest = __webpack_require__(/*! ./dispatchRequest */ 280);
+	var isAbsoluteURL = __webpack_require__(/*! ./../helpers/isAbsoluteURL */ 283);
+	var combineURLs = __webpack_require__(/*! ./../helpers/combineURLs */ 284);
 	
 	/**
 	 * Create a new instance of Axios
@@ -30956,7 +30967,7 @@
 
 
 /***/ },
-/* 269 */
+/* 268 */
 /*!*********************************!*\
   !*** ./~/axios/lib/defaults.js ***!
   \*********************************/
@@ -30964,8 +30975,8 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./utils */ 266);
-	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 270);
+	var utils = __webpack_require__(/*! ./utils */ 265);
+	var normalizeHeaderName = __webpack_require__(/*! ./helpers/normalizeHeaderName */ 269);
 	
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -30982,10 +30993,10 @@
 	  var adapter;
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(/*! ./adapters/xhr */ 271);
+	    adapter = __webpack_require__(/*! ./adapters/xhr */ 270);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(/*! ./adapters/http */ 271);
+	    adapter = __webpack_require__(/*! ./adapters/http */ 270);
 	  }
 	  return adapter;
 	}
@@ -31059,7 +31070,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../webpack/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 270 */
+/* 269 */
 /*!****************************************************!*\
   !*** ./~/axios/lib/helpers/normalizeHeaderName.js ***!
   \****************************************************/
@@ -31067,7 +31078,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ../utils */ 266);
+	var utils = __webpack_require__(/*! ../utils */ 265);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -31080,7 +31091,7 @@
 
 
 /***/ },
-/* 271 */
+/* 270 */
 /*!*************************************!*\
   !*** ./~/axios/lib/adapters/xhr.js ***!
   \*************************************/
@@ -31088,13 +31099,13 @@
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 266);
-	var settle = __webpack_require__(/*! ./../core/settle */ 272);
-	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 275);
-	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 276);
-	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 277);
-	var createError = __webpack_require__(/*! ../core/createError */ 273);
-	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ 278);
+	var utils = __webpack_require__(/*! ./../utils */ 265);
+	var settle = __webpack_require__(/*! ./../core/settle */ 271);
+	var buildURL = __webpack_require__(/*! ./../helpers/buildURL */ 274);
+	var parseHeaders = __webpack_require__(/*! ./../helpers/parseHeaders */ 275);
+	var isURLSameOrigin = __webpack_require__(/*! ./../helpers/isURLSameOrigin */ 276);
+	var createError = __webpack_require__(/*! ../core/createError */ 272);
+	var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(/*! ./../helpers/btoa */ 277);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -31190,7 +31201,7 @@
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 279);
+	      var cookies = __webpack_require__(/*! ./../helpers/cookies */ 278);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -31267,7 +31278,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./../../../webpack/~/node-libs-browser/~/process/browser.js */ 3)))
 
 /***/ },
-/* 272 */
+/* 271 */
 /*!************************************!*\
   !*** ./~/axios/lib/core/settle.js ***!
   \************************************/
@@ -31275,7 +31286,7 @@
 
 	'use strict';
 	
-	var createError = __webpack_require__(/*! ./createError */ 273);
+	var createError = __webpack_require__(/*! ./createError */ 272);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -31301,7 +31312,7 @@
 
 
 /***/ },
-/* 273 */
+/* 272 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/core/createError.js ***!
   \*****************************************/
@@ -31309,7 +31320,7 @@
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(/*! ./enhanceError */ 274);
+	var enhanceError = __webpack_require__(/*! ./enhanceError */ 273);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -31327,7 +31338,7 @@
 
 
 /***/ },
-/* 274 */
+/* 273 */
 /*!******************************************!*\
   !*** ./~/axios/lib/core/enhanceError.js ***!
   \******************************************/
@@ -31355,7 +31366,7 @@
 
 
 /***/ },
-/* 275 */
+/* 274 */
 /*!*****************************************!*\
   !*** ./~/axios/lib/helpers/buildURL.js ***!
   \*****************************************/
@@ -31363,7 +31374,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 266);
+	var utils = __webpack_require__(/*! ./../utils */ 265);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -31432,7 +31443,7 @@
 
 
 /***/ },
-/* 276 */
+/* 275 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/helpers/parseHeaders.js ***!
   \*********************************************/
@@ -31440,7 +31451,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 266);
+	var utils = __webpack_require__(/*! ./../utils */ 265);
 	
 	/**
 	 * Parse headers into an object
@@ -31478,7 +31489,7 @@
 
 
 /***/ },
-/* 277 */
+/* 276 */
 /*!************************************************!*\
   !*** ./~/axios/lib/helpers/isURLSameOrigin.js ***!
   \************************************************/
@@ -31486,7 +31497,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 266);
+	var utils = __webpack_require__(/*! ./../utils */ 265);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -31555,7 +31566,7 @@
 
 
 /***/ },
-/* 278 */
+/* 277 */
 /*!*************************************!*\
   !*** ./~/axios/lib/helpers/btoa.js ***!
   \*************************************/
@@ -31600,7 +31611,7 @@
 
 
 /***/ },
-/* 279 */
+/* 278 */
 /*!****************************************!*\
   !*** ./~/axios/lib/helpers/cookies.js ***!
   \****************************************/
@@ -31608,7 +31619,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 266);
+	var utils = __webpack_require__(/*! ./../utils */ 265);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -31662,7 +31673,7 @@
 
 
 /***/ },
-/* 280 */
+/* 279 */
 /*!************************************************!*\
   !*** ./~/axios/lib/core/InterceptorManager.js ***!
   \************************************************/
@@ -31670,7 +31681,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 266);
+	var utils = __webpack_require__(/*! ./../utils */ 265);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -31723,7 +31734,7 @@
 
 
 /***/ },
-/* 281 */
+/* 280 */
 /*!*********************************************!*\
   !*** ./~/axios/lib/core/dispatchRequest.js ***!
   \*********************************************/
@@ -31731,10 +31742,10 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 266);
-	var transformData = __webpack_require__(/*! ./transformData */ 282);
-	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 283);
-	var defaults = __webpack_require__(/*! ../defaults */ 269);
+	var utils = __webpack_require__(/*! ./../utils */ 265);
+	var transformData = __webpack_require__(/*! ./transformData */ 281);
+	var isCancel = __webpack_require__(/*! ../cancel/isCancel */ 282);
+	var defaults = __webpack_require__(/*! ../defaults */ 268);
 	
 	/**
 	 * Throws a `Cancel` if cancellation has been requested.
@@ -31811,7 +31822,7 @@
 
 
 /***/ },
-/* 282 */
+/* 281 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/core/transformData.js ***!
   \*******************************************/
@@ -31819,7 +31830,7 @@
 
 	'use strict';
 	
-	var utils = __webpack_require__(/*! ./../utils */ 266);
+	var utils = __webpack_require__(/*! ./../utils */ 265);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -31840,7 +31851,7 @@
 
 
 /***/ },
-/* 283 */
+/* 282 */
 /*!****************************************!*\
   !*** ./~/axios/lib/cancel/isCancel.js ***!
   \****************************************/
@@ -31854,7 +31865,7 @@
 
 
 /***/ },
-/* 284 */
+/* 283 */
 /*!**********************************************!*\
   !*** ./~/axios/lib/helpers/isAbsoluteURL.js ***!
   \**********************************************/
@@ -31877,7 +31888,7 @@
 
 
 /***/ },
-/* 285 */
+/* 284 */
 /*!********************************************!*\
   !*** ./~/axios/lib/helpers/combineURLs.js ***!
   \********************************************/
@@ -31898,7 +31909,7 @@
 
 
 /***/ },
-/* 286 */
+/* 285 */
 /*!**************************************!*\
   !*** ./~/axios/lib/cancel/Cancel.js ***!
   \**************************************/
@@ -31926,7 +31937,7 @@
 
 
 /***/ },
-/* 287 */
+/* 286 */
 /*!*******************************************!*\
   !*** ./~/axios/lib/cancel/CancelToken.js ***!
   \*******************************************/
@@ -31934,7 +31945,7 @@
 
 	'use strict';
 	
-	var Cancel = __webpack_require__(/*! ./Cancel */ 286);
+	var Cancel = __webpack_require__(/*! ./Cancel */ 285);
 	
 	/**
 	 * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -31992,7 +32003,7 @@
 
 
 /***/ },
-/* 288 */
+/* 287 */
 /*!***************************************!*\
   !*** ./~/axios/lib/helpers/spread.js ***!
   \***************************************/
