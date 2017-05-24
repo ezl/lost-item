@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-import { Link, browserHistory } from 'react-router';
+import React from 'react';
+import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 const propTypes = {
   children: PropTypes.element,

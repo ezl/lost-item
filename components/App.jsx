@@ -1,35 +1,34 @@
-import React, { PropTypes } from 'react';
-import { Link, browserHistory } from 'react-router';
-
+import React from 'react';
+import { browserHistory } from 'react-router';
+import PropTypes from 'prop-types';
 
 const propTypes = {
   children: PropTypes.element.isRequired,
   routes: PropTypes.array.isRequired,
 };
 
-class Links extends React.Component {
-  render() {
-    return(
-      <ul className="nav navbar-nav">
-        <li className="nav-item hidden-xs-down">
-          <a className="title nav-link" href="/">
-            lost-item
-          </a>
-        </li>
-        <li className="nav-item"><a className="nav-link" href="/how-it-works">How Does It Work?</a></li>
-      </ul>
-    )
-  }
-}
+const Links = () =>
+  <ul className="nav navbar-nav">
+    <li className="nav-item hidden-xs-down">
+      <a className="title nav-link" href="/">
+        lost-item
+      </a>
+    </li>
+    <li className="nav-item"><a className="nav-link" href="/how-it-works">How Does It Work?</a></li>
+  </ul>;
 
 class AuthStatus extends React.Component {
+  static propTypes = {
+    user: PropTypes.object,
+  };
+
   constructor(props) {
     super(props);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
   handleLogout() {
-    var resp = firebase.auth().signOut();
+    firebase.auth().signOut();
     browserHistory.push('/');
   }
 
@@ -38,30 +37,26 @@ class AuthStatus extends React.Component {
       return (
         <div id="authStatus" className="navbar-nav">
           <a className="nav-link nav-item" href="/signup">Sign Up</a>
-          <a className='nav-link nav-item' href="/login">Log In</a>
+          <a className="nav-link nav-item" href="/login">Log In</a>
         </div>
-      )
-    } else {
-      return (
-        <div id="authStatus" className="navbar-nav">
-          <a className='nav-link nav-item' href='/settings'>Settings</a>
-          <a className='nav-link nav-item' onClick={this.handleLogout} href="#">Log Out</a>
-        </div>
-      )
+      );
     }
+    return (
+      <div id="authStatus" className="navbar-nav">
+        <a className="nav-link nav-item" href="/settings">Settings</a>
+        <a className="nav-link nav-item" onClick={this.handleLogout} href="#">Log Out</a>
+      </div>
+    );
   }
 }
 
 class Nav extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
       <nav className="navbar navbar-dark">
         <div className="clearfix">
-          <button className="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation"></button>
+          <button className="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation" />
           <a className="navbar-brand hidden-sm-up" href="/">
             lost-item
           </a>
@@ -71,29 +66,28 @@ class Nav extends React.Component {
           <AuthStatus user={this.props.user} />
         </div>
       </nav>
-    )
+    );
   }
 }
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    var user = firebase.auth().currentUser;
-    this.state = {user: user};
+    const user = firebase.auth().currentUser;
+    this.state = { user };
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(function(user) {
-        this.setState({'user': user});
+    firebase.auth().onAuthStateChanged((user) => {
+      this.setState({ user });
       if (user) {
         // User is signed in.
       } else {
       }
-    }.bind(this));
-
+    });
   }
   render() {
-    var children = React.cloneElement(this.props.children, {user: this.state.user});
+    const children = React.cloneElement(this.props.children, { user: this.state.user });
     return (
       <div>
         <Nav user={this.state.user} />

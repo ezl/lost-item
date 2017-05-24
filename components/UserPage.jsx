@@ -1,19 +1,20 @@
-import React, { PropTypes } from 'react';
-import axios from 'axios';
+import React from 'react';
+import PropTypes from 'prop-types';
+import values from 'object.values';
 
 const propTypes = {
   location: PropTypes.object.isRequired,
 };
 
-var getSlug = function() {
+const getSlug = function () {
   // Just cut off the preceding '/'
   return location.pathname.slice(1);
 };
 
 class UserContactForm extends React.Component {
   render() {
-    const buttonText = `Send`;
-    const action = "https://formspree.io/" + `${this.props.email}`;
+    const buttonText = 'Send';
+    const action = 'https://formspree.io/' + `${this.props.email}`;
     return (
       <form action={action} method="POST">
         <div className="form-group">
@@ -31,9 +32,9 @@ class UserContactForm extends React.Component {
           <textarea className="form-control" type="text" name="where" />
           <small className="form-text text-muted">Leave your contact email or phone here, or a message for how {this.props.name} can retrieve it, like "I left it with the front desk at the ACME Hotel at Colombus and 4th Street."</small>
         </div>
-        <button type="submit" className="btn btn-primary"><i className='fa fa-send'></i> {buttonText}</button>
+        <button type="submit" className="btn btn-primary"><i className="fa fa-send" /> {buttonText}</button>
       </form>
-    )
+    );
   }
 }
 
@@ -55,7 +56,7 @@ class UserInfo extends React.Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -66,7 +67,7 @@ class UserNotFound extends React.Component {
         <strong>No Such Page</strong>
         <p>Hmmm... We do not have a page for this link. Did you find an item with this link on it?</p>
       </div>
-    )
+    );
   }
 }
 
@@ -74,35 +75,34 @@ class UserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null
+      user: null,
     };
   }
 
   componentDidMount() {
-    var slug = getSlug();
+    const slug = getSlug();
 
     firebase.database()
       .ref('/users')
       .orderByChild('slug')
       .equalTo(slug)
       .once('value')
-      .then(function(snapshot) {
+      .then((snapshot) => {
         if (snapshot.val() === null) {
           // not exists;
         } else {
           // do something else;
-          var user = Object.values(snapshot.val())[0];
-          this.setState({'user': user});
-        };
-       }.bind(this));
+          const user = values(snapshot.val())[0];
+          this.setState({ user });
+        }
+      });
   }
 
   render() {
     if (this.state.user === null) {
       return <UserNotFound />;
-    } else {
-      return <UserInfo user={this.state.user} />;
     }
+    return <UserInfo user={this.state.user} />;
   }
 }
 
