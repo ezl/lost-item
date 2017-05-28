@@ -1,6 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
+import { getFirebaseApp } from './db/FirebaseApp';
 
 const propTypes = {
   children: PropTypes.element,
@@ -27,7 +28,7 @@ class LogInForm extends React.Component {
     var password = "password";
     console.log("trying to log in!", email, password);
 
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    getFirebaseApp().auth().signInWithEmailAndPassword(email, password)
       .then(function() {
         console.log("successfully logged in");
         browserHistory.push('/settings/');
@@ -83,19 +84,16 @@ class LogInForm extends React.Component {
   }
 }
 
-function LogIn() {
-  return (
-    <div>
-      <div className="row">
-        <div className="col-md-6">
-          <h2>Log In</h2>
-          <br />
-          <LogInForm />
-        </div>
+const LogIn = () =>
+  <div>
+    <div className="row">
+      <div className="col-md-6">
+        <h2>Log In</h2>
+        <br />
+        <LogInForm />
       </div>
     </div>
-  );
-}
+  </div>
 
 LogIn.propTypes = propTypes;
 

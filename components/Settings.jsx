@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getFirebaseApp } from './db/FirebaseApp';
 
 const propTypes = {
   children: PropTypes.element,
@@ -23,7 +24,7 @@ class SettingsForm extends React.Component {
   }
 
   componentDidMount() {
-    var database = firebase.database()
+    var database = getFirebaseApp().database()
     database.ref('users/' + this.props.user.uid).once('value').then(function(snapshot) {
       this.setState({
         name: snapshot.val().name,
@@ -83,7 +84,7 @@ class SettingsForm extends React.Component {
 
     // this.flashProfileUpdateErrorMessage("error message");
 
-    var database = firebase.database();
+    var database = getFirebaseApp().database();
     database.ref('users/' + user.uid).set(data);
     // oh this is janky. just waiting a second and assuming success.
     setTimeout(

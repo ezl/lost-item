@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import values from 'object.values';
+import { getFirebaseApp } from './db/FirebaseApp';
 
 const propTypes = {
   location: PropTypes.object.isRequired,
@@ -38,38 +39,33 @@ class UserContactForm extends React.Component {
   }
 }
 
-class UserInfo extends React.Component {
-  render() {
-    return (
-      <div>
-        <div className="row">
-          <div className="col-md-12">
-            <h2>Yay! You found something that belongs to {this.props.user.name}!</h2>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-            <br />
-            <p>{this.props.user.name} will be very happy to hear that! Please help get this item returned!</p>
-            <UserContactForm name={this.props.user.name} email={this.props.user.email} />
-            <hr />
-          </div>
-        </div>
+const UserInfo = (props) =>
+  <div>
+    <div className="row">
+      <div className="col-md-12">
+        <h2>Yay! You found something that belongs to {props.user.name}!</h2>
       </div>
-    );
-  }
-}
+    </div>
+    <div className="row">
+      <div className="col-md-6">
+        <br />
+        <p>{props.user.name} will be very happy to hear that! Please help get this item returned!</p>
+        <UserContactForm name={this.props.user.name} email={props.user.email} />
+        <hr />
+      </div>
+    </div>
+  </div>
 
-class UserNotFound extends React.Component {
-  render() {
-    return (
-      <div>
-        <strong>No Such Page</strong>
-        <p>Hmmm... We do not have a page for this link. Did you find an item with this link on it?</p>
-      </div>
-    );
-  }
-}
+UserInfo.propTypes = {
+  user: PropTypes.object,
+};
+
+
+const UserNotFound = () =>
+  <div>
+    <strong>No Such Page</strong>
+    <p>Hmmm... We do not have a page for this link. Did you find an item with this link on it?</p>
+  </div>
 
 class UserPage extends React.Component {
   constructor(props) {
@@ -82,7 +78,7 @@ class UserPage extends React.Component {
   componentDidMount() {
     const slug = getSlug();
 
-    firebase.database()
+    getFirebaseApp().database()
       .ref('/users')
       .orderByChild('slug')
       .equalTo(slug)
