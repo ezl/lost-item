@@ -18,6 +18,7 @@ class SignUpForm extends React.Component {
     this.state = {
       name: '',
       email: '',
+      password: '',
       signupFormError: '',
       signupButtonPending: false,
     };
@@ -31,7 +32,7 @@ class SignUpForm extends React.Component {
     e.preventDefault();
 
     const email = this.state.email.trim();
-    const password = Math.random().toString(36).substring(7);
+    const password = this.state.password.trim();
     const name = this.state.name.trim();
     const slug = Math.random().toString(36).substring(6);
     console.log('slug', slug);
@@ -48,8 +49,6 @@ class SignUpForm extends React.Component {
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
         console.log(error.code, error.message);
         this.setState({ signupFormError: error.message });
         this.setState({ signupButtonPending: false });
@@ -79,6 +78,8 @@ class SignUpForm extends React.Component {
             <input className="dotted" value={this.state.name} type="text" placeholder="name" name="name" onChange={this.handleChange.bind(this, 'name')} required="required" />
             and my email is
             <input className="dotted" value={this.state.email} type="email" placeholder="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
+            and my password is
+            <input className="dotted" value={this.state.password} type="password" placeholder="password" name="password" onChange={this.handleChange.bind(this, 'password')} required="required" />
             .
         </p>
         <p>

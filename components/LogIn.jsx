@@ -25,7 +25,7 @@ class LogInForm extends React.Component {
     this.setState({ loginButtonPending: true });
 
     const email = this.state.email.trim();
-    const password = 'password';
+    const password = this.state.password.trim();
     console.log('trying to log in!', email, password);
 
     getFirebaseApp().auth().signInWithEmailAndPassword(email, password)
