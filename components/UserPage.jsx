@@ -7,37 +7,39 @@ const propTypes = {
   location: PropTypes.object.isRequired,
 };
 
-const getSlug = function () {
+const getSlug = () =>
   // Just cut off the preceding '/'
-  return location.pathname.slice(1);
+   location.pathname.slice(1);
+
+const UserContactForm = (props) => {
+  const buttonText = 'Send';
+  const action = `https://formspree.io/${props.email}`;
+  return (
+    <form action={action} method="POST">
+      <div className="form-group">
+        <label>What did you find?</label>
+        <input className="form-control" type="text" name="what" />
+        <small className="form-text text-muted">e.g. an android phone, a credit card, a large sack of potatoes</small>
+      </div>
+      <div className="form-group">
+        <label>Where did you find it?</label>
+        <input className="form-control" type="text" name="where" />
+        <small className="form-text text-muted">e.g. at Burger King on Clark Street, at Jenny's house, on Richard Branson's jet</small>
+      </div>
+      <div className="form-group">
+        <label>What&#39;s the best way for {props.name} to get this item back?</label>
+        <textarea className="form-control" type="text" name="where" />
+        <small className="form-text text-muted">Leave your contact email or phone here, or a message for how {props.name} can retrieve it, like "I left it with the front desk at the ACME Hotel at Colombus and 4th Street."</small>
+      </div>
+      <button type="submit" className="btn btn-primary"><i className="fa fa-send" /> {buttonText}</button>
+    </form>
+  );
 };
 
-class UserContactForm extends React.Component {
-  render() {
-    const buttonText = 'Send';
-    const action = 'https://formspree.io/' + `${this.props.email}`;
-    return (
-      <form action={action} method="POST">
-        <div className="form-group">
-          <label>What did you find?</label>
-          <input className="form-control" type="text" name="what" />
-          <small className="form-text text-muted">e.g. an android phone, a credit card, a large sack of potatoes</small>
-        </div>
-        <div className="form-group">
-          <label>Where did you find it?</label>
-          <input className="form-control" type="text" name="where" />
-          <small className="form-text text-muted">e.g. at Burger King on Clark Street, at Jenny's house, on Richard Branson's jet</small>
-        </div>
-        <div className="form-group">
-          <label>What&#39;s the best way for {this.props.name} to get this item back?</label>
-          <textarea className="form-control" type="text" name="where" />
-          <small className="form-text text-muted">Leave your contact email or phone here, or a message for how {this.props.name} can retrieve it, like "I left it with the front desk at the ACME Hotel at Colombus and 4th Street."</small>
-        </div>
-        <button type="submit" className="btn btn-primary"><i className="fa fa-send" /> {buttonText}</button>
-      </form>
-    );
-  }
-}
+UserContactForm.propTypes = {
+  email: PropTypes.string,
+  name: PropTypes.string,
+};
 
 const UserInfo = (props) =>
   <div>
@@ -54,7 +56,7 @@ const UserInfo = (props) =>
         <hr />
       </div>
     </div>
-  </div>
+  </div>;
 
 UserInfo.propTypes = {
   user: PropTypes.object,
@@ -65,7 +67,7 @@ const UserNotFound = () =>
   <div>
     <strong>No Such Page</strong>
     <p>Hmmm... We do not have a page for this link. Did you find an item with this link on it?</p>
-  </div>
+  </div>;
 
 class UserPage extends React.Component {
   constructor(props) {
