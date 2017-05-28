@@ -50,7 +50,7 @@ const UserInfo = (props) =>
       <div className="col-md-6">
         <br />
         <p>{props.user.name} will be very happy to hear that! Please help get this item returned!</p>
-        <UserContactForm name={this.props.user.name} email={props.user.email} />
+        <UserContactForm name={props.user.name} email={props.user.email} />
         <hr />
       </div>
     </div>
