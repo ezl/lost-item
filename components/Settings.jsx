@@ -150,25 +150,17 @@ SettingsForm.propTypes = {
   user: PropTypes.object.isRequired,
 };
 
-const Settings = (props) => {
-  console.log(props);
-  if (props.user === null) {
-    return (
-      <div><h2>You must be logged in to view this page</h2><Link to="/">Click here to back to the home page.</Link></div>
-    );
-  }
-  return (
-    <div>
-      <div className="row">
-        <div className="col-md-6">
-          <h2>Settings</h2>
-          <br />
-          <SettingsForm user={props.user} />
-        </div>
+const Settings = (props) => (
+  <div>
+    <div className="row">
+      <div className="col-md-6">
+        <h2>Settings</h2>
+        <br />
+        <SettingsForm user={props.user} />
       </div>
     </div>
+  </div>
   );
-};
 
 Settings.propTypes = {
   user: PropTypes.object.isRequired,

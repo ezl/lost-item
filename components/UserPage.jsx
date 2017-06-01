@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import values from 'object.values';
 import { getFirebaseApp } from './db/FirebaseApp';
+import Loading from "./Loading";
 
 const propTypes = {
   location: PropTypes.object.isRequired,
@@ -70,13 +71,10 @@ const UserNotFound = () =>
   </div>;
 
 class UserPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null,
-    };
-  }
-
+  state = {
+    user: null,
+    loading: true,
+  };
   componentDidMount() {
     const slug = getSlug();
 
@@ -87,16 +85,19 @@ class UserPage extends React.Component {
       .once('value')
       .then((snapshot) => {
         if (snapshot.val() === null) {
-          // not exists;
+          this.setState({ user: null, loading: false });
         } else {
           // do something else;
           const user = values(snapshot.val())[0];
-          this.setState({ user });
+          this.setState({ user, loading: false });
         }
       });
   }
 
   render() {
+    if (this.state.loading) {
+      return <Loading />;
+    }
     if (this.state.user === null) {
       return <UserNotFound />;
     }

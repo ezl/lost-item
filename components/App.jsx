@@ -11,10 +11,9 @@ import Home from './Home';
 import HowItWorks from './HowItWorks';
 import UserPage from './UserPage';
 import Settings from './Settings';
+import PrivateRoute from './PrivateRoute';
+import Loading from './Loading';
 
-const propTypes = {
-  children: PropTypes.element.isRequired,
-};
 
 const Links = () =>
   <ul className="nav navbar-nav">
@@ -26,53 +25,57 @@ const Links = () =>
     <li className="nav-item"><Link className="nav-link" to="/how-it-works">How Does It Work?</Link></li>
   </ul>;
 
-const Nav = (props) => {
-  console.log(55555555);
-  console.log(props.user);
-  return (<nav className="navbar navbar-dark">
+const Nav = (props) =>
+  <nav className="navbar navbar-dark">
     <div className="clearfix">
       <button className="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation" />
       <Link className="navbar-brand hidden-sm-up" to="/">
-        lost-item
-      </Link>
+          lost-item
+        </Link>
     </div>
     <div className="collapse navbar-toggleable-xs" id="bd-main-nav">
       <Links user={props.user} />
       <AuthStatus user={props.user} />
     </div>
-  </nav>);
-};
+  </nav>;
 
 Nav.propTypes = {
   user: PropTypes.object,
 };
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    const user = getFirebaseApp().auth().currentUser;
-    this.state = { user };
-  }
+  state = {
+    user: null,
+    loading: true,
+  };
 
   componentDidMount() {
-    getFirebaseApp().auth().onAuthStateChanged((user) => {
-      this.setState({ user });
+    this.removeListener = getFirebaseApp().auth().onAuthStateChanged((user) => {
+      this.setState({
+        user,
+        loading: false,
+      });
     });
   }
+  componentWillUnmount() {
+    this.removeListener();
+  }
   render() {
-    const extraProps = { color: 'red' }
     return (
       <div>
         <Nav user={this.state.user} />
         <div className="container">
-          <Switch>
-            <Route exact path="/signup" mapMenuTitle="Claim Your Lost-Item.Com Link" component={SignUp} />
-            <Route exact path="/login" mapMenuTitle="Log In" component={LogIn} />
-            <Route exact path="/how-it-works" mapMenuTitle="How It Works" component={HowItWorks} />
-            <Route exact path="/settings" mapMenuTitle="Settings" render={(r => <Settings {...r} {...this.props} user={this.state.user} />)} />
-            <Route exact path="/" component={Home} />
-            <Route path="*" mapMenuTitle="User Page" component={UserPage} />
-          </Switch>
+          {this.state.loading
+                    ? <Loading />
+                    :
+                    <Switch>
+                      <Route exact path="/signup" mapMenuTitle="Claim Your Lost-Item.Com Link" component={SignUp} />
+                      <Route exact path="/login" mapMenuTitle="Log In" component={LogIn} />
+                      <Route exact path="/how-it-works" mapMenuTitle="How It Works" component={HowItWorks} />
+                      <PrivateRoute exact path="/settings" mapMenuTitle="Settings" component={Settings} user={this.state.user} />
+                      <Route exact path="/" component={Home} />
+                      <Route path="*" mapMenuTitle="User Page" component={UserPage} />
+                    </Switch>}
         </div>
       </div>
     );
