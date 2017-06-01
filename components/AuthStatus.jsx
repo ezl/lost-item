@@ -7,6 +7,9 @@ import { getFirebaseApp } from './db/FirebaseApp';
 class AuthStatus extends React.Component {
   static propTypes = {
     user: PropTypes.object,
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
   };
 
   constructor(props) {

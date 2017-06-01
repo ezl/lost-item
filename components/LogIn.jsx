@@ -8,6 +8,13 @@ const propTypes = {
 };
 
 class LogInForm extends React.Component {
+  static propTypes = {
+    user: PropTypes.object,
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {

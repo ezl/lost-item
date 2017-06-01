@@ -13,6 +13,12 @@ function toTitleCase(str) {
 }
 
 class SignUpForm extends React.Component {
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -57,6 +63,7 @@ class SignUpForm extends React.Component {
 
   updateProfile(user, data) {
     console.log('updateProfile');
+    console.log(this.props);
     const database = getFirebaseApp().database();
     database.ref(`users/${user.uid}`).set(data).then(() => {
       this.props.history.push('/settings/');
@@ -105,6 +112,7 @@ class SignUpForm extends React.Component {
     );
   }
 }
+const SignUpFormWithRouter = withRouter(SignUpForm);
 
 function SignUp() {
   return (
@@ -117,7 +125,7 @@ function SignUp() {
       <div className="row">
         <div className="col-md-6">
           <br />
-          <SignUpForm />
+          <SignUpFormWithRouter />
           <br />
         </div>
         <div className="col-md-6 hidden">
