@@ -40,7 +40,7 @@ class SignUpForm extends React.Component {
     const email = this.state.email.trim();
     const password = this.state.password.trim();
     const name = this.state.name.trim();
-    const slug = Math.random().toString(36).substring(6);
+    const slug = Math.random().toString(36).slice(-6);
     console.log('slug', slug);
 
     getFirebaseApp().auth().createUserWithEmailAndPassword(email, password)
