@@ -1,6 +1,7 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import { getFirebaseApp } from './db/FirebaseApp';
 
 class AuthStatus extends React.Component {
@@ -15,25 +16,25 @@ class AuthStatus extends React.Component {
 
   handleLogout() {
     getFirebaseApp().auth().signOut();
-    browserHistory.push('/');
+    this.props.history.push('/');
   }
 
   render() {
     if (this.props.user === null) {
       return (
         <div id="authStatus" className="navbar-nav">
-          <a className="nav-link nav-item" href="/signup">Sign Up</a>
-          <a className="nav-link nav-item" href="/login">Log In</a>
+          <Link className="nav-link nav-item" to="/signup">Sign Up</Link>
+          <Link className="nav-link nav-item" to="/login">Log In</Link>
         </div>
       );
     }
     return (
       <div id="authStatus" className="navbar-nav">
-        <a className="nav-link nav-item" href="/settings">Settings</a>
+        <Link className="nav-link nav-item" to="/settings">Settings</Link>
         <a className="nav-link nav-item" onClick={this.handleLogout}>Log Out</a>
       </div>
     );
   }
 }
 
-export default AuthStatus;
+export default withRouter(AuthStatus);

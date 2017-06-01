@@ -1,6 +1,6 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import { getFirebaseApp } from './db/FirebaseApp';
 
 const propTypes = {
@@ -31,7 +31,7 @@ class LogInForm extends React.Component {
     getFirebaseApp().auth().signInWithEmailAndPassword(email, password)
       .then(function () {
         console.log('successfully logged in');
-        browserHistory.push('/settings/');
+        this.props.history.push('/settings/');
         this.setState({ loginButtonPending: false });
       })
       .catch((error) => {
@@ -82,14 +82,14 @@ class LogInForm extends React.Component {
     );
   }
 }
-
+const LogInFormWithRouter = withRouter(LogInForm);
 const LogIn = () =>
   <div>
     <div className="row">
       <div className="col-md-6">
         <h2>Log In</h2>
         <br />
-        <LogInForm />
+        <LogInFormWithRouter />
       </div>
     </div>
   </div>;

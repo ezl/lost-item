@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { getFirebaseApp } from './db/FirebaseApp';
 
@@ -59,7 +59,7 @@ class SignUpForm extends React.Component {
     console.log('updateProfile');
     const database = getFirebaseApp().database();
     database.ref(`users/${user.uid}`).set(data).then(() => {
-      browserHistory.push('/settings/');
+      this.props.history.push('/settings/');
     });
   }
 
@@ -133,4 +133,4 @@ function SignUp() {
 
 SignUp.propTypes = propTypes;
 
-export default SignUp;
+export default withRouter(SignUp);

@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getFirebaseApp } from './db/FirebaseApp';
-
-const propTypes = {
-  children: PropTypes.element,
-};
 
 class SettingsForm extends React.Component {
   constructor(props) {
@@ -149,10 +146,15 @@ class SettingsForm extends React.Component {
   }
 }
 
+SettingsForm.propTypes = {
+  user: PropTypes.object.isRequired,
+};
+
 const Settings = (props) => {
+  console.log(props);
   if (props.user === null) {
     return (
-      <div><h2>You must be logged in to view this page</h2><a href="/">Click here to back to the home page.</a></div>
+      <div><h2>You must be logged in to view this page</h2><Link to="/">Click here to back to the home page.</Link></div>
     );
   }
   return (
@@ -169,7 +171,7 @@ const Settings = (props) => {
 };
 
 Settings.propTypes = {
-  user: PropTypes.object,
+  user: PropTypes.object.isRequired,
 };
 
 export default Settings;

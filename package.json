@@ -16,7 +16,8 @@
     "current-input": "^1.1.0",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
-    "react-router": "^2.4.1",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "object.values": "^1.0.4",
     "prop-types": "^15.5.10",
     "firebase": "^4.0.0"

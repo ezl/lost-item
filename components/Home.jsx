@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HeroUnit = () =>
   <div className="jumbotron">
@@ -15,17 +16,17 @@ const About = () =>
         things that you own.
       </p>
       <p>
-        For example, I have a sticker that says <a href="http://www.lost-item.com/eric">www.lost-item.com/eric</a> on it. So if anyone finds my phone, it will be easy for them to figure out who it belongs to.
+        For example, I have a sticker that says <Link to="/eric">www.lost-item.com/eric</Link> on it. So if anyone finds my phone, it will be easy for them to figure out who it belongs to.
       </p>
       <p>
         With your own www.lost-item.com link, if you ever lose something, whoever finds it
         will easily be able to get it back to you.
       </p>
       <p>
-        <a href="/eric">Click here</a> to see an example.
+        <Link to="/eric">Click here</Link> to see an example.
       </p>
       <p className="cta">
-        <a className="btn btn-primary" href="/signup">Oh, cool. Sign me up.</a>
+        <Link className="btn btn-primary" to="/signup">Oh, cool. Sign me up.</Link>
       </p>
     </section>
     <section>
@@ -40,7 +41,7 @@ const About = () =>
       </p>
       <p>So basically, Lost Item makes it easy for someone to contact you if they find your stuff.</p>
       <p className="cta">
-        <a className="btn btn-primary" href="/signup">Oh, cool. Sign me up.</a>
+        <Link className="btn btn-primary" to="/signup">Oh, cool. Sign me up.</Link>
       </p>
     </section>
     <section>
@@ -58,7 +59,7 @@ const About = () =>
       </ul>
       <p>For now though, I just built this for myself so I would be able to recover items I lose.</p>
       <p className="cta">
-        <a className="btn btn-primary" href="/signup">Oh, cool. Sign me up.</a>
+        <Link className="btn btn-primary" to="/signup">Oh, cool. Sign me up.</Link>
       </p>
     </section>
     <section>
@@ -67,7 +68,7 @@ const About = () =>
         I lose stuff. Often. Obviously, it's kind of a problem.
       </p>
       <p className="cta">
-        <a className="btn btn-primary" href="/signup">Oh, cool. Sign me up.</a>
+        <Link className="btn btn-primary" to="/signup">Oh, cool. Sign me up.</Link>
       </p>
     </section>
   </div>;

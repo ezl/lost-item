@@ -1,37 +1,47 @@
 /* eslint-disable max-len */
 import React from 'react';
+import { Link, Route, Switch } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
 import AuthStatus from './AuthStatus';
 import { getFirebaseApp } from './db/FirebaseApp';
+import SignUp from './Signup';
+import LogIn from './LogIn';
+import Home from './Home';
+import HowItWorks from './HowItWorks';
+import UserPage from './UserPage';
+import Settings from './Settings';
 
 const propTypes = {
   children: PropTypes.element.isRequired,
-  routes: PropTypes.array.isRequired,
 };
 
 const Links = () =>
   <ul className="nav navbar-nav">
     <li className="nav-item hidden-xs-down">
-      <a className="title nav-link" href="/">
+      <Link className="title nav-link" to="/">
         lost-item
-      </a>
+      </Link>
     </li>
-    <li className="nav-item"><a className="nav-link" href="/how-it-works">How Does It Work?</a></li>
+    <li className="nav-item"><Link className="nav-link" to="/how-it-works">How Does It Work?</Link></li>
   </ul>;
 
-const Nav = (props) =>
-  <nav className="navbar navbar-dark">
+const Nav = (props) => {
+  console.log(55555555);
+  console.log(props.user);
+  return (<nav className="navbar navbar-dark">
     <div className="clearfix">
       <button className="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation" />
-      <a className="navbar-brand hidden-sm-up" href="/">
+      <Link className="navbar-brand hidden-sm-up" to="/">
         lost-item
-      </a>
+      </Link>
     </div>
     <div className="collapse navbar-toggleable-xs" id="bd-main-nav">
       <Links user={props.user} />
       <AuthStatus user={props.user} />
     </div>
-  </nav>;
+  </nav>);
+};
 
 Nav.propTypes = {
   user: PropTypes.object,
@@ -50,18 +60,24 @@ class App extends React.Component {
     });
   }
   render() {
-    const children = React.cloneElement(this.props.children, { user: this.state.user });
+    const extraProps = { color: 'red' }
     return (
       <div>
         <Nav user={this.state.user} />
         <div className="container">
-          {children}
+          <Switch>
+            <Route exact path="/signup" mapMenuTitle="Claim Your Lost-Item.Com Link" component={SignUp} />
+            <Route exact path="/login" mapMenuTitle="Log In" component={LogIn} />
+            <Route exact path="/how-it-works" mapMenuTitle="How It Works" component={HowItWorks} />
+            <Route exact path="/settings" mapMenuTitle="Settings" render={(r => <Settings {...r} {...this.props} user={this.state.user} />)} />
+            <Route exact path="/" component={Home} />
+            <Route path="*" mapMenuTitle="User Page" component={UserPage} />
+          </Switch>
         </div>
       </div>
     );
   }
 }
 
-App.propTypes = propTypes;
 
 export default App;
