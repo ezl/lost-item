@@ -12,6 +12,7 @@ function toTitleCase(str) {
   return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
+
 class SignUpForm extends React.Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
@@ -50,6 +51,12 @@ class SignUpForm extends React.Component {
           email,
           slug,
         };
+        const formData = new FormData();
+        formData.append('name', 'Validation successful');
+        this.props.history.push(`/${slug}`);
+        const req = new XMLHttpRequest();
+        req.open('POST', `https://formspree.io/${email}`);
+        req.send(formData);
         this.updateProfile(user, data);
         this.setState({ signupButtonPending: false });
       })
@@ -66,7 +73,7 @@ class SignUpForm extends React.Component {
     console.log(this.props);
     const database = getFirebaseApp().database();
     database.ref(`users/${user.uid}`).set(data).then(() => {
-      this.props.history.push('/settings/');
+      this.props.history.push('/settings/', { verifyWarn: true });
     });
   }
 

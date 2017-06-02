@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import { getFirebaseApp } from './db/FirebaseApp';
 
 class SettingsForm extends React.Component {
   constructor(props) {
     super(props);
+    console.log('111111');
+    console.log(this.state);
 
     this.state = {
       email: '',
@@ -95,6 +97,9 @@ class SettingsForm extends React.Component {
     const url = `http://www.lost-item.com/${this.state.slug}`;
     return (
       <div>
+        {this.props.location.state && this.props.location.state.verifyWarn &&
+          <div className="info">In order to receive emails when you’ve lost an item, you MUST first verify your email address. Please check your inbox for a message from Formspree.com and click the link to verify your email address.</div>
+        }
         <div className="row">
           <div className="col-md-12">
             <div>
@@ -148,7 +153,9 @@ class SettingsForm extends React.Component {
 
 SettingsForm.propTypes = {
   user: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
+const SettingsFormWithRouter = withRouter(SettingsForm);
 
 const Settings = (props) => (
   <div>
@@ -156,7 +163,7 @@ const Settings = (props) => (
       <div className="col-md-6">
         <h2>Settings</h2>
         <br />
-        <SettingsForm user={props.user} />
+        <SettingsFormWithRouter user={props.user} />
       </div>
     </div>
   </div>

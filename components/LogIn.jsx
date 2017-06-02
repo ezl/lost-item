@@ -34,20 +34,20 @@ class LogInForm extends React.Component {
     const email = this.state.email.trim();
     const password = this.state.password.trim();
     console.log('trying to log in!', email, password);
+    const th = this;
 
     getFirebaseApp().auth().signInWithEmailAndPassword(email, password)
-      .then(function () {
+      .then(() => {
         console.log('successfully logged in');
-        this.props.history.push('/settings/');
-        this.setState({ loginButtonPending: false });
+        th.props.history.push('/settings/');
       })
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        this.setState({ logInFormError: error.message });
-        this.setState({ loginButtonPending: false });
+        th.setState({ logInFormError: error.message });
+        th.setState({ loginButtonPending: false });
       });
   }
 
