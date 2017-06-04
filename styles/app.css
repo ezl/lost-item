@@ -151,3 +151,10 @@ input.dotted, input.dotted:focus {
 
 form.signupForm p {
 }
+
+.info {
+  background-color: #3ec19d;
+  margin-bottom: 2em;
+  color: white;
+  padding-left: 15px;
+}

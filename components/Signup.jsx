@@ -1,84 +1,99 @@
-import React, { PropTypes } from 'react';
-import { Link, browserHistory } from 'react-router';
+/* eslint-disable max-len */
+import React from 'react';
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
+import { getFirebaseApp } from './db/FirebaseApp';
 
 const propTypes = {
   children: PropTypes.element,
 };
 
 function toTitleCase(str) {
-  return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+  return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
+
 class SignUpForm extends React.Component {
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
-      'name': '',
-      'email': '',
-      'signupFormError': '',
-      'signupButtonPending': false
+      name: '',
+      email: '',
+      password: '',
+      signupFormError: '',
+      signupButtonPending: false,
     };
-
     this.createUser = this.createUser.bind(this);
     this.updateProfile = this.updateProfile.bind(this);
   }
 
   createUser(e) {
-    console.log("createUser");
-    this.setState({signupButtonPending: true});
+    console.log('createUser');
+    this.setState({ signupButtonPending: true });
     e.preventDefault();
 
-    var email = this.state.email.trim();
-    var password = Math.random().toString(36).substring(7);
-    var password = "password";
-    var name = this.state.name.trim();
-    var slug = Math.random().toString(36).substring(6);
-    console.log("slug", slug);
+    const email = this.state.email.trim();
+    const password = this.state.password.trim();
+    const name = this.state.name.trim();
+    const slug = Math.random().toString(36).slice(-6);
+    console.log('slug', slug);
 
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-      .then(function(user) {
+    getFirebaseApp().auth().createUserWithEmailAndPassword(email, password)
+      .then((user) => {
         const data = {
-          name: name,
-          email: email,
-          slug: slug
+          name,
+          email,
+          slug,
         };
+        const formData = new FormData();
+        formData.append('name', 'Validation successful');
+        this.props.history.push(`/${slug}`);
+        const req = new XMLHttpRequest();
+        req.open('POST', `https://formspree.io/${email}`);
+        req.send(formData);
         this.updateProfile(user, data);
-        this.setState({signupButtonPending: false});
-      }.bind(this))
-      .catch(function(error) {
+        this.setState({ signupButtonPending: false });
+      })
+      .catch((error) => {
         // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
         console.log(error.code, error.message);
-        this.setState({signupFormError: error.message});
-        this.setState({signupButtonPending: false});
-      }.bind(this));
-
+        this.setState({ signupFormError: error.message });
+        this.setState({ signupButtonPending: false });
+      });
   }
 
   updateProfile(user, data) {
-    console.log("updateProfile");
-    var database = firebase.database();
-    database.ref('users/' + user.uid).set(data).then(function() {
-      browserHistory.push('/settings/');
+    console.log('updateProfile');
+    console.log(this.props);
+    const database = getFirebaseApp().database();
+    database.ref(`users/${user.uid}`).set(data).then(() => {
+      this.props.history.push('/settings/', { verifyWarn: true });
     });
   }
 
   handleChange(name, e) {
-    var change = {};
+    const change = {};
     change[name] = e.target.value;
     this.setState(change);
   }
 
   render() {
     return (
-      <form className='signupForm' onSubmit={this.createUser}>
+      <form className="signupForm" onSubmit={this.createUser}>
         <p>Dear Eric,</p>
         <p>
             My name is
             <input className="dotted" value={this.state.name} type="text" placeholder="name" name="name" onChange={this.handleChange.bind(this, 'name')} required="required" />
             and my email is
-            <input className="dotted"  value={this.state.email} type="email" placeholder="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
+            <input className="dotted" value={this.state.email} type="email" placeholder="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
+            and my password is
+            <input className="dotted" value={this.state.password} type="password" placeholder="password" name="password" onChange={this.handleChange.bind(this, 'password')} required="required" />
             .
         </p>
         <p>
@@ -96,14 +111,15 @@ class SignUpForm extends React.Component {
         )}
 
         {this.state.signupButtonPending ?
-        <button className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin"></i> Signing Up...</button>
+          <button className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin" /> Signing Up...</button>
         :
-        <button type="submit" className="btn btn-primary">Love, {this.state.name ? toTitleCase(this.state.name) : 'Me'}</button>
+          <button type="submit" className="btn btn-primary">Love, {this.state.name ? toTitleCase(this.state.name) : 'Me'}</button>
         }
       </form>
-    )
+    );
   }
 }
+const SignUpFormWithRouter = withRouter(SignUpForm);
 
 function SignUp() {
   return (
@@ -116,7 +132,7 @@ function SignUp() {
       <div className="row">
         <div className="col-md-6">
           <br />
-          <SignUpForm />
+          <SignUpFormWithRouter />
           <br />
         </div>
         <div className="col-md-6 hidden">
@@ -132,4 +148,4 @@ function SignUp() {
 
 SignUp.propTypes = propTypes;
 
-export default SignUp;
+export default withRouter(SignUp);
