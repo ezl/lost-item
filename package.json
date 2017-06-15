@@ -20,7 +20,8 @@
     "react-router-dom": "^4.1.1",
     "object.values": "^1.0.4",
     "prop-types": "^15.5.10",
-    "firebase": "^4.0.0"
+    "firebase": "^4.0.0",
+    "paypal-checkout": "^4.0.82"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

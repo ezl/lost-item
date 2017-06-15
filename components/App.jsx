@@ -13,6 +13,7 @@ import UserPage from './UserPage';
 import Settings from './Settings';
 import PrivateRoute from './PrivateRoute';
 import Loading from './Loading';
+import PayPalCheckout from './Payment';
 
 
 const Links = () =>
@@ -72,6 +73,7 @@ class App extends React.Component {
                       <Route exact path="/signup" mapMenuTitle="Claim Your Lost-Item.Com Link" component={SignUp} />
                       <Route exact path="/login" mapMenuTitle="Log In" component={LogIn} />
                       <Route exact path="/how-it-works" mapMenuTitle="How It Works" component={HowItWorks} />
+                      <PrivateRoute exact path="/payment" component={PayPalCheckout} user={this.state.user} />
                       <PrivateRoute exact path="/settings" mapMenuTitle="Settings" component={Settings} user={this.state.user} />
                       <Route exact path="/" component={Home} />
                       <Route path="*" mapMenuTitle="User Page" component={UserPage} />

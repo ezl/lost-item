@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
+
 import { getFirebaseApp } from './db/FirebaseApp';
+
 
 class SettingsForm extends React.Component {
   constructor(props) {
@@ -25,10 +28,13 @@ class SettingsForm extends React.Component {
   componentDidMount() {
     const database = getFirebaseApp().database();
     database.ref(`users/${this.props.user.uid}`).once('value').then((snapshot) => {
+      const paidUntil = snapshot.val().paid_until;
+      const currentDate = new Date().getTime();
       this.setState({
         name: snapshot.val().name,
         email: snapshot.val().email,
         slug: snapshot.val().slug,
+        can_change_link: paidUntil !== undefined && paidUntil !== null && paidUntil >= currentDate,
       });
     });
   }
@@ -61,11 +67,12 @@ class SettingsForm extends React.Component {
   updateProfile(e) {
     this.setState({ updatingSettings: true });
     e.preventDefault();
-    const data = {
-      name: this.state.name,
-      email: this.state.email,
-      slug: this.state.slug,
-    };
+    const updates = {};
+    updates[`users/${this.props.user.uid}/name`] = this.state.name;
+    updates[`users/${this.props.user.uid}/email`] = this.state.email;
+    if (this.state.can_change_link) {
+      updates[`users/${this.props.user.uid}/slug`] = this.state.slug;
+    }
     const user = this.props.user;
     console.log('emails are', user.email, this.state.email);
     if (user.email !== this.state.email) {
@@ -84,7 +91,7 @@ class SettingsForm extends React.Component {
     // this.flashProfileUpdateErrorMessage("error message");
 
     const database = getFirebaseApp().database();
-    database.ref(`users/${user.uid}`).set(data);
+    database.ref().update(updates);
     // oh this is janky. just waiting a second and assuming success.
     setTimeout(
       () => {
@@ -113,6 +120,10 @@ class SettingsForm extends React.Component {
           </div>
         </div>
         <br />
+        {!this.state.can_change_link &&
+          <Link className="nav-link" to="/payment">Choose your own link</Link> &&
+          <br />
+        }
         <form onSubmit={this.updateProfile}>
           <div className="form-group">
             <label>Name</label>
@@ -127,10 +138,17 @@ class SettingsForm extends React.Component {
 
           <div className="form-group">
             <label>Your Link</label>
-            <div className="input-group">
-              <span className="input-group-addon">http://lost-item.com/</span>
-              <input value={this.state.slug} name="slug" onChange={this.handleChange.bind(this, 'slug')} className="form-control" type="text" />
-            </div>
+            {this.state.can_change_link &&
+              <div className="input-group">
+                <span className="input-group-addon">http://lost-item.com/</span>
+                <input value={this.state.slug} name="slug" onChange={this.handleChange.bind(this, 'slug')} className="form-control" type="text" />
+              </div>
+            }
+            {!this.state.can_change_link &&
+              <div className="input-group">
+                <span className="input-group-addon">http://lost-item.com/{this.state.slug}</span>
+              </div>
+            }
           </div>
 
           {this.state.updatingSettings ?

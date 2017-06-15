@@ -50,6 +50,7 @@ class SignUpForm extends React.Component {
           name,
           email,
           slug,
+          paid_until: null,
         };
         const formData = new FormData();
         formData.append('name', 'Validation successful');
