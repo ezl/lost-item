@@ -13,14 +13,16 @@ module.exports = {
     ],
   },
   output: {
-    path: __dirname
+    path: __dirname,
+    filename: 'index_bundle.js',
+    publicPath: '/'
   },
   resolve: {
     extensions: ['*', '.js', '.jsx'],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html',
+      template: './src/index.html',
       filename: './index.html'
     })
   ]

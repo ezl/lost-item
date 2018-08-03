@@ -19,9 +19,7 @@ let th;
 
 class PayPalCheckoutNR extends React.Component {
   static propTypes = {
-    user: PropTypes.object.isRequired,
-    env: PropTypes.object.isRequired,
-    client: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -69,7 +67,7 @@ class PayPalCheckoutNR extends React.Component {
   render() {
     const client = {
       sandbox: 'AZ_--6AsX9VFy48qw7j4lzza-B2WI7n-iSWr_iRPIFWi0O_AbwNnxYJHjD47x0MMiqLzdg6eEflb3tgh',
-      production: 'AZ_--6AsX9VFy48qw7j4lzza-B2WI7n-iSWr_iRPIFWi0O_AbwNnxYJHjD47x0MMiqLzdg6eEflb3tgh',
+      production: 'ASsXllfkIJcAdJkmuqXtqfGNegHSMJee1MKNh5ie4hcreZPMgN2IdhsXq80C6BrThMqUGA1Wn91t_GnT',
     };
 
     return (
@@ -77,19 +75,15 @@ class PayPalCheckoutNR extends React.Component {
         <div>
           <div>
             <label htmlFor="1y">
-              <input id="1y" type="radio" data-period="1" value="50.00" name="period" checked={this.state.selectedOption === '50.00'} onChange={this.handleOptionChange} /> $50 for 1 year </label>
+              <input id="1y" type="radio" data-period="1" value="19.00" name="period" checked={this.state.selectedOption === '19.00'} onChange={this.handleOptionChange} /> $19/year </label>
           </div>
           <div>
-            <label htmlFor="2y">
-              <input id="2y" type="radio" data-period="2" value="90.00" name="period" checked={this.state.selectedOption === '90.00'} onChange={this.handleOptionChange} /> $90 for 2 year </label>
-          </div>
-          <div>
-            <label htmlFor="3y">
-              <input id="3y" type="radio" data-period="3" value="120.00" name="period" checked={this.state.selectedOption === '120.00'} onChange={this.handleOptionChange} /> $120 for 3 year </label>
+            <label htmlFor="forever">
+              <input id="forever" type="radio" data-period="99" value="59.00" name="period" checked={this.state.selectedOption === '59.00'} onChange={this.handleOptionChange} /> $59/forever </label>
           </div>
         </div>
         <PayPalButton
-          env={'sandbox'}
+          env={'production'}
           client={client}
           payment={this.payment}
           commit // Optional: show a 'Pay Now' button in the checkout flow

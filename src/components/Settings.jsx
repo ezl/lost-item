@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
 
-import { getFirebaseApp } from './db/FirebaseApp';
+import { getFirebaseApp } from './db/FirebaseApp'
 
 
 class SettingsForm extends React.Component {
@@ -60,7 +60,7 @@ class SettingsForm extends React.Component {
       }, 5000);
   }
 
-  updateProfile(e) {
+  async updateProfile(e) {
     this.setState({ updatingSettings: true });
     e.preventDefault();
     const updates = {};
@@ -71,32 +71,29 @@ class SettingsForm extends React.Component {
     }
     const user = this.props.user;
     if (user.email !== this.state.email) {
-      user.updateEmail(this.state.email).then(() => {
-        // Update successful.
-      }, () => {
-        this.flashProfileUpdateErrorMessage("Error Updating");
-      });
+      try {
+        await user.updateEmail(this.state.email)
+      } catch (error) {
+        this.flashProfileUpdateErrorMessage(error.message);
+        this.setState({ updatingSettings: false });
+        return
+      }
     }
 
-    // this.flashProfileUpdateErrorMessage("error message");
-
     const database = getFirebaseApp().database();
-    database.ref().update(updates);
-    // oh this is janky. just waiting a second and assuming success.
-    setTimeout(
-      () => {
-        this.setState({ updatingSettings: false });
-        this.flashProfileUpdateSuccessMessage();
-      }, 1000);
+    database.ref().update(updates).then(() => {
+      this.flashProfileUpdateSuccessMessage();
+    }, (error) => {
+      this.flashProfileUpdateErrorMessage(error.message)
+    }).finally(() => {
+      this.setState({ updatingSettings: false });
+    });
   }
 
   render() {
     const url = `http://www.lost-item.com/${this.state.slug}`;
     return (
       <div>
-        {this.props.location.state && this.props.location.state.verifyWarn &&
-          <div className="info">In order to receive emails when you’ve lost an item, you MUST first verify your email address. Please check your inbox for a message from Formspree.com and click the link to verify your email address.</div>
-        }
         <div className="row">
           <div className="col-md-12">
             <div>
@@ -110,10 +107,6 @@ class SettingsForm extends React.Component {
           </div>
         </div>
         <br />
-        {!this.state.can_change_link &&
-          <Link className="nav-link" to="/payment">Choose your own link</Link> &&
-          <br />
-        }
         <form onSubmit={this.updateProfile}>
           <div className="form-group">
             <label>Name</label>
@@ -135,8 +128,14 @@ class SettingsForm extends React.Component {
               </div>
             }
             {!this.state.can_change_link &&
-              <div className="input-group">
-                <span className="input-group-addon">http://lost-item.com/{this.state.slug}</span>
+              <div>
+                <div className="input-group">
+                  <span className="input-group-addon">http://lost-item.com/{this.state.slug}</span>
+                </div>
+                <br/>
+                <div className="input-group">
+                  want to change your link? <Link className="nav-link" to="/payment">Click Here</Link>
+                </div>
               </div>
             }
           </div>

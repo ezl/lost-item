@@ -63,6 +63,7 @@ div #authStatus div#username {
 }
 .settingsError {
     color: #E8686B;
+    display: block;
 }
 
 h2 {

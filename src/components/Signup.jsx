@@ -52,12 +52,8 @@ class SignUpForm extends React.Component {
         };
         const formData = new FormData();
         formData.append('name', 'Validation successful');
-        this.props.history.push(`/${slug}`);
-        const req = new XMLHttpRequest();
-        req.open('POST', `https://formspree.io/${email}`);
-        req.send(formData);
-        this.updateProfile(user, data);
         this.setState({ signupButtonPending: false });
+        this.updateProfile(user.user, data);
       })
       .catch((error) => {
         // Handle Errors here.
@@ -69,7 +65,7 @@ class SignUpForm extends React.Component {
   updateProfile(user, data) {
     const database = getFirebaseApp().database();
     database.ref(`users/${user.uid}`).set(data).then(() => {
-      this.props.history.push('/settings/', { verifyWarn: true });
+      this.props.history.push('/settings/');
     });
   }
 
