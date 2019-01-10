@@ -67,7 +67,7 @@ class PayPalCheckoutNR extends React.Component {
   render() {
     const client = {
       sandbox: 'AZ_--6AsX9VFy48qw7j4lzza-B2WI7n-iSWr_iRPIFWi0O_AbwNnxYJHjD47x0MMiqLzdg6eEflb3tgh',
-      production: 'ASsXllfkIJcAdJkmuqXtqfGNegHSMJee1MKNh5ie4hcreZPMgN2IdhsXq80C6BrThMqUGA1Wn91t_GnT',
+      production: 'ASII0h6jpjWsQ_WUA5Id_aaubko50xz2fLaGaWCFpPPLKi3mKvXBX0TzZuTf-Vugu89zW8HztXf73XHO',
     };
 
     return (
