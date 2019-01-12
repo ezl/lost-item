@@ -24,7 +24,7 @@ class UserContactForm extends React.Component {
       what: '',
       where: '',
       slug: getSlug(),
-      contact: '',
+      how: '',
       sending: false,
       messageSent: false
     };
@@ -86,7 +86,7 @@ class UserContactForm extends React.Component {
           </div>
           <div className="form-group">
             <label>What&#39;s the best way for {this.state.name} to get this item back?</label>
-            <textarea className="form-control" type="text" name="where" onChange={this.handleChange.bind(this, 'contact')}/>
+            <textarea className="form-control" type="text" name="how" onChange={this.handleChange.bind(this, 'how')}/>
             <small className="form-text text-muted">Leave your contact email or phone here, or a message for
               how {this.state.name} can retrieve it, like &quot;I left it with the front desk at the ACME Hotel at Colombus and
               4th Street.&quot;</small>

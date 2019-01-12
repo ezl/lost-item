@@ -19,10 +19,20 @@ function sendEmail (user, what, where, how) {
   // 5. Send welcome email to new users
   console.log(user)
   const mailOptions = {
-    from: '"Eric" <test@tenantreport.net>',
+    from: '"Found Lost Item!!!" <found@lost-item.com>',
     to: `${user.email}`,
     subject: 'Lost Item Found!',
-    html: `What: ${what}  <br/> Where: ${where}  <br/> How: ${how} <br/>`
+    html: `
+          Great news, {user.name}! <br/><br/> 
+          
+          Someone found something that belongs to you! <br/> 
+          
+          What did they find? ${what} <br/> 
+          Where did they find it? ${where} <br/> 
+          Here's how you can get it back: <br/> 
+          ${how}
+           <br/> 
+          Have a great day! :)`
   }
   // 6. Process the sending of this email via nodemailer
   return mailTransport.sendMail(mailOptions)
