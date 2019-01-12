@@ -134,7 +134,10 @@ class SettingsForm extends React.Component {
                 </div>
                 <br/>
                 <div className="input-group">
-                  want to change your link? <Link className="nav-link" to="/payment">Click Here</Link>
+                  want to change your link? <Link className="nav-link" to={{
+                                                                            pathname: "/payment",
+                                                                            state: { slug: this.state.slug }
+                                                                          }} >Click Here</Link>
                 </div>
               </div>
             }
