@@ -25,6 +25,7 @@ class UserContactForm extends React.Component {
       where: '',
       slug: getSlug(),
       contact: '',
+      sending: false,
       messageSent: false
     };
 
@@ -33,6 +34,9 @@ class UserContactForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    this.setState({
+      sending: true
+    })
     fetch('https://us-central1-lost-item-ba357.cloudfunctions.net/notifyUser', {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, cors, *same-origin
@@ -51,6 +55,9 @@ class UserContactForm extends React.Component {
            messageSent: true
         })
       }
+      this.setState({
+        sending: false
+      })
     }); // parses response to JSON
   }
 
@@ -64,9 +71,6 @@ class UserContactForm extends React.Component {
 
     return (
       <div>
-       {this.state.messageSent &&
-          <span className="settingsFlashMessage settingsSuccess">Success!</span>
-        }
         <form method="POST" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>What did you find?</label>
@@ -87,7 +91,15 @@ class UserContactForm extends React.Component {
               how {this.state.name} can retrieve it, like &quot;I left it with the front desk at the ACME Hotel at Colombus and
               4th Street.&quot;</small>
           </div>
-          <button type="submit" className="btn btn-primary"><i className="fa fa-send"/>{buttonText}</button>
+
+          {this.state.messageSent &&
+            <span className="settingsFlashMessage settingsSuccess">Success!</span>
+          }
+          {!this.state.messageSent &&
+            <button type="submit" className="btn btn-primary" disabled={this.state.sending}>
+              <i className={this.state.sending ? 'fa fa-spinner' : 'fa fa-send'} aria-hidden="true"/>
+              &nbsp;&nbsp;{buttonText}</button>
+          }
         </form>
       </div>
     );
