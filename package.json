@@ -21,11 +21,11 @@
     "firebase": "^5.7.2",
     "object.values": "^1.1.0",
     "paypal-checkout": "^4.0.239",
-    "prop-types": "^15.6.2",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
