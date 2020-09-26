@@ -18,22 +18,26 @@ const mailTransport = nodemailer.createTransport(postmarkTransport({
 function sendEmail (user, what, where, how) {
   // 5. Send welcome email to new users
   console.log(user)
-  const mailOptions = {
-    from: '"Found Lost Item!!!" <found@lost-item.com>',
-    to: `${user.email}`,
-    subject: 'Lost Item Found!',
-    html: `
-          Great news, {user.name}! <br/><br/> 
+    const mailOptions = {
+        from: '"Found Lost Item!!!" <found@lost-item.com>',
+        to: `${user.email}`,
+        subject: 'Lost Item Found!',
+        html: `
+          Great news, ${user.name}! <br/><br/> 
           
           Someone found something that belongs to you! <br/> 
           
-          What did they find? ${what} <br/> 
-          Where did they find it? ${where} <br/> 
-          Here's how you can get it back: <br/> 
-          ${how}
-           <br/> 
+          <strong>What did they find?</strong> <br/> 
+          ${what} <br/> 
+
+          <strong>Where did they find it?</strong> <br/> 
+          ${where} <br/> 
+
+          <strong>Here's how you can get it back:</strong> <br/> 
+          ${how} <br/> 
+          
           Have a great day! :)`
-  }
+    }
   // 6. Process the sending of this email via nodemailer
   return mailTransport.sendMail(mailOptions)
     .then(() => console.log('Lost Item Email'))
