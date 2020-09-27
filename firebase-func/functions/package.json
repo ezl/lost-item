@@ -9,6 +9,9 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
+  "engines": {
+	"node": "10"
+  },
   "dependencies": {
     "firebase-admin": "~6.4.0",
     "nodemailer": "^5.0.0",
