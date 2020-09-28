@@ -12,7 +12,7 @@ const About = () =>
     <section>
       <h3>What is Lost Item?</h3>
       <p>
-        <strongLost Item</strong> gives you a link, which you can put
+        <strong>Lost Item</strong> gives you a link, which you can put
         things that you own.
       </p>
       <p>
