@@ -19,6 +19,8 @@
     "axios": "^0.18.0",
     "current-input": "^1.1.1",
     "firebase": "^5.7.2",
+    "install": "^0.13.0",
+    "node-pre-gyp": "^0.15.0",
     "object.values": "^1.1.0",
     "paypal-checkout": "^4.0.239",
     "prop-types": "^15.7.2",
@@ -44,7 +46,7 @@
     "http-server": "^0.11.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "uglifyjs-webpack-plugin": "^2.1.1",
-    "webpack": "^4.28.1",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"
   }
