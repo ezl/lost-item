@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -14,6 +14,8 @@ class SettingsForm extends React.Component {
       email: '',
       name: '',
       slug: '',
+      profilePicture: '',
+      profilePictureURL: 'images/profile.jpg',
       updatingSettings: false,
       updateSettingsSuccessMessageVisible: false,
       updateSettingsErrorMessageVisible: false,
@@ -21,10 +23,14 @@ class SettingsForm extends React.Component {
     };
 
     this.updateProfile = this.updateProfile.bind(this);
+    this.changeProfilePicture = this.changeProfilePicture.bind(this);
+    this.loadImage = this.loadImage.bind(this);
   }
 
   componentDidMount() {
     const database = getFirebaseApp().database();
+
+    // Get user data
     database.ref(`users/${this.props.user.uid}`).once('value').then((snapshot) => {
       const paidUntil = snapshot.val().paid_until;
       const currentDate = new Date().getTime();
@@ -33,6 +39,8 @@ class SettingsForm extends React.Component {
         email: snapshot.val().email,
         slug: snapshot.val().slug,
         can_change_link: paidUntil !== undefined && paidUntil !== null && paidUntil >= currentDate,
+      }, () => {
+        this.loadImage(snapshot.val().email);
       });
     });
   }
@@ -60,6 +68,41 @@ class SettingsForm extends React.Component {
       }, 5000);
   }
 
+  // We use this function to store the file in the state before upload
+  async changeProfilePicture(e) {
+    if (e.target.files[0] !== null) {
+      this.setState({
+        profilePicture: e.target.files[0],
+      });
+    }
+  }
+
+  loadImage(email) {
+    try {
+      const storage = getFirebaseApp().storage().ref();
+
+      // After we get the user data, we try to get the profile picture
+      let profilePictureRef = storage.child(`images/${email}`);
+
+      // Get user data
+      profilePictureRef.getDownloadURL().then((url) => {
+        // Assign the image to the state
+        this.setState({ profilePictureURL: url });
+      }).catch(function (error) {
+        switch (error.code) {
+          case 'storage/object-not-found': // File doesn't exist
+          case 'storage/unauthorized': // User doesn't have permission to access the object
+          case 'storage/canceled': // User canceled the upload
+          case 'storage/unknown': // Unknown error occurred, inspect the server response
+            console.error('cannot load profile image');
+            break;
+        }
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   async updateProfile(e) {
     this.setState({ updatingSettings: true });
     e.preventDefault();
@@ -76,13 +119,36 @@ class SettingsForm extends React.Component {
       } catch (error) {
         this.flashProfileUpdateErrorMessage(error.message);
         this.setState({ updatingSettings: false });
-        return
+        return;
       }
     }
 
     const database = getFirebaseApp().database();
+    const storage = getFirebaseApp().storage().ref();
+
     database.ref().update(updates).then(() => {
       this.flashProfileUpdateSuccessMessage();
+
+      if (this.state.profilePicture !== '') {
+        // Upload file and metadata to the object 'images/mountains.jpg'
+        let uploadPicture = storage.child(`images/${user.email}`).put(this.state.profilePicture);
+
+        // Listen for state changes, errors, and completion of the upload.
+        uploadPicture.on(getFirebaseApp().storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+          function (snapshot) {
+            // Upload in progress
+            console.log('Upload in progress');
+          }, function (error) {
+            switch (error.code) {
+              case 'storage/unauthorized':
+              case 'storage/canceled':
+              case 'storage/unknown':
+                console.log('error uploading image');
+                break;
+            }
+          });
+      }
+
     }, (error) => {
       this.flashProfileUpdateErrorMessage(error.message)
     }).finally(() => {
@@ -92,6 +158,7 @@ class SettingsForm extends React.Component {
 
   render() {
     const url = `http://www.lost-item.com/${this.state.slug}`;
+
     return (
       <div>
         <div className="row">
@@ -109,10 +176,18 @@ class SettingsForm extends React.Component {
         <br />
         <form onSubmit={this.updateProfile}>
           <div className="form-group">
+            <label>Profile picture</label>
+            <div className="img" style={{ backgroundImage: `url(${this.state.profilePictureURL})` }}></div>
+            <input type="file" onChange={this.changeProfilePicture} />
+            <small className="form-text text-muted">This image will be shown to the people trying to give back your items.</small>
+          </div>
+
+          <div className="form-group">
             <label>Name</label>
             <input value={this.state.name} name="name" onChange={this.handleChange.bind(this, 'name')} className="form-control" type="text" />
             <small className="form-text text-muted">What name do you want displayed on your Lost Item page?</small>
           </div>
+
           <div className="form-group">
             <label>Email</label>
             <input value={this.state.email} name="email" onChange={this.handleChange.bind(this, 'email')} className="form-control" type="text" />
@@ -132,12 +207,12 @@ class SettingsForm extends React.Component {
                 <div className="input-group">
                   <span className="input-group-addon">http://lost-item.com/{this.state.slug}</span>
                 </div>
-                <br/>
+                <br />
                 <div className="input-group">
                   want to change your link? <Link className="nav-link" to={{
-                                                                            pathname: "/payment",
-                                                                            state: { slug: this.state.slug }
-                                                                          }} >Click Here</Link>
+                    pathname: "/payment",
+                    state: { slug: this.state.slug }
+                  }} >Click Here</Link>
                 </div>
               </div>
             }
@@ -145,15 +220,15 @@ class SettingsForm extends React.Component {
 
           {this.state.updatingSettings ?
             <button className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin" /> Updating Settings...</button>
-          :
+            :
             <button className="btn btn-primary">Update Settings</button>
           }
 
           {this.state.updateSettingsErrorMessageVisible &&
-          <span className="settingsFlashMessage settingsError">{this.state.updateSettingsErrorMessageText}</span>
+            <span className="settingsFlashMessage settingsError">{this.state.updateSettingsErrorMessageText}</span>
           }
           {this.state.updateSettingsSuccessMessageVisible &&
-          <span className="settingsFlashMessage settingsSuccess">Success!</span>
+            <span className="settingsFlashMessage settingsSuccess">Success!</span>
           }
         </form>
       </div>
@@ -177,7 +252,7 @@ const Settings = (props) => (
       </div>
     </div>
   </div>
-  );
+);
 
 Settings.propTypes = {
   user: PropTypes.object.isRequired,
