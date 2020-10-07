@@ -1,95 +1,94 @@
 body {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 18px;
-    color: #40190D;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  color: #4A4A4A;
+  line-height: 1.8;
 }
 
+.color-gray{ color: #9B9B9B; }
+.color-blue{ color: #242448; }
+
 .container {
-    max-width: 960px;
+  max-width: 960px;
 }
 .navbar {
-    background-color: #3ec19d;
-    margin-bottom: 2em;
-    color:white;
-    border-radius: 0;
+  background-color: #3ec19d;
+  margin-bottom: 2em;
+  color:white;
+  border-radius: 0;
 }
 .navbar a,
 .navbar-dark .navbar-nav a.nav-link {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .navbar-dark .navbar-nav a.nav-link:hover {
-    color: white;
+  color: white;
 }
 a {
-    color: #999;
-    text-decoration: underline;
+  color: #999;
+  text-decoration: underline;
 }
 a:hover {
-    color: #3ec19d;
+  color: #3ec19d;
 }
 
 div#authStatus {
-    float: left;
-    display: block;
+  float: left;
+  display: block;
 }
 
-@media (min-width: 576px) {
-    div#authStatus {
-        float: right;
-    }
-}
 div #authStatus div#username {
-    float: left;
-    padding-top: .425rem;
-    padding-bottom: .425rem;
-    margin-right: 1rem;
+  float: left;
+  padding-top: .425rem;
+  padding-bottom: .425rem;
+  margin-right: 1rem;
 }
 .title.nav-link {
-    font-weight: bold;
-    color: white !important;
+  font-weight: bold;
+  color: white !important;
 }
 
 .jumbotron {
-    text-align: center;
-    background-color: white;
+  text-align: center;
+  background-color: white;
 }
 
 .settingsFlashMessage {
-    padding-left: 20px;
+  padding-left: 20px;
 }
 .settingsSuccess {
-    color: #3ec19d;
+  color: #3ec19d;
 }
 .settingsError {
-    color: #E8686B;
-    display: block;
+  color: #E8686B;
+  display: block;
 }
 
 h2 {
-    color: #3ec19d;
-    margin-bottom: 1rem;
+  color: #3ec19d;
+  margin-bottom: 1rem;
 }
 h3 {
-    font-size: 1.5rem;
-    color: #3ec19d;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #3ec19d;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 p.cta {
-    text-align: center;
-    margin: 2em auto;
+  text-align: center;
+  margin: 2em auto;
 }
 
 .btn-primary {
-    border: 2px solid #3ec19d;
-    background: #3ec19d;
-    border-radius: 2px;
-    text-decoration: none;
-    color: #fff;
-    margin-top: 1em;
-    margin-bottom: 1em;
+  border: 2px solid #67CABC;
+  background: #67CABC;
+  border-radius: 2px;
+  text-decoration: none;
+  color: #fff;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .btn-primary:hover,
@@ -98,59 +97,55 @@ p.cta {
 .btn-primary:active:hover,
 .btn-primary:disabled,
 .btn-primary:disabled:hover {
-    background-color: white;
-    color: #3ec19d;
-    border: 2px solid #3ec19d;
+  background-color: white;
+  color: #3ec19d;
+  border: 2px solid #3ec19d;
 }
 
 
 .form-control {
-    border: 2px solid #cfcfd2;
-    border-radius: 2px;
-    padding: 7px 8px;
-    background: #fff;
-    margin-top: 7px;
-    margin-bottom: 5px;
-    color: #545454;
+  border: 2px solid #cfcfd2;
+  border-radius: 2px;
+  padding: 7px 8px;
+  background: #fff;
+  margin-top: 7px;
+  margin-bottom: 5px;
+  color: #545454;
 }
 .input-group .form-control {
-    margin-top: 0px;
-    -webkit-border-top-left-radius: 0px;
-    -webkit-border-bottom-left-radius: 0px;
-    -moz-border-radius-topleft: 0px;
-    -moz-border-radius-bottomleft: 0px;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
+  margin-top: 0px;
+  -webkit-border-top-left-radius: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  -moz-border-radius-topleft: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 .input-group .input-group-addon {
-    border-width: 2px;
-    padding: 0px 10px;
-    -webkit-border-top-left-radius: 2px;
-    -webkit-border-bottom-left-radius: 2px;
-    -moz-border-radius-topleft: 2px;
-    -moz-border-radius-bottomleft: 2px;
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
+  border-width: 2px;
+  padding: 0px 10px;
+  -webkit-border-top-left-radius: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  -moz-border-radius-topleft: 2px;
+  -moz-border-radius-bottomleft: 2px;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
 }
 .form-control:focus {
-    border-color: #3ec19d;
+  border-color: #3ec19d;
 }
 .teal {
     color: #3ec19d;
 }
 
 input.dotted, input.dotted:focus {
-   /* Thanks, https://www.chefsteps.com/activities/equilibrium-brining! */
-    border-width: 0px;
-    border-bottom: 1px;
-    border-style: dashed;
-    border-color: #b8b6b4;
-    outline: none;
-    text-align: center;
-    color: #3ec19d;
-}
-
-form.signupForm p {
+  /* Thanks, https://www.chefsteps.com/activities/equilibrium-brining! */
+  border-width: 0px;
+  border-bottom: 1px;
+  border-style: dashed;
+  border-color: #b8b6b4;
+  outline: none;
+  text-align: center;
 }
 
 .info {
@@ -169,4 +164,79 @@ form.signupForm p {
   margin-bottom: 1rem;
   background-size: cover;
   background-position: center;
+}
+
+/* new design big titles */
+.big-title{
+  font-size: 38px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Sign up form */
+.signupForm{
+  padding: 2rem 0;
+}
+.signupForm p{
+  display: flex;
+  flex-flow: column wrap;
+}
+.signupForm h5{
+  margin-bottom: 1.5rem;
+}
+.signupForm button[type=submit]{
+  font-weight: bold;
+  border-radius: 4px;
+  min-width: 180px;
+  padding: 14px;
+  margin: 0 auto;
+  margin-top: 1rem;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
+}
+
+/* Moved media queries to the end of the file for easier access */
+@media (min-width: 576px) {
+  div#authStatus {
+      float: right;
+  }
+}
+@media (min-width: 768px) {
+  /* some of the new pages have a box shadow */
+  .shadow{
+    box-shadow: 0 0.3rem 1.2rem 0 rgba(5,10,15,.03);
+    padding: 3rem;
+  }
+
+  .big-title{
+    font-size: 48px;
+    text-align: left;
+    line-height: 1.3;
+  }
+  .big-title span{
+    background-size: calc(90% + 2px) 8px;
+    background-position: 0% 105%;
+    padding-bottom: 6px;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(#309797, #309797);
+  }
+
+  .signupForm p{
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  .signupForm span{
+    flex: 0 0 200px;
+    padding-right: 15px;
+  }
+  .signupForm input{
+    flex: 0 0 calc(100% - 200px);
+  }
+  .signupForm button[type=submit]{
+    margin: 0 auto;
+    left: 0;
+    position: relative;
+    transform: none;
+  }
 }

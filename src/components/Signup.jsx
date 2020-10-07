@@ -78,21 +78,29 @@ class SignUpForm extends React.Component {
   render() {
     return (
       <form className="signupForm" onSubmit={this.createUser}>
-        <p>Dear Eric,</p>
+        <h5 className="color-blue">Dear <strong>Eric,</strong></h5>
+
         <p>
-            My name is
-          <input className="dotted" value={this.state.name} type="text" placeholder="name" name="name" onChange={this.handleChange.bind(this, 'name')} required="required" />
-            and my email is
-          <input className="dotted" value={this.state.email} type="email" placeholder="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
-            and my password is
-          <input className="dotted" value={this.state.password} type="password" placeholder="password" name="password" onChange={this.handleChange.bind(this, 'password')} required="required" />
-            .
+          <span>My name is</span> 
+          <input autoComplete="no-autocomplete" className="dotted" value={this.state.name} type="text" name="name" onChange={this.handleChange.bind(this, 'name')} required="required" />
         </p>
+
         <p>
+          <span>and my email is </span>
+          <input autoComplete="no-autocomplete" className="dotted" value={this.state.email} type="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
+        </p>
+
+        <p>
+          <span>and my password is </span>
+          <input autoComplete="no-autocomplete" className="dotted" value={this.state.password} type="password" name="password" onChange={this.handleChange.bind(this, 'password')} required="required" />
+        </p>
+
+        <p className="color-gray">
             If I lose my stuff, I want the person who finds it to easily know how to get it back to me.
         </p>
+
         <p>
-            Give me a personal www.lost-item.com link, please!
+            Give me a personal lost-item.com link, please!
         </p>
 
         {this.state.signupFormError && (
@@ -105,7 +113,7 @@ class SignUpForm extends React.Component {
         {this.state.signupButtonPending ?
           <button className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin" /> Signing Up...</button>
         :
-          <button type="submit" className="btn btn-primary">Love, {this.state.name ? toTitleCase(this.state.name) : 'Me'}</button>
+          <button type="submit" className="btn btn-primary">Sign me up</button>
         }
       </form>
     );
@@ -117,21 +125,12 @@ function SignUp() {
   return (
     <div>
       <div className="row">
-        <div className="col-md-12">
-          <h2>Get Your Own Lost-Item Link</h2>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6">
-          <br />
+        <div className="col-md-8 offset-md-2 shadow">
+          <h2 className="big-title color-blue">Get Your Own <br/> <span>Lost-Item Link</span></h2>
+
+          <br/>
+
           <SignUpFormWithRouter />
-          <br />
-        </div>
-        <div className="col-md-6 hidden">
-          <br />
-          <p><strong className="teal">Why?</strong> So if you lose your stuff, someone can get it back to you.</p>
-          <p><strong className="teal">How much does this cost?</strong> It&apos;s free.</p>
-          <p><strong className="teal">I don&apos;t want to do this.</strong> OK. Cool.</p>
         </div>
       </div>
     </div>
