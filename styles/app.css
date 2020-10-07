@@ -190,7 +190,8 @@ input.dotted, input.dotted:focus {
   min-width: 180px;
   padding: 14px;
   margin: 0 auto;
-  margin-top: 1rem;
+  position: relative;
+  margin-top: 2rem;
   left: 50%;
   position: relative;
   transform: translateX(-50%);
@@ -234,7 +235,9 @@ input.dotted, input.dotted:focus {
     flex: 0 0 calc(100% - 200px);
   }
   .signupForm button[type=submit]{
-    margin: 0 auto;
+    display: block;
+    margin: 0;
+    margin-top: 3rem;
     left: 0;
     position: relative;
     transform: none;

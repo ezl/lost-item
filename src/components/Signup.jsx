@@ -111,7 +111,7 @@ class SignUpForm extends React.Component {
         )}
 
         {this.state.signupButtonPending ?
-          <button className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin" /> Signing Up...</button>
+          <button type="submit" className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin" /> Signing Up...</button>
         :
           <button type="submit" className="btn btn-primary">Sign me up</button>
         }
