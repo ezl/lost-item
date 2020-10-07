@@ -12,8 +12,11 @@ const About = () =>
     <section>
       <h3>What is Lost Item?</h3>
       <p>
-        Lost Item is a site that gives you a permanent link, which you can stick on
+        <strong>Lost Item</strong> gives you a link, which you can put
         things that you own.
+      </p>
+      <p>
+        Them, if someone finds something you lose, they can contact you to let you know.
       </p>
       <p>
         For example, I have a sticker that says <Link to="/eric">www.lost-item.com/eric</Link> on it. So if anyone finds my phone, it will be easy for them to figure out who it belongs to.
