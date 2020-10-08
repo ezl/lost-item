@@ -161,25 +161,21 @@ class SettingsForm extends React.Component {
 
     return (
       <div>
-        <div className="row">
-          <div className="col-md-12">
-            <div>
-              <label>Your Link</label>: <strong><a href={url}>www.lost-item.com/{this.state.slug}</a></strong>
-              <small className="form-text text-muted">This is the link you&apos;ll label your stuff with. You can write it or print it on things you own like credit cards or cell phones, print labels and sew it to clothes.</small>
-            </div>
-            <div className="hidden-xs-up">
-              <label>Your Log In Email Address</label>: {this.props.user.email}
-              <small className="form-text text-muted">Use this email address to log in. It doesn&apos;t necessarily have to be the same as the contact email below.</small>
-            </div>
-          </div>
-        </div>
-        <br />
         <form onSubmit={this.updateProfile}>
           <div className="form-group">
-            <label>Profile picture</label>
-            <div className="img" style={{ backgroundImage: `url(${this.state.profilePictureURL})` }}></div>
-            <input type="file" onChange={this.changeProfilePicture} />
-            <small className="form-text text-muted">This image will be shown to the people trying to give back your items.</small>
+            <div className="copy">
+              <a href="#">
+                <img src="images/copy.svg" />
+                Copy to clipboard
+              </a>
+
+              <Link className="nav-link" to={{ pathname: "/payment", state: { slug: this.state.slug } }}>
+                <img src="images/link.svg" />
+                Change link
+              </Link>
+            </div>
+            <input disabled value={`www.lost-item.com/${this.state.slug}`} className="form-control teal" type="text" />
+            <small className="form-text text-muted">This is the link you&apos;ll label your stuff with. You can write it or print it on things you own like credit cards or cell phones, print labels and sew it to clothes.</small>
           </div>
 
           <div className="form-group">
@@ -195,33 +191,16 @@ class SettingsForm extends React.Component {
           </div>
 
           <div className="form-group">
-            <label>Your Link</label>
-            {this.state.can_change_link &&
-              <div className="input-group">
-                <span className="input-group-addon">http://lost-item.com/</span>
-                <input value={this.state.slug} name="slug" onChange={this.handleChange.bind(this, 'slug')} className="form-control" type="text" />
-              </div>
-            }
-            {!this.state.can_change_link &&
-              <div>
-                <div className="input-group">
-                  <span className="input-group-addon">http://lost-item.com/{this.state.slug}</span>
-                </div>
-                <br />
-                <div className="input-group">
-                  want to change your link? <Link className="nav-link" to={{
-                    pathname: "/payment",
-                    state: { slug: this.state.slug }
-                  }} >Click Here</Link>
-                </div>
-              </div>
-            }
+            <label>Profile picture</label>
+            <div className="img" style={{ backgroundImage: `url(${this.state.profilePictureURL})` }}></div>
+            <input type="file" onChange={this.changeProfilePicture} />
+            <small className="form-text text-muted">This image will be shown to the people trying to give back your items.</small>
           </div>
 
           {this.state.updatingSettings ?
-            <button className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin" /> Updating Settings...</button>
+            <button type="submit" className="left btn btn-primary" disabled><i className="fa fa-spinner fa-spin" /> Updating Settings...</button>
             :
-            <button className="btn btn-primary">Update Settings</button>
+            <button type="submit" className="left btn btn-primary">Update Settings</button>
           }
 
           {this.state.updateSettingsErrorMessageVisible &&
@@ -245,9 +224,11 @@ const SettingsFormWithRouter = withRouter(SettingsForm);
 const Settings = (props) => (
   <div>
     <div className="row">
-      <div className="col-md-6">
-        <h2>Settings</h2>
+      <div className="col-md-8 offset-md-2 shadow">
+        <h2 className="big-title color-blue">Your <span>Link</span></h2>
+
         <br />
+
         <SettingsFormWithRouter user={props.user} />
       </div>
     </div>
