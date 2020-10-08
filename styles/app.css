@@ -26,8 +26,8 @@ body {
   color: white;
 }
 a {
-  color: #999;
-  text-decoration: underline;
+  color: #3ec19d;
+  text-decoration: none;
 }
 a:hover {
   color: #3ec19d;
@@ -104,38 +104,22 @@ p.cta {
 
 
 .form-control {
-  border: 2px solid #cfcfd2;
-  border-radius: 2px;
-  padding: 7px 8px;
-  background: #fff;
+  border: 1px solid #D8D8D8;
+  border-radius: 4px;
+  padding: 10px;
   margin-top: 7px;
+  background: #fff;
   margin-bottom: 5px;
   color: #545454;
 }
-.input-group .form-control {
-  margin-top: 0px;
-  -webkit-border-top-left-radius: 0px;
-  -webkit-border-bottom-left-radius: 0px;
-  -moz-border-radius-topleft: 0px;
-  -moz-border-radius-bottomleft: 0px;
-  border-top-left-radius: 0px;
-  border-bottom-left-radius: 0px;
-}
-.input-group .input-group-addon {
-  border-width: 2px;
-  padding: 0px 10px;
-  -webkit-border-top-left-radius: 2px;
-  -webkit-border-bottom-left-radius: 2px;
-  -moz-border-radius-topleft: 2px;
-  -moz-border-radius-bottomleft: 2px;
-  border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
+.form-control:disabled {
+  background: #fff;
 }
 .form-control:focus {
   border-color: #3ec19d;
 }
 .teal {
-    color: #3ec19d;
+  color: #3ec19d;
 }
 
 input.dotted, input.dotted:focus {
@@ -271,7 +255,9 @@ input.dotted, input.dotted:focus {
 .signupForm h5{
   margin-bottom: 1.5rem;
 }
-.signupForm button[type=submit]{
+
+/* New submit button across the site */
+button[type=submit]{
   font-weight: bold;
   border-radius: 4px;
   min-width: 180px;
@@ -282,6 +268,31 @@ input.dotted, input.dotted:focus {
   left: 50%;
   position: relative;
   transform: translateX(-50%);
+}
+button[type=submit].left{
+  left: 0;
+  transform: translateX(0%);
+}
+
+/* Settings page */
+/* Copy to clipboard and payment link button */
+.copy{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+.copy a{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  display: inline-block;
+  align-items: center;
+}
+.copy a img{
+  width: 16px;
+  margin-right: 12px;
 }
 
 /* Moved media queries to the end of the file for easier access */
