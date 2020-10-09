@@ -295,6 +295,22 @@ button[type=submit].left{
   margin-right: 12px;
 }
 
+/* Intro section on UserPage.jsx */
+.intro{
+  text-align: center;
+  font-size: 14px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.shadow.nomargin img{
+  width: 100%;
+  max-width: 100%;
+}
+
 /* Moved media queries to the end of the file for easier access */
 @media (min-width: 576px) {
   div#authStatus {
@@ -306,6 +322,12 @@ button[type=submit].left{
   .shadow{
     box-shadow: 0 0.3rem 1.2rem 0 rgba(5,10,15,.03);
     padding: 3rem;
+  }
+  .shadow.nomargin{
+    padding: 0;
+  }
+  .shadow.nomargin .content{
+    padding: 0 3rem;
   }
 
   .big-title{
