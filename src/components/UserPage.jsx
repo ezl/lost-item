@@ -69,20 +69,25 @@ class UserContactForm extends React.Component {
         {this.state.messageSent &&
           <div>
             <div className="row">
-              <div className="col-md-12">
-                <h2>Thank you!</h2>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-8">
-                <br />
-                <p>🎉</p>
-                <p>{this.props.user.name} will be happy to get his {this.state.what} back!</p>
-                <p>Do you need a lost-item link also? Lost Item gives you a link so if you lose something, the person who finds it can help you get it back.</p>
-                <p className="cta">
-                  <Link className="btn btn-primary" to="/signup">Learn more here.</Link>
-                </p>
-                <hr />
+              <div className="col-md-8 offset-md-2 shadow nomargin">
+                <img src="images/moon.svg" />
+
+                <div className="content">
+                  <h2 className="big-title color-blue"><span>Hooray!</span></h2>
+
+                  <br />
+
+                  <p><strong>Thanks for helping get that item back to its rightful owner!</strong></p>
+
+                  <p>By the way, do you want your own link that you can put on any of your items in case you ever lose them?</p>
+
+                  <p>It's free, easy, and safer than writing your personal information on items!</p>
+
+                  <p className="cta">
+                    <Link className="btn btn-primary" to="/signup">Learn more</Link>
+                  </p>
+                </div>
+
               </div>
             </div>
           </div>
@@ -90,42 +95,43 @@ class UserContactForm extends React.Component {
         {!this.state.messageSent &&
           <div>
             <div className="row">
-              <div className="col-md-12">
-                <h2>Yay! You found something that belongs to {this.props.user.name}!</h2>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <br />
-                <div className="img" style={{ backgroundImage: `url(${this.props.pic})` }}></div>
-                <br />
-                <p>{this.props.user.name} will be very happy to hear that! Please help get this item returned!</p>
-                <form method="POST" onSubmit={this.handleSubmit}>
-                  <div className="form-group">
-                    <label>What did you find?</label>
-                    <input className="form-control" type="text" name="what" onChange={this.handleChange.bind(this, 'what')} />
-                    <small className="form-text text-muted">e.g. an android phone, a credit card, a large sack of potatoes</small>
-                  </div>
-                  <div className="form-group">
-                    <label>Where did you find it?</label>
-                    <input className="form-control" type="text" name="where" onChange={this.handleChange.bind(this, 'where')} />
-                    <small className="form-text text-muted">e.g. at Burger King on Clark Street, at Jenny&apos;s house, on Richard
-                    Branson&apos;s jet
-                            </small>
-                  </div>
-                  <div className="form-group">
-                    <label>What&#39;s the best way for {this.state.name} to get this item back?</label>
-                    <textarea className="form-control" type="text" name="how" onChange={this.handleChange.bind(this, 'how')} />
-                    <small className="form-text text-muted">Leave your contact email or phone here, or a message for
-                            how {this.state.name} can retrieve it, like &quot;I left it with the front desk at the ACME Hotel at Colombus and
-                            4th Street.&quot;</small>
-                  </div>
+              <div className="col-md-10 offset-md-1 shadow">
+                <h2 className="big-title color-blue">Yay! <span>You found something</span> that belongs to {this.props.user.name}!</h2>
 
-                  <button type="submit" className="btn btn-primary" disabled={this.state.sending}>
-                    <i className={this.state.sending ? 'fa fa-spinner' : 'fa fa-send'} aria-hidden="true" />
-                          &nbsp;&nbsp;{buttonText}</button>
-                </form>
-                <hr />
+                <br />
+
+                <div className="row">
+                  <div className="col-md-8 offset-md-2">
+                    <div className="intro">
+                      <div className="img" style={{ backgroundImage: `url(${this.props.pic})` }}></div>
+                      <br />
+                      <p><strong>{this.props.user.name}</strong> will be very happy to hear that! Please help get this item returned!</p>
+                    </div>
+
+                    <form method="POST" onSubmit={this.handleSubmit}>
+                      <div className="form-group">
+                        <label>What did you find?</label>
+                        <input className="form-control" type="text" name="what" onChange={this.handleChange.bind(this, 'what')} />
+                        <small className="form-text text-muted">e.g. an android phone, a credit card, a large sack of potatoes</small>
+                      </div>
+                      <div className="form-group">
+                        <label>Where did you find it?</label>
+                        <input className="form-control" type="text" name="where" onChange={this.handleChange.bind(this, 'where')} />
+                        <small className="form-text text-muted">e.g. at Burger King on Clark Street, at Jenny&apos;s house, on Richard Branson&apos;s jet</small>
+                      </div>
+                      <div className="form-group">
+                        <label>What&#39;s the best way for {this.state.name} to get this item back?</label>
+                        <textarea className="form-control" type="text" name="how" onChange={this.handleChange.bind(this, 'how')} />
+                        <small className="form-text text-muted">Leave your contact email or phone here, or a message for how {this.state.name} can retrieve it, like &quot;I left it with the front desk at the ACME Hotel at Colombus and 4th Street.&quot;</small>
+                      </div>
+
+                      <button type="submit" className="btn btn-primary" disabled={this.state.sending}>
+                        <i className={this.state.sending ? 'fa fa-spinner' : 'fa fa-send'} aria-hidden="true" />
+                      &nbsp;&nbsp;{buttonText}
+                      </button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -211,6 +217,10 @@ class UserPage extends React.Component {
     } catch (err) {
       // We could keep this console.log but I'll comment it for now
       // console.log('no profile picture, loading default');
+      this.setState({
+        user,
+        loading: false,
+      });
     }
   }
 
