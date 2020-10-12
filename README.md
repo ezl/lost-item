@@ -6,8 +6,8 @@ That person can write/sticker/attach that URL to their belongings. If the item i
 
 I personally use it by printing stickers and iron on patches, which I affix to my: airpods, phone, credit cards, jacket liners, etc.
 
-![Stickers](https://www.notion.so/ezl/Pics-of-labels-607d3a1cb2df49a4b9dc08fe1ebd5ff1#fde7d7eb7e2c492abd26a7565049ac87)
-![Iron on patches](https://www.notion.so/ezl/Pics-of-labels-607d3a1cb2df49a4b9dc08fe1ebd5ff1#fa0f35e24c254456bc74322ef09c149d)
+![Stickers](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fbf7a39cc-dc85-4abc-9a58-db44a7a6d16a%2Fstickers.jpg?table=block&id=fde7d7eb-7e2c-492a-bd26-a7565049ac87&width=2050&userId=&cache=v2)
+![Iron on patches](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F5e6b6e3a-2846-4e32-a256-8718ef6e3feb%2FIMG_4812.jpeg?table=block&id=fa0f35e2-4c25-4456-bc74-322ef09c149d&width=1200&userId=&cache=v2)
 
 # Tech
 
