@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import "@babel/polyfill";
-import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Link, Route, Switch, NavLink, useHistory } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import AuthStatus from './AuthStatus';
@@ -17,32 +17,114 @@ import Loading from './Loading';
 import PayPalCheckout from './Payment';
 
 
-const Links = () =>
-  <ul className="nav navbar-nav">
-    <li className="nav-item hidden-xs-down">
-      <Link className="title nav-link" to="/">
-        lost-item
-      </Link>
-    </li>
-    <li className="nav-item"><Link className="nav-link" to="/how-it-works">How Does It Work?</Link></li>
-  </ul>;
+class NavBar extends React.Component {
+  static propTypes = {
+    user: PropTypes.object,
+  };
 
-const Nav = (props) =>
-  <nav className="navbar navbar-dark">
-    <div className="clearfix">
-      <button className="navbar-toggler float-xs-right hidden-sm-up" type="button" data-toggle="collapse" data-target="#bd-main-nav" aria-controls="bd-main-nav" aria-expanded="false" aria-label="Toggle navigation" />
-      <Link className="navbar-brand hidden-sm-up" to="/">
-          lost-item
+  constructor(props) {
+    super(props);
+
+    this.handleMobileMenu = this.handleMobileMenu.bind(this);
+  }
+
+  handleMobileMenu() {
+    let menu = document.querySelector('.b-container');
+    let overlay = document.querySelector('.overlay');
+
+    // Open and close the menu
+    menu.classList.toggle('open');
+
+    if (menu.classList.contains('open')) {
+      // When the menu is open, disable scrolling
+      document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
+      overlay.classList.add('open');
+    } else {
+      // When the menu is closed, we enable again the scroll on the site
+      document.body.style.overflow = 'visible';
+      overlay.classList.remove('open');
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        {/* Overlay when menu on mobile is open */}
+        <div className="overlay">
+          {/* Links, here we'll use NavLink instead of Link so we easily access the active url */}
+          <div className="links">
+            {this.props.user !== null ?
+              <NavLink className="nav-link" activeClassName="active" to="/settings">Dashboard</NavLink>
+              : ''
+            }
+            <NavLink className="nav-link" activeClassName="active" to="/how-it-works">How it Works</NavLink>
+            <NavLink className="nav-link" activeClassName="active" to="/" exact={true}>Store</NavLink>
+          </div>
+
+          {/* Buttons */}
+          <AuthStatus user={this.props.user} />
+        </div>
+
+        <div className="nav">
+          {/* Logo */}
+          <Link to="/">
+            <img src="images/logo.svg" alt="Lost Item logo" />
+          </Link>
+
+          {/* Links, here we'll use NavLink instead of Link so we easily access the active url */}
+          <div className="links">
+            {this.props.user !== null ?
+              <NavLink className="nav-link" activeClassName="active" to="/settings">Dashboard</NavLink>
+              : ''
+            }
+            <NavLink className="nav-link" activeClassName="active" to="/how-it-works">How it Works</NavLink>
+            <NavLink className="nav-link" activeClassName="active" to="/" exact={true}>Store</NavLink>
+          </div>
+
+          {/* Buttons */}
+          <AuthStatus user={this.props.user} />
+
+          {/* Burger menu for mobile */}
+          <span className="b-container">
+            <div className="b-menu" onClick={this.handleMobileMenu}>
+              <div className="b-bun b-bun--top"></div>
+              <div className="b-bun b-bun--mid"></div>
+              <div className="b-bun b-bun--bottom"></div>
+            </div>
+          </span>
+        </div>
+      </div>
+    );
+  }
+}
+
+const Footer = (props) =>
+  <footer>
+    <div className="container">
+      <div className="links">
+        <Link to="/">
+          About
         </Link>
-    </div>
-    <div className="collapse navbar-toggleable-xs" id="bd-main-nav">
-      <Links user={props.user} />
-      <AuthStatus user={props.user} />
-    </div>
-  </nav>;
 
-Nav.propTypes = {
-  user: PropTypes.object,
+        <Link to="/">
+          Terms of Service
+        </Link>
+
+        <Link to="/">
+          FAQ
+        </Link>
+
+        <Link to="/">
+          Clients
+        </Link>
+      </div>
+
+      <p className="copyright">&copy; All rights reserved by Lost-Item</p>
+    </div>
+  </footer>;
+
+Footer.propTypes = {
 };
 
 class App extends React.Component {
@@ -51,7 +133,7 @@ class App extends React.Component {
     loading: true,
   };
 
-  componentDidMount() {
+  componentDidMount(prevProps) {
     this.removeListener = getFirebaseApp().auth().onAuthStateChanged((user) => {
       this.setState({
         user,
@@ -59,31 +141,63 @@ class App extends React.Component {
       });
     });
   }
+
   componentWillUnmount() {
     this.removeListener();
   }
+
   render() {
     return (
       <div>
-        <Nav user={this.state.user} />
+        {/* Nav bar */}
+        <NavBar user={this.state.user} />
+
         <div className="container">
           {this.state.loading
-                    ? <Loading />
-                    :
-                    <Switch>
-                      <Route exact path="/signup" mapMenuTitle="Claim Your Lost-Item.Com Link" component={SignUp} />
-                      <Route exact path="/login" mapMenuTitle="Log In" component={LogIn} />
-                      <Route exact path="/how-it-works" mapMenuTitle="How It Works" component={HowItWorks} />
-                      <PrivateRoute exact path="/payment" component={PayPalCheckout} user={this.state.user} />
-                      <PrivateRoute exact path="/settings" mapMenuTitle="Settings" component={Settings} user={this.state.user} />
-                      <Route exact path="/" component={Home} />
-                      <Route path="*" mapMenuTitle="User Page" component={UserPage} />
-                    </Switch>}
+            ? <Loading />
+            :
+            <Switch>
+              <Route exact path="/signup" mapMenuTitle="Claim Your Lost-Item.Com Link" component={SignUp} />
+              <Route exact path="/login" mapMenuTitle="Log In" component={LogIn} />
+              <Route exact path="/how-it-works" mapMenuTitle="How It Works" component={HowItWorks} />
+              <PrivateRoute exact path="/payment" component={PayPalCheckout} user={this.state.user} />
+              <PrivateRoute exact path="/settings" mapMenuTitle="Settings" component={Settings} user={this.state.user} />
+              <Route exact path="/" component={Home} />
+              <Route path="*" mapMenuTitle="User Page" component={UserPage} />
+            </Switch>}
         </div>
+
+        {/* Footer */}
+        <Footer />
       </div>
     );
   }
 }
 
+const Root = () => {
+  const history = useHistory()
 
-export default App;
+  useEffect(() => {
+    return history.listen((location) => {
+      // close the menu if we change route
+      try {
+        let menu = document.querySelector('.b-container');
+        let overlay = document.querySelector('.overlay');
+
+        window.scrollTo(0, 0);
+        document.body.style.overflow = 'visible';
+        menu.classList.remove('open');
+        overlay.classList.remove('open');
+      } catch (error) {
+        console.error('error trying to close the menu on route change');
+      }
+    })
+  }, [history])
+
+  return (
+    <App />
+  )
+}
+
+
+export default Root;

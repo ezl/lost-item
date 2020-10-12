@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { getFirebaseApp } from './db/FirebaseApp';
 
@@ -26,15 +26,14 @@ class AuthStatus extends React.Component {
     if (this.props.user === null) {
       return (
         <div id="authStatus" className="navbar-nav">
-          <Link className="nav-link nav-item" to="/signup">Sign Up</Link>
-          <Link className="nav-link nav-item" to="/login">Log In</Link>
+          <Link className="nav-button login" to="/login">Log In</Link>
+          <Link className="nav-button register" to="/signup">Sign Up</Link>
         </div>
       );
     }
     return (
       <div id="authStatus" className="navbar-nav">
-        <Link className="nav-link nav-item" to="/settings">Settings</Link>
-        <a className="nav-link nav-item" onClick={this.handleLogout}>Log Out</a>
+        <a className="nav-button logout" onClick={this.handleLogout}>Log Out</a>
       </div>
     );
   }
