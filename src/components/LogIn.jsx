@@ -54,31 +54,29 @@ class LogInForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.logInUser}>
-        <div className="form-group">
-          <label>Email</label>
-          <div className="input-group">
-            <span className="input-group-addon"><i className="fa fa-envelope-o" /></span>
-            <input className="form-control" value={this.state.name} type="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
-          </div>
-        </div>
-        <div className="form-group">
-          <label>Password</label>
-          <div className="input-group">
-            <span className="input-group-addon"><i className="fa fa-lock" /></span>
-            <input className="form-control" value={this.state.password} type="password" name="password" onChange={this.handleChange.bind(this, 'password')} required="required" />
-          </div>
-        </div>
+      <form className="signupForm" onSubmit={this.logInUser}>
+
+        <p>
+          <span>My Email</span>
+          <input className="dotted" value={this.state.name} type="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
+        </p>
+
+        <p>
+          <span>My Password</span>
+          <input className="dotted" value={this.state.password} type="password" name="password" onChange={this.handleChange.bind(this, 'password')} required="required" />
+        </p>
+
         {this.state.logInFormError && (
-        <div className="alert alert-danger" role="alert">
-          <strong>Hmmm, I can&apos;t log you in. </strong>
-          <p>{this.state.logInFormError} :(</p>
-        </div>
+          <div className="alert alert-danger" role="alert">
+            <strong>Hmmm, I can&apos;t log you in. </strong>
+            <p>{this.state.logInFormError} :(</p>
+          </div>
         )}
+
         {this.state.loginButtonPending ?
-          <button className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin" /> Logging In...</button>
-        :
-          <button className="btn btn-primary">Log In</button>
+          <button type="submit" className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin" /> Logging In...</button>
+          :
+          <button type="submit" className="btn btn-primary">Log In</button>
         }
       </form>
     );
@@ -88,9 +86,11 @@ const LogInFormWithRouter = withRouter(LogInForm);
 const LogIn = () =>
   <div>
     <div className="row">
-      <div className="col-md-6">
-        <h2>Log In</h2>
+      <div className="col-md-8 offset-md-2 shadow">
+        <h2 className="big-title color-blue"><span>Log in</span></h2>
+
         <br />
+
         <LogInFormWithRouter />
       </div>
     </div>
