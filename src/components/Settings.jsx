@@ -71,7 +71,10 @@ class SettingsForm extends React.Component {
   // We use this function to store the file in the state before upload
   async changeProfilePicture(e) {
     if (e.target.files[0] !== null) {
+      let preview = URL.createObjectURL(e.target.files[0]);
+      
       this.setState({
+        profilePictureURL: preview,
         profilePicture: e.target.files[0],
       });
     }
