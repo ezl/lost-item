@@ -102,6 +102,12 @@ p.cta {
   border: 2px solid #3ec19d;
   box-shadow: 0 0 0 0 rgba(103, 202, 189, 0.3);
 }
+.btn-primary.more:hover {
+  background-color: #67CABC;
+  color: #fff;
+  border: 2px solid #67CABC;
+  box-shadow: 0 0 0 0 rgba(103, 202, 189, 0.3);
+}
 
 
 .form-control {
@@ -406,6 +412,11 @@ footer .container .copyright{
   text-decoration: none;
   color: #4A4A4A;
   margin-right: 1.5rem;
+  border-bottom: 2px solid transparent;
+  transition: .2s linear;
+}
+.nav .nav-link:hover{
+  border-bottom: 2px solid #4A4A4A;
 }
 .nav .nav-link.active{
   border-bottom: 2px solid #309797;
@@ -414,6 +425,7 @@ footer .container .copyright{
 }
 .nav-button{
   text-decoration: none;
+  transition: .2s linear;
   color: #b4b4b4 !important;
   border: 2px solid #b4b4b4;
   border-radius: 4px;
@@ -424,6 +436,7 @@ footer .container .copyright{
   color: #b4b4b4 !important;
   border: none;
   margin-right: 1rem;
+  border: 2px solid transparent;
 }
 .nav-button.register{
   color: #fff !important;
@@ -433,6 +446,20 @@ footer .container .copyright{
 .nav-button:hover{
   cursor: pointer;
   text-decoration: none;
+}
+.nav-button.logout:hover {
+  background-color: #b4b4b4;
+  color: #fff !important;
+  border: 2px solid #b4b4b4;
+  box-shadow: 0 0 0 0 rgba(103, 202, 189, 0.3);
+}
+.nav-button.login:hover {
+  border: 2px solid #b4b4b4;
+  box-shadow: 0 0 0 0 rgba(103, 202, 189, 0.3);
+}
+.nav-button.register:hover {
+  background-color: transparent;
+  color: #67CABC !important;
 }
 .nav .links, .nav #authStatus{
   display: none;
