@@ -300,6 +300,45 @@ button[type=submit].left{
   width: 16px;
   margin-right: 12px;
 }
+.clipboard{
+  width: 100%;
+  border: 1px solid #67CABC;
+  border-radius: 4px;
+  display: block;
+  font-size: 14px;
+  padding: 10px;
+  margin-top: 7px;
+  background: #fff;
+  margin-bottom: 5px;
+  color: #67CABC;
+  transition: .1s linear;
+}
+.clipboard:hover{
+  cursor: pointer;
+}
+.clipboard:active{
+  background-color: #F6FFFE;
+  box-shadow: 0 0.3rem 1.2rem 0 rgba(5,10,15,.07);
+}
+
+/* Copied to clipboard alert */
+.copied{
+  position: fixed;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #3ec19d;
+  color: white;
+  font-size: 16px;
+  padding: 1rem 1.5rem;
+  border-radius: 0 0 4px 4px;
+  z-index: 999;
+  transition: .2s linear;
+  width: 300px;
+}
+.copied.active{
+  top: 0;
+}
 
 /* Intro section on UserPage.jsx */
 .intro{
