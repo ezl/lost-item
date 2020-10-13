@@ -25,6 +25,7 @@ class SettingsForm extends React.Component {
     this.updateProfile = this.updateProfile.bind(this);
     this.changeProfilePicture = this.changeProfilePicture.bind(this);
     this.loadImage = this.loadImage.bind(this);
+    this.copyToClipboard = this.copyToClipboard.bind(this);
   }
 
   componentDidMount() {
@@ -43,6 +44,19 @@ class SettingsForm extends React.Component {
         this.loadImage(snapshot.val().email);
       });
     });
+  }
+
+  copyToClipboard(e) {
+    e.preventDefault();
+
+    // Play animation of the alert
+    document.querySelector('.copied').classList.add('active');
+
+    navigator.clipboard.writeText(`www.lost-item.com/${this.state.slug}`);
+
+    setTimeout(() => {
+      document.querySelector('.copied').classList.remove('active');
+    }, 2000);
   }
 
   handleChange(name, e) {
@@ -161,10 +175,12 @@ class SettingsForm extends React.Component {
 
     return (
       <div>
+        <div className="copied">Link copied to clipboard.</div>
+        
         <form onSubmit={this.updateProfile}>
           <div className="form-group">
             <div className="copy">
-              <a href="#">
+              <a href="#" onClick={this.copyToClipboard}>
                 <img src="images/copy.svg" />
                 Copy to clipboard
               </a>
@@ -174,7 +190,7 @@ class SettingsForm extends React.Component {
                 Change link
               </Link>
             </div>
-            <input disabled value={`www.lost-item.com/${this.state.slug}`} className="form-control teal" type="text" />
+            <span className="clipboard" onClick={this.copyToClipboard}>{`www.lost-item.com/${this.state.slug}`}</span>
             <small className="form-text text-muted">This is the link you&apos;ll label your stuff with. You can write it or print it on things you own like credit cards or cell phones, print labels and sew it to clothes.</small>
           </div>
 
