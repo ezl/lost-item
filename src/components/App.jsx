@@ -59,7 +59,6 @@ class NavBar extends React.Component {
               : ''
             }
             <NavLink className="nav-link" activeClassName="active" to="/how-it-works">How it Works</NavLink>
-            <NavLink className="nav-link" activeClassName="active" to="/" exact={true}>Store</NavLink>
           </div>
 
           {/* Buttons */}
@@ -79,7 +78,6 @@ class NavBar extends React.Component {
               : ''
             }
             <NavLink className="nav-link" activeClassName="active" to="/how-it-works">How it Works</NavLink>
-            <NavLink className="nav-link" activeClassName="active" to="/" exact={true}>Store</NavLink>
           </div>
 
           {/* Buttons */}
