@@ -539,8 +539,7 @@ footer .container .copyright{
 .b-bun--mid {
   height: 2px;
   top: 8px;
-  left: calc(25px - 18px);
-  width: 18px;
+  width: 25px;
 }
 .b-bun--bottom {
   height: 2px;
