@@ -111,24 +111,31 @@ class UserContactForm extends React.Component {
                     <form method="POST" onSubmit={this.handleSubmit}>
                       <div className="form-group">
                         <label>What did you find?</label>
-                        <input className="form-control" type="text" name="what" onChange={this.handleChange.bind(this, 'what')} />
+                        <input className="form-control" type="text" name="what" onChange={this.handleChange.bind(this, 'what')} required />
                         <small className="form-text text-muted">e.g. an android phone, a credit card, a large sack of potatoes</small>
                       </div>
                       <div className="form-group">
                         <label>Where did you find it?</label>
-                        <input className="form-control" type="text" name="where" onChange={this.handleChange.bind(this, 'where')} />
+                        <input className="form-control" type="text" name="where" onChange={this.handleChange.bind(this, 'where')} required />
                         <small className="form-text text-muted">e.g. at Burger King on Clark Street, at Jenny&apos;s house, on Richard Branson&apos;s jet</small>
                       </div>
                       <div className="form-group">
                         <label>What&#39;s the best way for {this.state.name} to get this item back?</label>
-                        <textarea className="form-control" type="text" name="how" onChange={this.handleChange.bind(this, 'how')} />
+                        <textarea className="form-control" type="text" name="how" onChange={this.handleChange.bind(this, 'how')} required />
                         <small className="form-text text-muted">Leave your contact email or phone here, or a message for how {this.state.name} can retrieve it, like &quot;I left it with the front desk at the ACME Hotel at Colombus and 4th Street.&quot;</small>
                       </div>
 
-                      <button type="submit" className="btn btn-primary" disabled={this.state.sending}>
-                        <i className={this.state.sending ? 'fa fa-spinner' : 'fa fa-send'} aria-hidden="true" />
-                      &nbsp;&nbsp;{buttonText}
+                    {this.state.sending ?
+                      <button type="submit" className="btn btn-primary" disabled>
+                        <i className="fa fa-spinner fa-spin" /> 
+                        &nbsp;&nbsp;Please wait a moment
                       </button>
+                      :
+                      <button type="submit" className="btn btn-primary">
+                        <i className='fa fa-send' />
+                        &nbsp;&nbsp;{buttonText}
+                      </button>
+                    }
                     </form>
                   </div>
                 </div>
