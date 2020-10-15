@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { getFirebaseApp } from './db/FirebaseApp';
@@ -8,7 +7,7 @@ const propTypes = {
   children: PropTypes.element,
 };
 
-class LogInForm extends React.Component {
+class ResetForm extends React.Component {
   static propTypes = {
     user: PropTypes.object,
     match: PropTypes.object.isRequired,
@@ -20,25 +19,24 @@ class LogInForm extends React.Component {
     super(props);
     this.state = {
       email: '',
-      password: '',
       loginFormError: '',
       loginButtonPending: false,
     };
 
-    this.logInUser = this.logInUser.bind(this);
+    this.resetPasswordFn = this.resetPasswordFn.bind(this);
   }
 
-  logInUser(e) {
+  resetPasswordFn(e) {
     e.preventDefault();
     this.setState({ loginButtonPending: true });
 
     const email = this.state.email.trim();
-    const password = this.state.password.trim();
     const th = this;
 
-    getFirebaseApp().auth().signInWithEmailAndPassword(email, password)
+    getFirebaseApp().auth().sendPasswordResetEmail(email)
       .then(() => {
-        th.props.history.push('/settings/');
+        // th.props.history.push('/settings/');
+        console.log('email sent');
       })
       .catch((error) => {
         // Handle Errors here.
@@ -55,51 +53,46 @@ class LogInForm extends React.Component {
 
   render() {
     return (
-      <form className="signupForm" onSubmit={this.logInUser}>
+      <form className="signupForm" onSubmit={this.resetPasswordFn}>
 
         <p>
-          <span>My Email</span>
+          <span>Your email</span>
           <input className="dotted" value={this.state.name} type="email" name="email" onChange={this.handleChange.bind(this, 'email')} required="required" />
-        </p>
-
-        <p>
-          <span>My Password</span>
-          <input className="dotted" value={this.state.password} type="password" name="password" onChange={this.handleChange.bind(this, 'password')} required="required" />
         </p>
 
         {this.state.logInFormError && (
           <div className="alert alert-danger" role="alert">
-            <strong>Hmmm, I can&apos;t log you in. </strong>
+            <strong>Sorry, there was a problem:</strong>
             <p>{this.state.logInFormError} :(</p>
           </div>
         )}
 
         {this.state.loginButtonPending ?
-          <button type="submit" className="btn btn-primary" disabled><i className="fa fa-spinner fa-spin" /> Logging In...</button>
+          <div className="alert alert-success" role="alert">
+            <strong>Email sent, please check your inbox!</strong>
+          </div>
           :
-          <button type="submit" className="btn btn-primary">Log In</button>
+          <button type="submit" className="btn btn-primary">Reset Password</button>
         }
-
-        <br/>
-        <Link className="nav-button login" to="/reset-password">Forgot your password?</Link>
       </form>
     );
   }
 }
-const LogInFormWithRouter = withRouter(LogInForm);
-const LogIn = () =>
-  <div>
+const ResetPasswordForm = withRouter(ResetForm);
+
+const Reset = () =>
+  <div className="container">
     <div className="row">
       <div className="col-md-8 offset-md-2 shadow">
-        <h2 className="big-title color-blue"><span>Log in</span></h2>
+        <h2 className="big-title color-blue"><span>Reset</span> Password</h2>
 
         <br />
 
-        <LogInFormWithRouter />
+        <ResetPasswordForm />
       </div>
     </div>
   </div>;
 
-LogIn.propTypes = propTypes;
+Reset.propTypes = propTypes;
 
-export default LogIn;
+export default Reset;

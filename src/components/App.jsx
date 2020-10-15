@@ -8,6 +8,7 @@ import AuthStatus from './AuthStatus';
 import { getFirebaseApp } from './db/FirebaseApp';
 import SignUp from './Signup';
 import LogIn from './LogIn';
+import ResetPassword from './ResetPassword';
 import Home from './Home';
 import HowItWorks from './HowItWorks';
 import UserPage from './UserPage';
@@ -157,6 +158,7 @@ class App extends React.Component {
             <Switch>
               <Route exact path="/signup" mapMenuTitle="Claim Your Lost-Item.Com Link" component={SignUp} />
               <Route exact path="/login" mapMenuTitle="Log In" component={LogIn} />
+              <Route exact path="/reset-password" mapMenuTitle="Reset Password" component={ResetPassword} />
               <Route exact path="/how-it-works" mapMenuTitle="How It Works" component={HowItWorks} />
               <PrivateRoute exact path="/payment" component={PayPalCheckout} user={this.state.user} />
               <PrivateRoute exact path="/settings" mapMenuTitle="Settings" component={Settings} user={this.state.user} />
