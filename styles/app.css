@@ -809,6 +809,56 @@ footer .container .copyright{
   }
 }
 
+.faq .question{
+  margin-bottom: 2rem;
+}
+.faq .question:last-child{
+  margin-bottom: 0;
+}
+.faq .question h5{
+  color: #67CABC;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  transition: .2s linear;
+  border-bottom: 2px solid transparent;
+  pointer-events: none;
+}
+.faq .question:hover{
+  cursor: pointer;
+}
+.faq .question p{
+  pointer-events: none;
+  height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  transition: .2s linear;
+}
+.faq .question i{
+  transition: .2s linear;
+}
+.faq .question.active h5{
+  border-bottom: 2px solid #67CABC;
+  padding-bottom: 1rem;
+}
+.faq .question.active i{
+  transform: rotate(180deg);
+}
+.faq .question.active p{
+  height: auto;
+  opacity: 1;
+  border-bottom: 1px solid #D8D8D8;
+  padding-bottom: 1rem;
+}
+
+.about a{
+  color: #67CABC;
+  text-decoration: none;
+  border-bottom: 2px dashed #67CABC;
+}
+
 /* Moved media queries to the end of the file for easier access */
 @media (min-width: 576px) {
   div#authStatus {

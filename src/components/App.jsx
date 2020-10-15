@@ -15,6 +15,9 @@ import Settings from './Settings';
 import PrivateRoute from './PrivateRoute';
 import Loading from './Loading';
 import PayPalCheckout from './Payment';
+import Faq from './Faq';
+import About from './About';
+import Terms from './Terms';
 
 
 class NavBar extends React.Component {
@@ -101,15 +104,15 @@ const Footer = (props) =>
   <footer>
     <div className="container">
       <div className="links">
-        <Link to="/">
+        <Link to="/about">
           About
         </Link>
 
-        <Link to="/">
+        <Link to="/terms">
           Terms of Service
         </Link>
 
-        <Link to="/">
+        <Link to="/faq">
           FAQ
         </Link>
 
@@ -160,6 +163,9 @@ class App extends React.Component {
               <Route exact path="/how-it-works" mapMenuTitle="How It Works" component={HowItWorks} />
               <PrivateRoute exact path="/payment" component={PayPalCheckout} user={this.state.user} />
               <PrivateRoute exact path="/settings" mapMenuTitle="Settings" component={Settings} user={this.state.user} />
+              <PrivateRoute exact path="/faq" mapMenuTitle="FaQ" component={Faq} />
+              <PrivateRoute exact path="/about" mapMenuTitle="About" component={About} />
+              <PrivateRoute exact path="/terms" mapMenuTitle="Terms" component={Terms} />
               <Route exact path="/" component={Home} />
               <Route path="*" mapMenuTitle="User Page" component={UserPage} />
             </Switch>}
