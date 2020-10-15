@@ -259,6 +259,7 @@ input.dotted, input.dotted:focus {
 /* Sign up form */
 .signupForm{
   padding: 2rem 0;
+  padding-bottom: 0;
 }
 .signupForm p{
   display: flex;
