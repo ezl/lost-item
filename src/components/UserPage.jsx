@@ -65,7 +65,7 @@ class UserContactForm extends React.Component {
     const buttonText = 'Send';
 
     return (
-      <div>
+      <div className="container">
         {this.state.messageSent &&
           <div>
             <div className="row">
@@ -162,9 +162,19 @@ UserInfo.propTypes = {
 
 
 const UserNotFound = () =>
-  <div>
-    <strong>No Such Page</strong>
-    <p>Hmmm... We do not have a page for this link. Did you find an item with this link on it?</p>
+  <div className="hero container big">
+    <div className="item">
+      <h2 className="big-title color-blue">Oh my...</h2>
+
+      <p>It looks like this page has been lost</p>
+
+      <p className="cta">
+        <Link className="btn btn-primary" to="/signup">Take me back home</Link>
+      </p>
+    </div>
+    <div className="item">
+      <img src="images/404.svg" />
+    </div>
   </div>;
 
 class UserPage extends React.Component {

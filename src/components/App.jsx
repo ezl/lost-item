@@ -154,7 +154,7 @@ class App extends React.Component {
         {/* Nav bar */}
         <NavBar user={this.state.user} />
 
-        <div className="container">
+        <div>
           {this.state.loading
             ? <Loading />
             :

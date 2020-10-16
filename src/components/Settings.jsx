@@ -241,7 +241,7 @@ SettingsForm.propTypes = {
 const SettingsFormWithRouter = withRouter(SettingsForm);
 
 const Settings = (props) => (
-  <div>
+  <div className="container">
     <div className="row">
       <div className="col-md-8 offset-md-2 shadow">
         <h2 className="big-title color-blue">Your <span>Link</span></h2>

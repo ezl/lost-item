@@ -88,7 +88,7 @@ class LogInForm extends React.Component {
 }
 const LogInFormWithRouter = withRouter(LogInForm);
 const LogIn = () =>
-  <div>
+  <div className="container">
     <div className="row">
       <div className="col-md-8 offset-md-2 shadow">
         <h2 className="big-title color-blue"><span>Log in</span></h2>

@@ -1,8 +1,10 @@
 import React from 'react';
 
 const Loading = () =>
-  <div className="spinner-wrapper">
-    <div class="spinner spinner3"></div>
+  <div className="container">
+    <div className="spinner-wrapper">
+      <div className="spinner spinner3"></div>
+    </div>
   </div>;
 
 export default Loading;
