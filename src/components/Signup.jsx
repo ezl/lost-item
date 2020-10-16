@@ -123,7 +123,7 @@ const SignUpFormWithRouter = withRouter(SignUpForm);
 
 function SignUp() {
   return (
-    <div>
+    <div className="container">
       <div className="row">
         <div className="col-md-8 offset-md-2 shadow">
           <h2 className="big-title color-blue">Get Your Own <br /> <span>Lost-Item Link</span></h2>

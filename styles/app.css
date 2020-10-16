@@ -217,7 +217,12 @@ input.dotted, input.dotted:focus {
 }
 .how .items .item{
   flex: 0 0 100%;
+  position: relative;
+  z-index: 0;
+}
+.how .items .item .content{
   display: flex;
+  width: 100%;
   flex-flow: row nowrap;
   justify-content: flex-start;
   font-size: 15px;
@@ -228,6 +233,25 @@ input.dotted, input.dotted:focus {
   box-shadow: 0 0.3rem 1.2rem 0 rgba(5,10,15,.03);
   min-height: 165px;
   position: relative;
+  background-color: white;
+  z-index: 10;
+}
+.how .items .item .content::after{
+  content: '';
+  position: absolute;
+  z-index: 30;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+  background-image: url('../images/arrow-how-mobile.svg');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.how .items .item:last-child .content::after{
+  display: none;
 }
 .how .items .item::before{
   counter-increment: how-it-works;
@@ -235,6 +259,7 @@ input.dotted, input.dotted:focus {
   width: 43px;
   height: 43px;
   font-weight: bold;
+  z-index: 20;
   background-color: rgba(103, 202, 189, 0.5);
   color: #4A4A4A;
   border-radius: 50%;
@@ -823,6 +848,10 @@ footer .container .copyright{
     display: none;
   }
 
+  .what .col-md-6{
+    padding: 3rem;
+  }
+
   .price ul li{
     padding-left: 0;
   }
@@ -874,7 +903,7 @@ footer .container .copyright{
     text-align: center;
   }
   .big-title span{
-    background-size: calc(90% + 2px) 8px;
+    background-size: calc(100% + 2px) 8px;
     background-position: 0% 105%;
     padding-bottom: 6px;
     background-repeat: no-repeat;
@@ -904,6 +933,9 @@ footer .container .copyright{
     transform: none;
   }
 
+  .how{
+    margin-bottom: 10rem;
+  }
   .how .green{
     margin-bottom: 5rem;
   }
@@ -916,8 +948,30 @@ footer .container .copyright{
     margin-bottom: 5rem;
     justify-content: space-between;
   }
+  .how .items .item::after{
+    content: '';
+    position: absolute;
+    z-index: 1;
+    top: 80%;
+    transform: translateY(-80%);
+    right: -50px;
+    width: 100px;
+    height: 40px;
+    background-image: url('../images/arrow-how-desktop.svg');
+    background-position: center;
+    background-size: cover;
+  }
+  .how .items .item:nth-child(even)::after{
+    right: initial;
+    left: -50px;
+    top: 70%;
+    transform: translateY(-70%) scaleX(-1);
+  }
+  .how .items .item:last-child::after, .how .items .item .content::after{
+    display: none;
+  }
   .how .items .item:nth-child(even){
     flex-flow: row-reverse nowrap;
-    top: 90px;
+    top: 150px;
   }
 }

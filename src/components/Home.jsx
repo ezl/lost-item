@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const HeroUnit = () =>
-  <div className="hero">
+  <div className="hero container big">
     <div className="item">
       <h1 className="big-title color-blue">Never Lose <br /><span>Your Stuff Again</span></h1>
 
@@ -22,7 +22,7 @@ const About = () =>
   <div>
     <div className="hero-bg"></div>
 
-    <section className="what color-blue">
+    <section className="what color-blue container big">
       <div className="row">
         <div className="col-md-6">
           <h3 className="big-title color-blue smaller"><span>What is Lost Item?</span></h3>
@@ -57,7 +57,7 @@ const About = () =>
       </div>
     </section>
 
-    <section className="price">
+    <section className="price container">
       <div className="row">
         <div className="col-md-8 offset-md-2 shadow">
           <h2 className="big-title color-blue center smaller">How much <span>does it cost?</span></h2>
@@ -84,12 +84,12 @@ const About = () =>
       </div>
     </section>
 
-    <section className="often">
+    <section className="often container">
       <h2 className="big-title color-blue center smaller">Why did <span>you make this?</span></h2>
 
       <p>I lose stuff. Often. Obviously, it&apos;s kind of a problem.</p>
 
-      <p className="cta">
+      <p className="cta container">
         <Link className="btn btn-primary" to="/signup">Oh, cool. Sign me up.</Link>
       </p>
     </section>

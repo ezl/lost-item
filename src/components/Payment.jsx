@@ -90,7 +90,7 @@ class PayPalCheckoutNR extends React.Component {
     };
 
     return (
-      <div>
+      <div className="container">
         <div className="row payment">
           <div className="col-md-8 offset-md-2 shadow">
             <h2 className="big-title color-blue">Change <span>Link</span></h2>
