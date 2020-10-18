@@ -48,11 +48,15 @@ class UserContactForm extends React.Component {
         if (response.status === 200) {
           this.setState({
             messageSent: true
-          })
+          });
+
+          // We found the item, scroll to top!
+          window.scrollTo(0, 0);
         }
+
         this.setState({
           sending: false
-        })
+        });
       }); // parses response to JSON
   }
 
