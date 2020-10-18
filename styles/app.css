@@ -885,6 +885,18 @@ footer .container .copyright{
   border-bottom: 2px dashed #67CABC;
 }
 
+.change-link{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+.change-link p{
+  flex: 0 0 170px;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+}
+
 /* Moved media queries to the end of the file for easier access */
 @media (min-width: 576px) {
   div#authStatus {
