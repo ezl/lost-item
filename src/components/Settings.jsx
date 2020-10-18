@@ -26,6 +26,7 @@ class SettingsForm extends React.Component {
     this.changeProfilePicture = this.changeProfilePicture.bind(this);
     this.loadImage = this.loadImage.bind(this);
     this.copyToClipboard = this.copyToClipboard.bind(this);
+    this.showSuccessMessage = this.showSuccessMessage.bind(this);
   }
 
   componentDidMount() {
@@ -59,6 +60,15 @@ class SettingsForm extends React.Component {
     }, 2000);
   }
 
+  showSuccessMessage() {
+    // Play animation of the alert
+    document.querySelector('.copied.ok').classList.add('active');
+
+    setTimeout(() => {
+      document.querySelector('.copied.ok').classList.remove('active');
+    }, 2000);
+  }
+
   handleChange(name, e) {
     const change = {};
     change[name] = e.target.value;
@@ -86,7 +96,7 @@ class SettingsForm extends React.Component {
   async changeProfilePicture(e) {
     if (e.target.files[0] !== null) {
       let preview = URL.createObjectURL(e.target.files[0]);
-      
+
       this.setState({
         profilePictureURL: preview,
         profilePicture: e.target.files[0],
@@ -165,11 +175,11 @@ class SettingsForm extends React.Component {
             }
           });
       }
-
     }, (error) => {
       this.flashProfileUpdateErrorMessage(error.message)
     }).finally(() => {
       this.setState({ updatingSettings: false });
+      this.showSuccessMessage();
     });
   }
 
@@ -179,7 +189,8 @@ class SettingsForm extends React.Component {
     return (
       <div>
         <div className="copied">Link copied to clipboard.</div>
-        
+        <div className="copied ok">Updated settings.</div>
+
         <form onSubmit={this.updateProfile}>
           <div className="form-group">
             <div className="copy">
@@ -223,10 +234,10 @@ class SettingsForm extends React.Component {
           }
 
           {this.state.updateSettingsErrorMessageVisible &&
-            <span className="settingsFlashMessage settingsError">{this.state.updateSettingsErrorMessageText}</span>
-          }
-          {this.state.updateSettingsSuccessMessageVisible &&
-            <span className="settingsFlashMessage settingsSuccess">Success!</span>
+            <div>
+              <br />
+              <span className="settingsFlashMessage settingsError">{this.state.updateSettingsErrorMessageText}</span>
+            </div>
           }
         </form>
       </div>
