@@ -19,6 +19,7 @@ import PayPalCheckout from './Payment';
 import Faq from './Faq';
 import About from './About';
 import Terms from './Terms';
+import Clients from './Clients';
 
 
 class NavBar extends React.Component {
@@ -117,7 +118,7 @@ const Footer = (props) =>
           FAQ
         </Link>
 
-        <Link to="/">
+        <Link to="/clients">
           Clients
         </Link>
       </div>
@@ -168,6 +169,7 @@ class App extends React.Component {
               <PrivateRoute exact path="/faq" mapMenuTitle="FaQ" component={Faq} />
               <PrivateRoute exact path="/about" mapMenuTitle="About" component={About} />
               <PrivateRoute exact path="/terms" mapMenuTitle="Terms" component={Terms} />
+              <PrivateRoute exact path="/clients" mapMenuTitle="Clients" component={Clients} />
               <Route exact path="/" component={Home} />
               <Route path="*" mapMenuTitle="User Page" component={UserPage} />
             </Switch>}
