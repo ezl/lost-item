@@ -12,9 +12,19 @@ const PrivateRoute = ({ component: Component, user, ...rest }) => (
     user !== null ? (
       <Component {...props} user={user} />
     ) : (
-      <div className="container">
-        <h2>You must be logged in to view this page</h2>
-        <Link to="/">Click here to back to the home page.</Link>
+      <div className="hero container big">
+        <div className="item">
+          <h2 className="big-title color-blue">Oh my...</h2>
+
+          <p>You need to be logged in to view this page</p>
+
+          <p className="cta">
+            <Link className="btn btn-primary" to="/signup">Take me back home</Link>
+          </p>
+        </div>
+        <div className="item">
+          <img src="images/404.svg" />
+        </div>
       </div>
     )
   )}
