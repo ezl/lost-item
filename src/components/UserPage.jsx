@@ -81,7 +81,7 @@ class UserContactForm extends React.Component {
 
                   <br />
 
-                  <p><strong>Thanks for helping get that item back to its rightful owner!</strong></p>
+                  <p><strong>Thanks for helping get that item back to {this.props.user.name}!</strong></p>
 
                   <p>By the way, do you want your own link that you can put on any of your items in case you ever lose them?</p>
 
