@@ -4,15 +4,8 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { getFirebaseApp } from './db/FirebaseApp';
+import PaymentForm from './PaymentForm';
 
-const PayPalButton = paypal.Button.driver('react', { React, ReactDOM });
-
-const propTypes = {
-  env: PropTypes.string.isRequired,
-  client: PropTypes.object.isRequired,
-};
-
-PayPalButton.propTypes = propTypes;
 let amount = 0;
 let period = 0;
 let th;
@@ -55,6 +48,10 @@ class PayPalCheckoutNR extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    amount = 0;
+  }
+
   flashLinkUpdateErrorMessage(message) {
     this.setState({
       updateLinkErrorMessageText: message,
@@ -93,18 +90,6 @@ class PayPalCheckoutNR extends React.Component {
       this.flashLinkUpdateErrorMessage(error.message)
     }).finally(() => {
       this.setState({ updatingLink: false });
-    });
-  }
-
-  onAuthorize(data, actions) {
-    return actions.payment.execute().then(() => {
-      const database = getFirebaseApp().database();
-      const currentDate = new Date();
-      currentDate.setFullYear(currentDate.getFullYear() + period);
-      const updates = {};
-      updates[`users/${th.props.user.uid}/paid_until`] = currentDate.getTime();
-      database.ref().update(updates);
-      th.props.history.push('/settings/');
     });
   }
 
@@ -222,13 +207,7 @@ class PayPalCheckoutNR extends React.Component {
                     </div>
                   </div>
 
-                  <PayPalButton
-                    env={'production'}
-                    client={client}
-                    payment={this.payment}
-                    commit // Optional: show a 'Pay Now' button in the checkout flow
-                    onAuthorize={this.onAuthorize}
-                  />
+                  <PaymentForm price={amount} user={this.props.user} />
                 </div>
               }
             </div>

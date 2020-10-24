@@ -16,6 +16,8 @@
   "license": "MIT",
   "dependencies": {
     "@babel/polyfill": "^7.11.5",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.10.0",
     "axios": "^0.20.0",
     "current-input": "^1.1.2",
     "firebase": "^7.21.1",

@@ -5,9 +5,9 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 const firestore = admin.firestore();
 const database = admin.database();
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
+const stripe = require('stripe')(functions.config().stripe.test);
+const endpointSecret = `${functions.config().stripe.endpoint}`;
+
 const postmarkKey = functions.config().postmark.key
 const mailTransport = nodemailer.createTransport(postmarkTransport({
   auth: {
@@ -44,15 +44,137 @@ function sendEmail (user, what, where, how) {
     .catch((error) => console.error('There was an error while sending the email:', error))
 }
 
+exports.stripeWebhooks = functions.https.onRequest(async (request, response) => {
+  response.set('Access-Control-Allow-Origin', '*');
+  response.set('Access-Control-Allow-Credentials', 'true'); // vital
+  if (request.method === 'OPTIONS') {
+    // Send response to OPTIONS requests
+    response.set('Access-Control-Allow-Methods', 'GET');
+    response.set('Access-Control-Allow-Headers', 'Content-Type');
+    response.set('Access-Control-Max-Age', '3600');
+    response.status(204).send('');
+  } else {
+    const payload = request.rawBody;
+    const sig = request.headers['stripe-signature'];
+
+    let event;
+
+    try {
+      event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+    } catch (err) {
+      response.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    switch (event.type) {
+      case 'checkout.session.completed':
+        const session = event.data.object;
+
+        // Update the dabatase if the payment_status is "paid"
+        if(session.payment_status === 'paid') {
+          database.ref('/users')
+          .orderByChild('stripe_session')
+          .equalTo(session.id)
+          .once('value')
+          .then((snapshot) => {
+            if (snapshot.val() !== null) {
+              const updates = {};
+              let key = Object.keys(snapshot.val())[0];
+
+              // Calculate if we're paying for a year or lifetime option and set paid_until
+              if(session.amount_total == 1900) {
+                const currentDate = new Date();
+                currentDate.setFullYear(currentDate.getFullYear() + 1);
+                updates[`users/${key}/paid_until`] = currentDate.getTime();
+              } else if (session.amount_total == 5900) {
+                const currentDate = new Date();
+                currentDate.setFullYear(currentDate.getFullYear() + 99);
+                updates[`users/${key}/paid_until`] = currentDate.getTime();
+              }
+              database.ref().update(updates);
+            }
+          }).then(() => {
+            response.status(200).send(`Session completed`);
+          }).catch(() => {
+            response.status(400).send(`Session error`);
+          })
+        }
+        // console.log(`checkout.session.completed name -> ${session.id}`);
+        // console.log(`checkout.session.completed status -> ${session.payment_status}`);
+        // console.log(`checkout.session.completed amount -> ${session.amount_total}`);
+        break;
+      default:
+        console.log('Event type not supported');
+        response.status(200).send(`Something other event we don't need`);
+        break;
+    }
+  }
+})
+
+exports.paymentYearlySession = functions.https.onRequest(async (request, response) => {
+  response.set('Access-Control-Allow-Origin', '*');
+  response.set('Access-Control-Allow-Credentials', 'true'); // vital
+  if (request.method === 'OPTIONS') {
+    // Send response to OPTIONS requests
+    response.set('Access-Control-Allow-Methods', 'GET');
+    response.set('Access-Control-Allow-Headers', 'Content-Type');
+    response.set('Access-Control-Max-Age', '3600');
+    response.status(204).send('');
+  } else {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price: 'price_1HeYI5FamwKDllrdEE3kMEuj',
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      success_url: 'https://www.lost-item.com/success',
+      cancel_url: 'https://www.lost-item.com/settings',
+    });
+
+    response.status(200).send({ id: session.id })
+  }
+})
+
+exports.paymentLifetimeDealSession = functions.https.onRequest(async (request, response) => {
+  response.set('Access-Control-Allow-Origin', '*');
+  response.set('Access-Control-Allow-Credentials', 'true'); // vital
+  if (request.method === 'OPTIONS') {
+    // Send response to OPTIONS requests
+    response.set('Access-Control-Allow-Methods', 'GET');
+    response.set('Access-Control-Allow-Headers', 'Content-Type');
+    response.set('Access-Control-Max-Age', '3600');
+    response.status(204).send('');
+  } else {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          name: 'Lifetime deal for Lost-item',
+          description: 'You can customize this description on the firebase functions',
+          amount: 5900,
+          currency: 'usd',
+          quantity: 1,
+        },
+      ],
+      success_url: 'https://www.lost-item.com/success',
+      cancel_url: 'https://www.lost-item.com/settings',
+    });
+
+    response.status(200).send({ id: session.id })
+  }
+})
+
 exports.notifyUser = functions.https.onRequest((request, response) => {
   response.set('Access-Control-Allow-Origin', '*');
   response.set('Access-Control-Allow-Credentials', 'true'); // vital
   if (request.method === 'OPTIONS') {
-      // Send response to OPTIONS requests
-      response.set('Access-Control-Allow-Methods', 'GET');
-      response.set('Access-Control-Allow-Headers', 'Content-Type');
-      response.set('Access-Control-Max-Age', '3600');
-      response.status(204).send('');
+    // Send response to OPTIONS requests
+    response.set('Access-Control-Allow-Methods', 'GET');
+    response.set('Access-Control-Allow-Headers', 'Content-Type');
+    response.set('Access-Control-Max-Age', '3600');
+    response.status(204).send('');
   } else {
     database.ref('/users')
     .orderByChild('slug')
@@ -66,9 +188,7 @@ exports.notifyUser = functions.https.onRequest((request, response) => {
         })
       }
     }).then(() => {
-    response.status(200).send("")
-  })
+      response.status(200).send("")
+    })
   }
-
-
 })

@@ -19,6 +19,7 @@ import PayPalCheckout from './Payment';
 import Faq from './Faq';
 import About from './About';
 import Terms from './Terms';
+import ThankYou from './ThankYou';
 import Clients from './Clients';
 
 
@@ -169,6 +170,7 @@ class App extends React.Component {
               <PrivateRoute exact path="/faq" mapMenuTitle="FaQ" component={Faq} />
               <PrivateRoute exact path="/about" mapMenuTitle="About" component={About} />
               <PrivateRoute exact path="/terms" mapMenuTitle="Terms" component={Terms} />
+              <PrivateRoute exact path="/success" mapMenuTitle="Thank You!" component={ThankYou} />
               <PrivateRoute exact path="/clients" mapMenuTitle="Clients" component={Clients} />
               <Route exact path="/" component={Home} />
               <Route path="*" mapMenuTitle="User Page" component={UserPage} />
