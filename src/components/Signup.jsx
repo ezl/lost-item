@@ -33,6 +33,13 @@ class SignUpForm extends React.Component {
     this.updateProfile = this.updateProfile.bind(this);
   }
 
+  componentDidMount() {
+    // Check if the user is already logged in, if so, move him to the dashboard
+    if (getFirebaseApp().auth().currentUser != null) {
+      this.props.history.push('/settings/');
+    }
+  }
+
   createUser(e) {
     this.setState({ signupButtonPending: true });
     e.preventDefault();

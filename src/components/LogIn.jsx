@@ -28,6 +28,13 @@ class LogInForm extends React.Component {
     this.logInUser = this.logInUser.bind(this);
   }
 
+  componentDidMount() {
+    // Check if the user is already logged in, if so, move him to the dashboard
+    if (getFirebaseApp().auth().currentUser != null) {
+      this.props.history.push('/settings/');
+    }
+  }
+
   logInUser(e) {
     e.preventDefault();
     this.setState({ loginButtonPending: true });
