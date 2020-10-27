@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { getFirebaseApp } from './db/FirebaseApp';
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_51Hdf2RFamwKDllrdg1kXdQvBVNP733tg2m5wLUVXXOwVlXYNmiVgBdbWZbqvl0HWemuK6EX21lxIk2kTrPc6dZcI00YCChYPne');
+const stripePromise = loadStripe('pk_live_51Hdf2RFamwKDllrdzOLjiET8r1vNeMudSeOZrxpga0CVAxE6fl8OYE0jESutkXBu5WXisISnnRexcuPIok3v85MO00n5NKlOaB');
 
 class PaymentForm extends React.Component {
   constructor(props) {
