@@ -26,6 +26,7 @@ class SignUpForm extends React.Component {
       name: '',
       email: '',
       password: '',
+      clink: '',
       signupFormError: '',
       signupButtonPending: false,
     };
@@ -72,6 +73,8 @@ class SignUpForm extends React.Component {
   updateProfile(user, data) {
     const database = getFirebaseApp().database();
     database.ref(`users/${user.uid}`).set(data).then(() => {
+      this.state.clink ? 
+      this.props.history.push({ pathname: "/payment", state: { clink: this.state.clink } }) :
       this.props.history.push('/settings/');
     });
   }
@@ -100,6 +103,14 @@ class SignUpForm extends React.Component {
         <p>
           <span>and my password is </span>
           <input autoComplete="no-autocomplete" className="dotted" value={this.state.password} type="password" name="password" onChange={this.handleChange.bind(this, 'password')} required="required" />
+        </p>
+
+        <p>
+          <span>lost-item.com/</span>
+          <div className="input-with-note">
+            <input autoComplete="no-autocomplete" className="dotted" value={this.state.clink} type="clink" name="clink" onChange={this.handleChange.bind(this, 'clink')} placeholder="Optional" />
+            <p>Get your custom link for just $1,99mo. Otherwise you can get a free random link like lost-item.com/j5h4jfgh9</p>
+          </div>
         </p>
 
         <p className="color-gray">

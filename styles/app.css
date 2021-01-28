@@ -293,6 +293,18 @@ input.dotted, input.dotted:focus {
 .signupForm h5{
   margin-bottom: 1.5rem;
 }
+.signupForm .input-with-note{
+  width: 100%;
+}
+.signupForm .input-with-note input{
+  width: 100%;
+}
+.signupForm .input-with-note p{
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 11px;
+  text-align: center;
+}
 
 /* New submit button across the site */
 button[type=submit]{
@@ -628,6 +640,28 @@ footer .container .copyright{
   margin-bottom: 4rem;
   margin-top: 4rem;
 }
+.price .price-card-head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  background-color: #309797;
+  color: #fff;
+}
+.price .price-card-head p {
+  margin: 0;
+  text-transform: uppercase;
+}
+.price .billed-note{
+  position: absolute;
+  bottom: -28px;
+  text-align: center;
+  font-size: 12px;
+}
 .price .free{
   font-weight: bold;
   font-size: 18px;
@@ -650,7 +684,15 @@ footer .container .copyright{
   font-size: 14px;
   right: 5px;
 }
-.price .cta, .price .cta a{ margin-bottom: 0; }
+.price .cta{ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0; 
+}
+.price .cta .btn{
+  padding: .75rem 2rem;
+}
 .price ul{
   margin: 0;
   padding: 0;
@@ -671,9 +713,16 @@ footer .container .copyright{
   left: -10px;
   width: 15px;
   height: 15px;
-  background-image: url('../images/star.svg');
+  background-image: url('../images/check.svg');
   background-position: center;
   background-size: cover;
+}
+.price ul li.disabled{
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+.price ul li.disabled::before{
+  background-image: none;
 }
 
 .what h3{ 
@@ -1036,5 +1085,11 @@ footer .container .copyright{
   .how .items .item:nth-child(even){
     flex-flow: row-reverse nowrap;
     top: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+  .price .price-card-head{
+    position: relative;
   }
 }

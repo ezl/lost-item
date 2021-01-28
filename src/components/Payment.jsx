@@ -39,6 +39,7 @@ class PayPalCheckoutNR extends React.Component {
 
     // Get user data
     database.ref(`users/${this.props.user.uid}`).once('value').then((snapshot) => {
+      console.log("THE SNAPSHOT", snapshot)
       const paidUntil = snapshot.val().paid_until;
       const currentDate = new Date().getTime();
       this.setState({
@@ -158,7 +159,7 @@ class PayPalCheckoutNR extends React.Component {
 
               <p className="bigger">Get a friendlier, easier to remember lost-item link.</p>
 
-              <p>Instead of <span className="blue">lost-item.com/{this.props.location.state.slug}</span>, choose your own custom link! For example, mine is www.lost-item.com/eric - super handy dandy and easy to remember. :)</p>
+              <p>Instead of <span className="blue">lost-item.com/{this.state.slug}</span>, choose your own custom link! For example, mine is www.lost-item.com/eric - super handy dandy and easy to remember. :)</p>
 
               <p className="bigger">What do you want your custom lost-item link to be?</p>
 
@@ -187,23 +188,23 @@ class PayPalCheckoutNR extends React.Component {
 
                   <p className="bigger center blue">We have 2 plans:</p>
 
-                  <p className="bigger center">You can hold your custom link for $19.00/year or an annual subscription.</p>
+                  <p className="bigger center">You can hold your custom link for $1,99/month or a one-time payment lifetime subscription.</p>
 
                   <div className="row options">
-                    <div className="col-sm-6" id="1y" data-period="1" data-value="19.00" onClick={this.handleSelectOption}>
+                    <div className="col-sm-6" id="1y" data-period="1" data-value="23.88" onClick={this.handleSelectOption}>
                       <div className="content">
-                        <h3>$19</h3>
-                        <p>per year</p>
+                        <h3>$1,99</h3>
+                        <p className="text-xs-center">monthly<br/>billed annually</p>
                       </div>
                       <p className="last">(You'll get charged again in a year)</p>
                     </div>
 
-                    <div className="col-sm-6" id="forever" data-period="99" data-value="59.00" onClick={this.handleSelectOption}>
+                    <div className="col-sm-6" id="forever" data-period="99" data-value="69.00" onClick={this.handleSelectOption}>
                       <div className="content">
-                        <h3>$59</h3>
-                        <p>lifetime</p>
+                        <h3>$69</h3>
+                        <p className="text-xs-center">lifetime<br/>own it forever!</p>
                       </div>
-                      <p className="last">(For a 1 time payment of $59.00 you get your link forever!)</p>
+                      <p className="last">(For a 1 time payment of $69.00 you get your link forever!)</p>
                     </div>
                   </div>
 
