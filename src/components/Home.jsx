@@ -58,28 +58,49 @@ const About = () =>
     </section>
 
     <section className="price container">
-      <div className="row">
-        <div className="col-md-8 offset-md-2 shadow">
-          <h2 className="big-title color-blue center smaller">How much <span>does it cost?</span></h2>
+      <h2 className="big-title color-blue center smaller">How much <span>does it cost?</span></h2>
+      <div className="row mb-3 mt-3">
+        <div className="col-md-5 shadow">
+          <div className="price-card-head">
+            <p>Random link</p>
+          </div>
 
           <p className="zero free blue">0 <span>$</span></p>
-          <p className="free blue">Free. You get your own permanent link, for free.</p>
-
-          <div className="divider"></div>
-
-          <p className="free left">In theory, we would make money by:</p>
+          
+          <div className="cta">
+            <Link className="btn btn-primary" to="/signup">Sign up</Link>
+          </div>
 
           <ul>
-            <li>By selling custom links (like vanity license plates)</li>
-            <li>Selling stickers, labels, and nametags with your link professionally printed on it</li>
-            <li>Through donations (for example, when a grateful person has his/her lost belongings returned due to someone reporting an item lost through this site)</li>
+            <li>Unique link that can be attached to anything</li>
+            <li>Automated email when someone finds your lost item</li>
+            <li className="disabled">Customizable link. Like lost-item.com/eric</li>
+            <li className="disabled">Automated SMS when someone finds your lost item</li>
           </ul>
 
-          <p className="free">For now though, I just built this for myself so I would be able to recover items I lose.</p>
+        </div>
 
-          <p className="cta">
-            <Link className="btn btn-primary" to="/signup">Oh, cool. Sign me up.</Link>
+        <div className="col-md-5 offset-md-2 shadow">
+          <div className="price-card-head">
+            <p>Custom link</p>
+          </div>
+
+          <p className="zero free blue">
+            1.99 <span>$</span>
+            <p className="billed-note">per month, billed annually</p>
           </p>
+
+          <div className="cta">
+            <Link className="btn btn-primary" to="/signup">Sign up</Link>
+          </div>
+
+          <ul>
+            <li>Unique link that can be attached to anything</li>
+            <li>Automated email when someone finds your lost item</li>
+            <li>Customizable link. Like lost-item.com/eric</li>
+            <li>Automated SMS when someone finds your lost item</li>
+          </ul>
+
         </div>
       </div>
     </section>
