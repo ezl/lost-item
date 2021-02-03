@@ -946,6 +946,31 @@ footer .container .copyright{
   font-size: 16px;
 }
 
+.labels .slider-side .main-slider-view {
+  height: 350px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.labels .slider-side .slider-thumbs {
+  height: 100px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.labels .sold-by {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.labels .sold-by img {
+  margin-left: 10px;
+}
+
+.labels .desc {
+  margin-top: 30px;
+}
+
 /* Moved media queries to the end of the file for easier access */
 @media (min-width: 576px) {
   div#authStatus {
