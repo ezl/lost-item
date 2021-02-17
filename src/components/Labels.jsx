@@ -41,7 +41,7 @@ class Labels extends React.Component {
               />
               <img
                 className="main-slider-view"
-                src="images/iphone-label.png"
+                src="images/iphone-12-label.png"
                 alt=""
               />
             </Slider>
@@ -64,7 +64,7 @@ class Labels extends React.Component {
               />
               <img
                 className="slider-thumbs"
-                src="images/iphone-label.png"
+                src="images/iphone-12-label.png"
                 alt=""
               />
             </Slider>

@@ -956,7 +956,7 @@ footer .container .copyright{
 
 .labels .slider-side .slider-thumbs {
   height: 100px;
-  object-fit: cover;
+  object-fit: contain;
   margin-right: 10px;
 }
 
