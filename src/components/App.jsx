@@ -11,6 +11,7 @@ import LogIn from './LogIn';
 import ResetPassword from './ResetPassword';
 import Home from './Home';
 import HowItWorks from './HowItWorks';
+import Labels from './Labels';
 import UserPage from './UserPage';
 import Settings from './Settings';
 import PrivateRoute from './PrivateRoute';
@@ -84,6 +85,7 @@ class NavBar extends React.Component {
               : ''
             }
             <NavLink className="nav-link" activeClassName="active" to="/how-it-works">How it Works</NavLink>
+            <NavLink className="nav-link" activeClassName="active" to="/labels">Buy Labels</NavLink>
           </div>
 
           {/* Buttons */}
@@ -165,6 +167,7 @@ class App extends React.Component {
               <Route exact path="/login" mapMenuTitle="Log In" component={LogIn} />
               <Route exact path="/reset-password" mapMenuTitle="Reset Password" component={ResetPassword} />
               <Route exact path="/how-it-works" mapMenuTitle="How It Works" component={HowItWorks} />
+              <Route exact path="/labels" mapMenuTitle="Buy Labels" component={Labels} />
               <PrivateRoute exact path="/payment" component={PayPalCheckout} user={this.state.user} />
               <PrivateRoute exact path="/settings" mapMenuTitle="Settings" component={Settings} user={this.state.user} />
               <PrivateRoute exact path="/faq" mapMenuTitle="FaQ" component={Faq} />
