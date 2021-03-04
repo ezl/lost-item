@@ -930,12 +930,6 @@ footer .container .copyright{
   padding-bottom: 1rem;
 }
 
-.about a{
-  color: #67CABC;
-  text-decoration: none;
-  border-bottom: 2px dashed #67CABC;
-}
-
 .change-link{
   display: flex;
   flex-flow: row nowrap;
@@ -971,6 +965,22 @@ footer .container .copyright{
 
 .labels .desc {
   margin-top: 30px;
+}
+
+/* ABOUT PAGES */
+.about a{
+  color: #67CABC;
+  text-decoration: none;
+  border-bottom: 2px dashed #67CABC;
+}
+
+.about h3 {
+  padding-bottom: 10px;
+  border-bottom: 2px solid #67CABC;
+}
+
+.about .grey-head {
+  color: #9B9B9B;
 }
 
 /* Moved media queries to the end of the file for easier access */
