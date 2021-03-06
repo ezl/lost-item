@@ -906,11 +906,11 @@ footer .container .copyright{
   cursor: pointer;
 }
 .faq .question p{
-  pointer-events: none;
   height: 0;
   opacity: 0;
   margin: 0;
   padding: 0;
+  visibility: hidden;
   transition: .2s linear;
 }
 .faq .question i{
@@ -928,6 +928,11 @@ footer .container .copyright{
   opacity: 1;
   border-bottom: 1px solid #D8D8D8;
   padding-bottom: 1rem;
+  visibility: visible;
+}
+
+.faq .question.active p p{
+  border-bottom: 0px;
 }
 
 .change-link{
