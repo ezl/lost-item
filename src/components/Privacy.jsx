@@ -2,7 +2,7 @@
 import React from "react";
 import { withRouter } from "react-router";
 
-class Terms extends React.Component {
+class Privacy extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -217,4 +217,4 @@ class Terms extends React.Component {
   }
 }
 
-export default withRouter(Terms);
+export default withRouter(Privacy);
