@@ -988,6 +988,88 @@ footer .container .copyright{
   color: #9B9B9B;
 }
 
+/* TESTIMONIALS PAGE */
+
+.testimonials .page-title {
+  text-align: center;
+  margin: 50px 0 80px;
+}
+
+.testimonials .page-title h1 {
+  color: #67CABC;
+}
+
+.testimonials .disclaimer {
+  color: #242448;
+  text-align: center;
+  max-width: 550px;
+  margin: 40px auto;
+  opacity: 0.6;
+}
+
+.testimonials .testimonial {
+  margin-bottom: 80px;
+}
+
+.testimonials .testimonial .msg {
+  position: relative;
+  padding: 30px 50px;
+  box-shadow: 0rem 0.6rem 0.9rem 0.6rem rgb(5 10 15 / 8%);
+  margin-bottom: 50px;
+}
+
+.testimonials .testimonial .msg .msg-pointer {
+  position: absolute;
+  bottom: -14px;
+  left: 50px;
+  height: 40px;
+  width: 40px;
+  background-color: #fff;
+  transform: rotate(45deg);
+}
+
+.testimonials .testimonial .msg .title {
+  font-size: 20px;
+  color: #67CABC;
+  margin-bottom: 0.5rem;
+}
+
+.testimonials .testimonial .msg .content {
+  font-size: 14px;
+  color: #242448;
+}
+
+.testimonials .testimonial .sender {
+  display: flex;
+  align-items: center;
+}
+
+.testimonials .testimonial .sender .pic {
+  height: 80px;
+  width: 80px;
+  border-radius: 80px;
+  margin-right: 20px;
+  background-color: #ccc;
+  background-position: center;
+  background-size: cover;
+}
+
+.testimonials .testimonial .sender .details {
+  width: calc(100% - 100px);
+}
+
+.testimonials .testimonial .sender .details .name {
+  margin: 0;
+  color: #242448;
+}
+
+.testimonials .testimonial .sender .details .desc {
+  margin: 0;
+  font-size: 12px;
+  color: #242448;
+  opacity: 0.6;
+}
+
 /* Moved media queries to the end of the file for easier access */
 @media (min-width: 576px) {
   div#authStatus {

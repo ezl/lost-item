@@ -12,6 +12,7 @@ import ResetPassword from "./ResetPassword";
 import Home from "./Home";
 import HowItWorks from "./HowItWorks";
 import Labels from "./Labels";
+import Testimonials from "./Testimonials";
 import UserPage from "./UserPage";
 import Settings from "./Settings";
 import PrivateRoute from "./PrivateRoute";
@@ -79,6 +80,16 @@ class NavBar extends React.Component {
             >
               How it Works
             </NavLink>
+            <NavLink className="nav-link" activeClassName="active" to="/labels">
+              Buy Labels
+            </NavLink>
+            <NavLink
+              className="nav-link"
+              activeClassName="active"
+              to="/testimonials"
+            >
+              Testimonials
+            </NavLink>
           </div>
 
           {/* Buttons */}
@@ -113,6 +124,13 @@ class NavBar extends React.Component {
             </NavLink>
             <NavLink className="nav-link" activeClassName="active" to="/labels">
               Buy Labels
+            </NavLink>
+            <NavLink
+              className="nav-link"
+              activeClassName="active"
+              to="/testimonials"
+            >
+              Testimonials
             </NavLink>
           </div>
 
@@ -216,6 +234,12 @@ class App extends React.Component {
                 path="/labels"
                 mapMenuTitle="Buy Labels"
                 component={Labels}
+              />
+              <Route
+                exact
+                path="/testimonials"
+                mapMenuTitle="Testimonials"
+                component={Testimonials}
               />
               <PrivateRoute
                 exact
