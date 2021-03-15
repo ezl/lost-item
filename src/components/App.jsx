@@ -155,15 +155,11 @@ const Footer = (props) => (
   <footer>
     <div className="container">
       <div className="links">
-        <Link to="/about">About</Link>
-
         <Link to="/terms">Terms of Service</Link>
 
         <Link to="/privacy">Privacy</Link>
 
         <Link to="/faq">FAQ</Link>
-
-        <Link to="/clients">Clients</Link>
       </div>
 
       <p className="copyright">&copy; All rights reserved by Lost-Item</p>
