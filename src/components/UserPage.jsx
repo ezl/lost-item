@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import values from 'object.values';
-import { getFirebaseApp } from './db/FirebaseApp';
-import Loading from './Loading';
+import React from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import values from "object.values";
+import { getFirebaseApp } from "./db/FirebaseApp";
+import Loading from "./Loading";
 
 const propTypes = {
   location: PropTypes.object.isRequired,
@@ -16,23 +16,48 @@ class UserContactForm extends React.Component {
     super(props);
 
     this.state = {
-      what: '',
-      where: '',
+      what: "",
+      where: "",
       slug: getSlug(),
-      how: '',
+      how: "",
       sending: false,
       messageSent: false,
+      file: {},
+      downloadURL: null,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  uploadImage(e) {
+    this.setState(
+      {
+        file: e.target.files[0],
+      },
+      async () => {
+        const storageRef = await getFirebaseApp()
+          .app()
+          .storage("gs://found-item-images")
+          .ref();
+        const thisRef = await storageRef.child(this.state.file.name);
+
+        await thisRef.put(this.state.file).then(async (snapshot) => {
+          const url = await snapshot.ref.getDownloadURL();
+
+          this.setState({
+            downloadURL: url,
+          });
+        });
+      }
+    );
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     this.setState({
-      sending: true
-    })
-    fetch('https://us-central1-lost-item-ba357.cloudfunctions.net/notifyUser', {
+      sending: true,
+    });
+    fetch("https://us-central1-lost-item-ba357.cloudfunctions.net/notifyUser", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       mode: "cors", // no-cors, cors, *same-origin
       cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
@@ -43,21 +68,20 @@ class UserContactForm extends React.Component {
       redirect: "follow", // manual, *follow, error
       referrer: "no-referrer", // no-referrer, *client
       body: JSON.stringify(this.state), // body data type must match "Content-Type" header
-    })
-      .then(response => {
-        if (response.status === 200) {
-          this.setState({
-            messageSent: true
-          });
-
-          // We found the item, scroll to top!
-          window.scrollTo(0, 0);
-        }
-
+    }).then((response) => {
+      if (response.status === 200) {
         this.setState({
-          sending: false
+          messageSent: true,
         });
-      }); // parses response to JSON
+
+        // We found the item, scroll to top!
+        window.scrollTo(0, 0);
+      }
+
+      this.setState({
+        sending: false,
+      });
+    }); // parses response to JSON
   }
 
   handleChange(name, e) {
@@ -66,106 +90,189 @@ class UserContactForm extends React.Component {
     this.setState(change);
   }
   render() {
-    const buttonText = 'Send';
+    const buttonText = "Send";
 
     return (
       <div className="container">
-        {this.state.messageSent &&
+        {this.state.messageSent && (
           <div>
             <div className="row">
               <div className="col-md-8 offset-md-2 shadow nomargin">
                 <img src="images/moon.svg" />
 
                 <div className="content">
-                  <h2 className="big-title color-blue"><span>Hooray!</span></h2>
+                  <h2 className="big-title color-blue">
+                    <span>Hooray!</span>
+                  </h2>
 
                   <br />
 
-                  <p><strong>Thanks for helping get that item back to {this.props.user.name}!</strong></p>
+                  <p>
+                    <strong>
+                      Thanks for helping get that item back to{" "}
+                      {this.props.user.name}!
+                    </strong>
+                  </p>
 
-                  <p>By the way, do you want your own link that you can put on any of your items in case you ever lose them?</p>
+                  <p>
+                    By the way, do you want your own link that you can put on
+                    any of your items in case you ever lose them?
+                  </p>
 
-                  <p>It's free, easy, and safer than writing your personal information on items!</p>
+                  <p>
+                    It's free, easy, and safer than writing your personal
+                    information on items!
+                  </p>
 
                   <p className="cta">
-                    <Link className="btn btn-primary" to="/signup">Learn more</Link>
+                    <Link className="btn btn-primary" to="/signup">
+                      Learn more
+                    </Link>
                   </p>
                 </div>
-
               </div>
             </div>
           </div>
-        }
-        {!this.state.messageSent &&
+        )}
+        {!this.state.messageSent && (
           <div>
             <div className="row">
               <div className="col-md-10 offset-md-1 shadow">
-                <h2 className="big-title color-blue">Yay! <span>You found something</span> that belongs to {this.props.user.name}!</h2>
+                <h2 className="big-title color-blue">
+                  Yay! <span>You found something</span> that belongs to{" "}
+                  {this.props.user.name}!
+                </h2>
 
                 <br />
 
                 <div className="row">
                   <div className="col-md-8 offset-md-2">
                     <div className="intro">
-                      <div className="img" style={{ backgroundImage: `url(${this.props.pic})` }}></div>
+                      <div
+                        className="img"
+                        style={{ backgroundImage: `url(${this.props.pic})` }}
+                      ></div>
                       <br />
-                      <p><strong>{this.props.user.name}</strong> will be very happy to hear that! Please help get this item returned!</p>
+                      <p>
+                        <strong>{this.props.user.name}</strong> will be very
+                        happy to hear that! Please help get this item returned!
+                      </p>
                     </div>
 
                     <form method="POST" onSubmit={this.handleSubmit}>
                       <div className="form-group">
                         <label>What did you find?</label>
-                        <input className="form-control" type="text" name="what" onChange={this.handleChange.bind(this, 'what')} required />
-                        <small className="form-text text-muted">e.g. an android phone, a credit card, a large sack of potatoes</small>
+                        <input
+                          className="form-control"
+                          type="text"
+                          name="what"
+                          onChange={this.handleChange.bind(this, "what")}
+                          required
+                        />
+                        <small className="form-text text-muted">
+                          e.g. an android phone, a credit card, a large sack of
+                          potatoes
+                        </small>
                       </div>
                       <div className="form-group">
                         <label>Where did you find it?</label>
-                        <input className="form-control" type="text" name="where" onChange={this.handleChange.bind(this, 'where')} required />
-                        <small className="form-text text-muted">e.g. at Burger King on Clark Street, at Jenny&apos;s house, on Richard Branson&apos;s jet</small>
+                        <input
+                          className="form-control"
+                          type="text"
+                          name="where"
+                          onChange={this.handleChange.bind(this, "where")}
+                          required
+                        />
+                        <small className="form-text text-muted">
+                          e.g. at Burger King on Clark Street, at Jenny&apos;s
+                          house, on Richard Branson&apos;s jet
+                        </small>
                       </div>
                       <div className="form-group">
-                        <label>What&#39;s the best way for {this.state.name} to get this item back?</label>
-                        <textarea className="form-control" type="text" name="how" onChange={this.handleChange.bind(this, 'how')} required />
-                        <small className="form-text text-muted">Leave your contact email or phone here, or a message for how {this.state.name} can retrieve it, like &quot;I left it with the front desk at the ACME Hotel at Colombus and 4th Street.&quot;</small>
+                        <label>
+                          What&#39;s the best way for {this.props.user.name} to
+                          get this item back?
+                        </label>
+                        <textarea
+                          className="form-control"
+                          type="text"
+                          name="how"
+                          onChange={this.handleChange.bind(this, "how")}
+                          required
+                        />
+                        <small className="form-text text-muted">
+                          Leave your contact email or phone here, or a message
+                          for how {this.props.user.name} can retrieve it, like
+                          &quot;I left it with the front desk at the ACME Hotel
+                          at Colombus and 4th Street.&quot;
+                        </small>
+                      </div>
+                      <div className="form-group">
+                        <label>Leave an image of what you found</label>
+                        <div className="upload-container">
+                          <button className="btn btn-primary">
+                            UPLOAD IMAGE
+                          </button>
+                          <p className="selected-file">
+                            {this.state.file.name
+                              ? this.state.file.name
+                              : "No file selected"}
+                          </p>
+                          <input
+                            type="file"
+                            name="upload-item-pic"
+                            onChange={this.uploadImage.bind(this)}
+                          />
+                        </div>
+                        <small className="form-text text-muted">
+                          Leave an image proof of the item you found for{" "}
+                          {this.props.user.name}. <br />
+                          (NOT REQUIRED)
+                        </small>
                       </div>
 
-                    {this.state.sending ?
-                      <button type="submit" className="btn btn-primary" disabled>
-                        <i className="fa fa-spinner fa-spin" /> 
-                        &nbsp;&nbsp;Please wait a moment
-                      </button>
-                      :
-                      <button type="submit" className="btn btn-primary">
-                        <i className='fa fa-send' />
-                        &nbsp;&nbsp;{buttonText}
-                      </button>
-                    }
+                      {this.state.sending ? (
+                        <button
+                          type="submit"
+                          className="btn btn-primary"
+                          disabled
+                        >
+                          <i className="fa fa-spinner fa-spin" />
+                          &nbsp;&nbsp;Please wait a moment
+                        </button>
+                      ) : (
+                        <button type="submit" className="btn btn-primary">
+                          <i className="fa fa-send" />
+                          &nbsp;&nbsp;{buttonText}
+                        </button>
+                      )}
                     </form>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        }
+        )}
       </div>
     );
   }
-};
+}
 
 UserContactForm.propTypes = {
   user: PropTypes.object,
   pic: PropTypes.string,
 };
 
-const UserInfo = (props) => <UserContactForm user={props.user} pic={props.pic} />;
+const UserInfo = (props) => (
+  <UserContactForm user={props.user} pic={props.pic} />
+);
 
 UserInfo.propTypes = {
   user: PropTypes.object,
   pic: PropTypes.string,
 };
 
-
-const UserNotFound = () =>
+const UserNotFound = () => (
   <div className="hero container big">
     <div className="item">
       <h2 className="big-title color-blue">Oh my...</h2>
@@ -173,13 +280,16 @@ const UserNotFound = () =>
       <p>It looks like this page has been lost</p>
 
       <p className="cta">
-        <Link className="btn btn-primary" to="/signup">Take me back home</Link>
+        <Link className="btn btn-primary" to="/signup">
+          Take me back home
+        </Link>
       </p>
     </div>
     <div className="item">
       <img src="images/404.svg" />
     </div>
-  </div>;
+  </div>
+);
 
 class UserPage extends React.Component {
   constructor(props) {
@@ -188,7 +298,7 @@ class UserPage extends React.Component {
     this.state = {
       user: null,
       loading: true,
-      profilePictureURL: 'images/profile.jpg',
+      profilePictureURL: "images/profile.jpg",
     };
 
     this.loadImage = this.loadImage.bind(this);
@@ -197,11 +307,12 @@ class UserPage extends React.Component {
   componentDidMount() {
     const slug = getSlug();
 
-    getFirebaseApp().database()
-      .ref('/users')
-      .orderByChild('slug')
+    getFirebaseApp()
+      .database()
+      .ref("/users")
+      .orderByChild("slug")
       .equalTo(slug)
-      .once('value')
+      .once("value")
       .then((snapshot) => {
         if (snapshot.val() === null) {
           this.setState({ user: null, loading: false });
@@ -221,20 +332,23 @@ class UserPage extends React.Component {
       let profilePictureRef = storage.child(`images/${user.email}`);
 
       // Get user data
-      profilePictureRef.getDownloadURL().then((url) => {
-        // Assign the image to the state
-        this.setState({
-          user,
-          loading: false,
-          profilePictureURL: url,
+      profilePictureRef
+        .getDownloadURL()
+        .then((url) => {
+          // Assign the image to the state
+          this.setState({
+            user,
+            loading: false,
+            profilePictureURL: url,
+          });
+        })
+        .catch(() => {
+          // If no profile picture is found in firebase, we keep the default one set in initial state
+          this.setState({
+            user,
+            loading: false,
+          });
         });
-      }).catch(() => {
-        // If no profile picture is found in firebase, we keep the default one set in initial state
-        this.setState({
-          user,
-          loading: false,
-        });
-      });
     } catch (err) {
       // We could keep this console.log but I'll comment it for now
       // console.log('no profile picture, loading default');
@@ -252,7 +366,9 @@ class UserPage extends React.Component {
     if (this.state.user === null) {
       return <UserNotFound />;
     }
-    return <UserInfo user={this.state.user} pic={this.state.profilePictureURL} />;
+    return (
+      <UserInfo user={this.state.user} pic={this.state.profilePictureURL} />
+    );
   }
 }
 
