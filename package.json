@@ -18,7 +18,7 @@
     "@babel/polyfill": "^7.11.5",
     "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.10.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "current-input": "^1.1.2",
     "firebase": "^7.21.1",
     "object.values": "^1.1.1",
