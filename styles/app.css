@@ -129,6 +129,31 @@ p.cta {
   color: #3ec19d;
 }
 
+/* custom upload button */
+.upload-container {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.upload-container .btn {
+  margin: 0 15px 0 0;
+}
+.upload-container p {
+  font-size: 14px;
+  margin: 0;
+}
+.upload-container input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 48px;
+}
+
 input.dotted, input.dotted:focus {
   /* Thanks, https://www.chefsteps.com/activities/equilibrium-brining! */
   border-width: 0px;

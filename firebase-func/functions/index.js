@@ -17,7 +17,7 @@ const mailTransport = nodemailer.createTransport(
   })
 );
 
-function sendEmail(user, what, where, how) {
+function sendEmail(user, what, where, how, file) {
   // 5. Send welcome email to new users
   console.log(user);
   const mailOptions = {
@@ -58,7 +58,7 @@ function sendEmail(user, what, where, how) {
           margin: 15px 0 30px;
         ">Someone found something that belongs to you!</p>
         <div style="display: block;">
-          <img src="./sample.png" style="
+          <img src="${file}" style="
             display: inline-block;
             width: 160px;
             height: 160px;
@@ -279,7 +279,8 @@ exports.notifyUser = functions.https.onRequest((request, response) => {
               user,
               request.body.what,
               request.body.where,
-              request.body.how
+              request.body.how,
+              request.body.downloadURL
             );
           });
         }
