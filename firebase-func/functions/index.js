@@ -38,7 +38,7 @@ function sendEmail(user, what, where, how, file) {
         width: 130px;
         margin: 20px auto 30px;
       ">
-        <img src="https://www.lost-item.com/images/logo.svg" style="width: 100%;" alt="">
+        <img src="https://www.lost-item.com/images/lost-item-logo.png" style="width: 100%;" alt="">
       </div>
       <div style="
         width: 570px;
@@ -55,7 +55,7 @@ function sendEmail(user, what, where, how, file) {
         ">Great news, ${user.name}!</p>
         <p style="
           font-size: 16px;
-          margin: 15px 0 30px;
+          margin: 9px 0 30px;
         ">Someone found something that belongs to you!</p>
         <div style="display: block;">
           <img src="${file}" style="
@@ -76,21 +76,21 @@ function sendEmail(user, what, where, how, file) {
               color: #1DAD99;
               margin: 0;
             ">What did they find?</p>
-            <p style="margin: 8px 0 16px;">${what}</p>
+            <p style="margin: 3px 0 16px;">${what}</p>
             <p style="
               font-size: 16px;
               font-weight: 600;
               color: #1DAD99;
               margin: 0;
             ">Where did they find it?</p>
-            <p style="margin: 8px 0 16px;">${where}</p>
+            <p style="margin: 3px 0 16px;">${where}</p>
             <p style="
               font-size: 16px;
               font-weight: 600;
               color: #1DAD99;
               margin: 0;
             ">Here’s how you can get it back:</p>
-            <p style="margin: 8px 0 16px;">${how}</p>
+            <p style="margin: 3px 0 16px;">${how}</p>
           </div>
         </div>
         <div style="
@@ -99,7 +99,7 @@ function sendEmail(user, what, where, how, file) {
           padding-top: 30px;
           margin-top: 22px;
         ">
-          <p style="margin: 0 0 8px;">Have a great day! :)</p>
+          <p style="margin: 0 0 4px;">Have a great day! :)</p>
           <p style="
             font-size: 16px;
             font-weight: 500;
